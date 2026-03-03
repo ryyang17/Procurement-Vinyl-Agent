@@ -4,8 +4,7 @@ Workflow: Daily Inventory Check → Find Suppliers → Create PO → Approval �
 """
 from agent.graph import build_procurement_graph, print_workflow_info, view_pending_orders, view_pending_invoices
 from agent.nodes import ProcurementState, human_approval_node
-from setup_data import setup_test_data, display_database_summary
-from agent.database import ProcurementDatabase
+from data import ProcurementDatabase
 
 
 def main():
@@ -46,12 +45,13 @@ def main():
         errors=[]
     )
 
-    # Run the workflow
+    # Run the workflow with memory persistence
     print("\n📌 WORKFLOW EXECUTION:\n")
 
     try:
-        # Execute the workflow
-        final_state = graph.invoke(state)
+        # Execute the workflow with thread_id for memory persistence
+        config = {"configurable": {"thread_id": "procurement_workflow_1"}}
+        final_state = graph.invoke(state, config)
 
         # Handle both dict and ProcurementState responses
         if isinstance(final_state, dict):

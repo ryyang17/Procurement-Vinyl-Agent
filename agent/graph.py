@@ -1,12 +1,12 @@
 """
-LangGraph Orchestration Layer - Defines the procurement workflows
+LangGraph Orchestration Layer - Defines the procurement workflows with memory support
 """
 from dotenv import load_dotenv
-from langchain_core.runnables.graph import Graph
 
 load_dotenv()
 
 from langgraph.graph import StateGraph, END
+from langgraph.checkpoint.memory import MemorySaver
 from langchain_google_genai import ChatGoogleGenerativeAI
 from agent.nodes import (
     ProcurementState,
@@ -24,10 +24,13 @@ from agent.nodes import (
 
 # Initialize LLM
 llm = ChatGoogleGenerativeAI(
-    model="gemini-3-pro-preview",
-    temperature=1,  # Lower = more deterministic for procurement decisions
-    max_tokens=1000
+    model="gemini-2.0-flash-exp",
+    temperature=0.3,  # Lower = more deterministic for procurement decisions
+    max_tokens=1500
 )
+
+# Initialize memory checkpointer for LangGraph state persistence
+memory = MemorySaver()
 
 # System prompt for procurement agent
 PROCUREMENT_AGENT_PROMPT = """Je bent een AI Procurement Agent gespecialiseerd in vinyl producten.
@@ -49,18 +52,20 @@ Antwoord altijd:
 
 def build_procurement_graph():
     """
-    Build the LangGraph workflow for procurement
+    Build the LangGraph workflow for procurement with memory support
 
     Automated Workflow Steps (R1-R8):
-    1. Daily Inventory Check (R1) → Find items below threshold
+    1. Daily Inventory Check (R1) → Find items below threshold with AI analysis
     2. If items need reordering:
-       3. Find Suppliers (R4-R5) → Compare up to 3 suppliers
-       4. Create Purchase Order (R6-R8) → Awaiting manual approval
+       3. Find Suppliers (R4-R5) → Compare up to 3 suppliers with AI recommendations
+       4. Create Purchase Order (R6-R8) → Awaiting manual approval with AI insights
 
     Manual Steps (called separately):
     - Human Approval (R6-R8) → Approve/Reject orders
     - Invoice Verification (R9-R10) → Check invoice discrepancies
     - Supplier History (R11) → Track performance metrics
+
+    Memory: All LLM decisions and reasoning are stored for future context
     """
 
     # Create the state graph
@@ -68,13 +73,13 @@ def build_procurement_graph():
 
     # ==================== NODES ====================
 
-    # Node 1: Daily inventory check
+    # Node 1: Daily inventory check with AI analysis
     workflow.add_node("daily_inventory_check", daily_inventory_check_node)
 
-    # Node 2: Find suppliers
+    # Node 2: Find suppliers with AI recommendations
     workflow.add_node("find_suppliers", find_suppliers_node)
 
-    # Node 3: Create purchase order (awaiting approval)
+    # Node 3: Create purchase order with AI approval message
     workflow.add_node("create_purchase_order", create_purchase_order_node)
 
     # ==================== EDGES (CONTROL FLOW) ====================
@@ -98,12 +103,9 @@ def build_procurement_graph():
     # Create purchase order -> END (awaiting manual approval)
     workflow.add_edge("create_purchase_order", END)
 
-    # Compile the graph
-    return workflow.compile()
+    # Compile the graph with memory persistence
+    return workflow.compile(checkpointer=memory)
 
-from IPython.display import Image, display
-
-display(Image(Graph.get_graph().dram.mermaid_png()))
 
 # ==================== GRAPH VISUALIZATION ====================
 
@@ -111,47 +113,48 @@ def print_workflow_info():
     """Print workflow structure info"""
     print("""
     ╔════════════════════════════════════════════════════════════════╗
-    ║     PROCUREMENT VINYL AGENT - WORKFLOW ORCHESTRATION           ║
+    ║   PROCUREMENT VINYL AGENT - AI-ENHANCED WORKFLOW 🤖            ║
     ╠════════════════════════════════════════════════════════════════╣
     ║                                                                ║
-    ║ [1] Daily Inventory Check (R1-R3)                            ║
-    ║     ├─ Check all inventory items                            ║
-    ║     ├─ Generate proposals for low stock                     ║
-    ║     └─ Route to supplier finding if needed                  ║
-    ║        │                                                     ║
-    ║        ▼                                                     ║
-    ║ [2] Find Suppliers (R4-R5)                                 ║
-    ║     ├─ Query suppliers offering product                    ║
-    ║     ├─ Compare up to 3 options                             ║
-    ║     └─ Select best based on price+lead time                ║
-    ║        │                                                     ║
-    ║        ▼                                                     ║
-    ║ [3] Create Purchase Order (R6-R8)                         ║
-    ║     ├─ Generate order awaiting approval                    ║
-    ║     ├─ Show: supplier, qty, total cost                     ║
-    ║     └─ Status: pending_approval                            ║
-    ║        │                                                     ║
-    ║        ▼                                                     ║
-    ║ [4] Human Approval (R6-R8)                                ║
-    ║     ├─ Manual approval/rejection needed                    ║
-    ║     ├─ Update order status                                 ║
-    ║     └─ Route to invoice verification                       ║
-    ║        │                                                     ║
-    ║        ▼                                                     ║
-    ║ [5] Invoice Verification (R9-R10)                         ║
-    ║     ├─ Compare invoice vs PO                               ║
-    ║     ├─ Check price & quantity match                        ║
-    ║     └─ Alert on discrepancies                              ║
-    ║        │                                                     ║
-    ║        ▼                                                     ║
-    ║ [6] Supplier History Tracking (R11)                       ║
-    ║     ├─ Update last price paid                              ║
-    ║     ├─ Record late deliveries                              ║
-    ║     └─ Update quality metrics                              ║
-    ║        │                                                     ║
-    ║        ▼                                                     ║
-    ║      [END]                                                   ║
+    ║ [1] Daily Inventory Check (R1-R3) + AI Analysis              ║
+    ║     ├─ Check inventory with sales velocity tracking           ║
+    ║     ├─ AI analyzes urgency & optimal reorder quantity        ║
+    ║     ├─ Considers: sales trend, lead time, stockout risk      ║
+    ║     └─ Generate intelligent proposals                         ║
+    ║        │                                                       ║
+    ║        ▼                                                       ║
+    ║ [2] Find Suppliers (R4-R5) + AI Recommendations             ║
+    ║     ├─ Query & compare up to 3 suppliers                     ║
+    ║     ├─ AI evaluates: price, reliability, quality             ║
+    ║     ├─ Reviews past supplier performance (memory)            ║
+    ║     └─ Recommends best option with reasoning                 ║
+    ║        │                                                       ║
+    ║        ▼                                                       ║
+    ║ [3] Create Purchase Order (R6-R8) + AI Approval Advice      ║
+    ║     ├─ Generate order with intelligent justification         ║
+    ║     ├─ AI provides approval recommendation                   ║
+    ║     ├─ Adjusts qty for min order & packaging units          ║
+    ║     └─ Status: pending_approval                              ║
+    ║        │                                                       ║
+    ║        ▼                                                       ║
+    ║ [4] Human Approval (R6-R8)                                  ║
+    ║     ├─ Manager reviews AI recommendation                     ║
+    ║     ├─ Approve/reject with full context                      ║
+    ║     └─ Decision stored in memory                             ║
+    ║        │                                                       ║
+    ║        ▼                                                       ║
+    ║ [5] Invoice Verification (R9-R10)                           ║
+    ║     ├─ Automated invoice vs PO comparison                    ║
+    ║     ├─ Detect price & quantity discrepancies                 ║
+    ║     └─ Alert on anomalies                                    ║
+    ║        │                                                       ║
+    ║        ▼                                                       ║
+    ║ [6] Supplier History Tracking (R11)                         ║
+    ║     ├─ Update performance metrics                            ║
+    ║     ├─ Track: price history, late deliveries, quality       ║
+    ║     └─ Feed into future AI decisions                         ║
     ║                                                                ║
+    ║ 🧠 MEMORY: All AI reasoning stored for continuous learning   ║
     ╚════════════════════════════════════════════════════════════════╝
     """)
 
