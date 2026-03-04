@@ -1,144 +1,149 @@
 """
-Main entry point for Procurement Vinyl Agent
-Workflow: Daily Inventory Check → Find Suppliers → Create PO → Approval → Invoice Verification
+Main entry point - generates test data as JSON
 """
-from agent.graph import build_procurement_graph, print_workflow_info, view_pending_orders, view_pending_invoices
-from agent.nodes import ProcurementState, human_approval_node
-from data import ProcurementDatabase
+
+import json
+import random
+from datetime import datetime, timedelta
+from pathlib import Path
 
 
-def main():
-    """Main entry point for the Procurement Vinyl Agent"""
+def generate_data(num_items=100):
+    """Generate all test data without external dependencies"""
+    data = {
+        'PRODUCT': [],
+        'SUPPLIER': [],
+        'INVENTORY': [],
+        'PURCHASE_ORDER': [],
+        'PURCHASE_ORDER_ITEM': [],
+        'PRICE_HISTORY': [],
+        'SUPPLIER_PERFORMANCE': []
+    }
 
-    print("\n" + "=" * 70)
-    print("🎵 PROCUREMENT VINYL AGENT - SYSTEM STARTUP")
-    print("=" * 70)
+    # Sample data for generation
+    product_names = ['Vinyl', 'Record', 'Album', 'Turntable', 'Speaker', 'Amplifier', 'Cable', 'Needle', 'Mat', 'Cleaner']
+    product_adjectives = ['Premium', 'Classic', 'Vintage', 'Professional', 'Deluxe', 'Ultra', 'Pro', 'Elite', 'Standard', 'Basic']
+    categories = ['Vinyl Records', 'Turntables', 'Speakers', 'Accessories', 'Cleaning Supplies']
 
-    # Step 1: Initialize database with test data (only first run)
-    print("\n[1/4] Checking database...")
-    db = ProcurementDatabase()
-    suppliers = db.get_all_suppliers()
+    company_names = ['SoundWave Inc', 'Vinyl Masters', 'Audio Tech', 'Record House', 'Music Pro', 'Turntable Co', 'Speaker Systems', 'Audio Solutions', 'Vinyl Vault', 'Music Store']
 
-    if not suppliers:
-        print("      Database is empty. Setting up test data...")
-        setup_test_data()
-    else:
-        print(f"      ✓ Database ready ({len(suppliers)} suppliers, {len(db.get_inventory())} products)")
+    statuses = ['Pending', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled']
 
-    # Step 2: Display workflow info
-    print("\n[2/4] Loading workflow configuration...")
-    print_workflow_info()
+    # PRODUCT
+    for i in range(1, num_items + 1):
+        data['PRODUCT'].append({
+            'product_id': i,
+            'name': f"{random.choice(product_adjectives)} {random.choice(product_names)} {i}",
+            'description': f'High quality product for vinyl enthusiasts. SKU: SKU-{i:05d}',
+            'sku': f"SKU-{i:05d}",
+            'category': random.choice(categories),
+            'current_price': round(random.uniform(10, 500), 2),
+            'created_at': (datetime.now() - timedelta(days=random.randint(1, 365))).isoformat()
+        })
 
-    # Step 3: Run procurement workflow
-    print("\n[3/4] Starting procurement workflow...")
-    print("-" * 70)
+    # SUPPLIER
+    for i in range(1, num_items + 1):
+        data['SUPPLIER'].append({
+            'supplier_id': i,
+            'name': f"{random.choice(company_names)} {i}",
+            'contact_email': f"contact{i}@supplier{i}.com",
+            'phone': f"+31 {random.randint(100, 999)} {random.randint(100000, 999999)}",
+            'address': f"Street {i}, {random.randint(1000, 9999)} City, Netherlands",
+            'created_at': (datetime.now() - timedelta(days=random.randint(1, 730))).isoformat()
+        })
 
-    # Build the graph
-    graph = build_procurement_graph()
+    # INVENTORY (1:1 with PRODUCT)
+    for i in range(1, num_items + 1):
+        data['INVENTORY'].append({
+            'inventory_id': i,
+            'product_id': i,
+            'quantity_in_stock': random.randint(0, 1000),
+            'reorder_level': random.randint(5, 50),
+            'last_updated': (datetime.now() - timedelta(days=random.randint(0, 30))).isoformat()
+        })
 
-    # Initialize workflow state
-    state = ProcurementState(
-        step="daily_inventory_check",
-        status="pending",
-        message="Starting daily inventory check...",
-        data={},
-        errors=[]
-    )
+    # PURCHASE_ORDER
+    for i in range(1, num_items + 1):
+        order_date = datetime.now() - timedelta(days=random.randint(1, 180))
+        expected_delivery = order_date + timedelta(days=random.randint(5, 30))
+        actual_delivery = expected_delivery + timedelta(days=random.randint(-5, 10)) if random.random() > 0.2 else None
 
-    # Run the workflow with memory persistence
-    print("\n📌 WORKFLOW EXECUTION:\n")
+        data['PURCHASE_ORDER'].append({
+            'purchase_order_id': i,
+            'supplier_id': random.randint(1, num_items),
+            'order_date': order_date.isoformat(),
+            'expected_delivery_date': expected_delivery.isoformat(),
+            'actual_delivery_date': actual_delivery.isoformat() if actual_delivery else None,
+            'status': random.choice(statuses),
+            'total_amount': round(random.uniform(100, 10000), 2)
+        })
 
-    try:
-        # Execute the workflow with thread_id for memory persistence
-        config = {"configurable": {"thread_id": "procurement_workflow_1"}}
-        final_state = graph.invoke(state, config)
+    # PURCHASE_ORDER_ITEM
+    item_id = 1
+    for po_id in range(1, num_items + 1):
+        num_items_in_order = random.randint(2, 5)
+        for _ in range(num_items_in_order):
+            data['PURCHASE_ORDER_ITEM'].append({
+                'purchase_order_item_id': item_id,
+                'purchase_order_id': po_id,
+                'product_id': random.randint(1, num_items),
+                'quantity': random.randint(1, 100),
+                'unit_price': round(random.uniform(10, 500), 2)
+            })
+            item_id += 1
 
-        # Handle both dict and ProcurementState responses
-        if isinstance(final_state, dict):
-            message = final_state.get('message', 'Workflow completed')
-            status = final_state.get('status', 'unknown')
-            data = final_state.get('data', {})
-            errors = final_state.get('errors', [])
-        else:
-            message = final_state.message
-            status = final_state.status
-            data = final_state.data
-            errors = final_state.errors
+    # PRICE_HISTORY
+    price_id = 1
+    for product_id in range(1, num_items + 1):
+        num_prices = random.randint(1, 3)
+        for j in range(num_prices):
+            start_date = datetime.now() - timedelta(days=random.randint(1, 365))
+            end_date = start_date + timedelta(days=random.randint(30, 180)) if j < num_prices - 1 else None
 
-        # Display results
-        print(f"\n{message}")
+            data['PRICE_HISTORY'].append({
+                'price_history_id': price_id,
+                'product_id': product_id,
+                'price': round(random.uniform(10, 500), 2),
+                'start_date': start_date.isoformat(),
+                'end_date': end_date.isoformat() if end_date else None
+            })
+            price_id += 1
 
-        if status == "error":
-            print(f"❌ Errors: {', '.join(errors)}")
+    # SUPPLIER_PERFORMANCE
+    for i in range(1, num_items + 1):
+        total_orders = random.randint(1, 50)
+        late_deliveries = random.randint(0, min(total_orders, 10))
+        reliability = round(100 - (late_deliveries / total_orders * 100), 2) if total_orders > 0 else 100
 
-        if data.get('awaiting_approval'):
-            print("\n⏸️  WORKFLOW PAUSED - AWAITING HUMAN APPROVAL")
-            print("\n" + "-" * 70)
-            print("Pending Order for Approval:")
-            approval_data = data['awaiting_approval']
-            print(f"  Order Number: {approval_data['order_number']}")
-            print(f"  Supplier: {approval_data['supplier_name']}")
-            print(f"  Product: {approval_data['product_code']}")
-            print(f"  Quantity: {approval_data['quantity']} units")
-            print(f"  Unit Price: €{approval_data['unit_price']:.2f}")
-            print(f"  Total Cost: €{approval_data['total_cost']:.2f}")
-            print("\n  Status: PENDING APPROVAL")
+        data['SUPPLIER_PERFORMANCE'].append({
+            'performance_id': i,
+            'supplier_id': i,
+            'total_orders': total_orders,
+            'late_deliveries': late_deliveries,
+            'reliability_score': reliability,
+            'evaluation_date': (datetime.now() - timedelta(days=random.randint(0, 30))).isoformat()
+        })
 
-            # Display LLM insights
-            if data.get('llm_supplier_analysis'):
-                print("\n" + "=" * 70)
-                print("🤖 AI LEVERANCIER ANALYSE:")
-                print("=" * 70)
-                print(data['llm_supplier_analysis'])
-
-            if data.get('llm_quantity_advice'):
-                print("\n" + "=" * 70)
-                print("🤖 AI HOEVEELHEID OPTIMALISATIE:")
-                print("=" * 70)
-                print(data['llm_quantity_advice'])
-
-            if data.get('llm_approval_message'):
-                print("\n" + "=" * 70)
-                print("📧 AI-GEGENEREERD GOEDKEURINGSVERZOEK:")
-                print("=" * 70)
-                print(data['llm_approval_message'])
-
-            print("\n" + "-" * 70)
-            print("  → Manager moet deze order handmatig goedkeuren")
-            print("-" * 70)
-
-    except Exception as e:
-        print(f"❌ Workflow execution error: {str(e)}")
-
-    # Step 4: Display system status
-    print("\n[4/4] System Status...")
-    print("-" * 70)
-    display_database_summary()
-
-    # Show pending items
-    print("\n📋 PENDING ACTIONS:")
-    print("-" * 70)
-    view_pending_orders()
-    view_pending_invoices()
-
-    print("\n" + "=" * 70)
-    print("🚀 Procurement Vinyl Agent Ready")
-    print("=" * 70)
-
-    # Display help
-    print("""
-    Next Steps:
-    -----------
-    1. Review pending orders (above)
-    2. Approve/Reject orders manually:
-       from agent.nodes import human_approval_node, ProcurementState
-       state = ProcurementState(...)
-       human_approval_node(state, approved=True, approved_by="manager_name")
-    
-    3. Process invoices when received
-    4. System automatically tracks supplier metrics
-    """)
+    return data
 
 
 if __name__ == "__main__":
-    main()
+    print("Generating test data...")
+    data = generate_data(100)
+
+    # Save to JSON in db directory
+    db_dir = Path(__file__).parent / "db"
+    db_dir.mkdir(exist_ok=True)
+
+    output_file = db_dir / "inventory.json"
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2)
+
+    # Print summary
+    print(f"\n✓ Data generated successfully!")
+    print(f"\nSummary:")
+    for table_name, records in data.items():
+        print(f"  {table_name}: {len(records)} records")
+
+    print(f"\n✓ Saved to: {output_file}")
+

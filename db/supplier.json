@@ -1,0 +1,164 @@
+{
+  "suppliers": [
+    {
+      "supplier_id": 1,
+      "name": "Vinyl World",
+      "contact_email": "contact@vinylworld.com",
+      "phone": "+31201234567",
+      "address": "Dam 1, Amsterdam, NL",
+      "created_at": "2026-02-01T09:00:00Z"
+    },
+    {
+      "supplier_id": 2,
+      "name": "Retro Records",
+      "contact_email": "sales@retrorecords.com",
+      "phone": "+31203456789",
+      "address": "Leidseplein 10, Amsterdam, NL",
+      "created_at": "2026-02-01T09:10:00Z"
+    },
+    {
+      "supplier_id": 3,
+      "name": "Classic Vinyls",
+      "contact_email": "info@classicvinyls.com",
+      "phone": "+31204567890",
+      "address": "Nieuwezijds Voorburgwal 20, Amsterdam, NL",
+      "created_at": "2026-02-01T09:20:00Z"
+    },
+    {
+      "supplier_id": 4,
+      "name": "Spin That Record",
+      "contact_email": "support@spinrecord.com",
+      "phone": "+31205678901",
+      "address": "Kalverstraat 15, Amsterdam, NL",
+      "created_at": "2026-02-01T09:30:00Z"
+    },
+    {
+      "supplier_id": 5,
+      "name": "Vinyl Hub",
+      "contact_email": "contact@vinylhub.com",
+      "phone": "+31206789012",
+      "address": "Rokin 5, Amsterdam, NL",
+      "created_at": "2026-02-01T09:40:00Z"
+    },
+    {
+      "supplier_id": 6,
+      "name": "Groove Factory",
+      "contact_email": "sales@groovefactory.com",
+      "phone": "+31207890123",
+      "address": "Herengracht 50, Amsterdam, NL",
+      "created_at": "2026-02-01T09:50:00Z"
+    },
+    {
+      "supplier_id": 7,
+      "name": "Record Planet",
+      "contact_email": "info@recordplanet.com",
+      "phone": "+31208901234",
+      "address": "Prinsengracht 100, Amsterdam, NL",
+      "created_at": "2026-02-01T10:00:00Z"
+    },
+    {
+      "supplier_id": 8,
+      "name": "Vinyl Palace",
+      "contact_email": "support@vinylpalace.com",
+      "phone": "+31209012345",
+      "address": "Spuistraat 25, Amsterdam, NL",
+      "created_at": "2026-02-01T10:10:00Z"
+    },
+    {
+      "supplier_id": 9,
+      "name": "Retro Spin",
+      "contact_email": "contact@retrospin.com",
+      "phone": "+31210123456",
+      "address": "Singel 40, Amsterdam, NL",
+      "created_at": "2026-02-01T10:20:00Z"
+    },
+    {
+      "supplier_id": 10,
+      "name": "Vinyl & Co",
+      "contact_email": "sales@vinylco.com",
+      "phone": "+31211234567",
+      "address": "Leidsestraat 12, Amsterdam, NL",
+      "created_at": "2026-02-01T10:30:00Z"
+    },
+    {
+      "supplier_id": 11,
+      "name": "Groove House",
+      "contact_email": "info@groovehouse.com",
+      "phone": "+31212234567",
+      "address": "Ferdinand Bolstraat 18, Amsterdam, NL",
+      "created_at": "2026-02-01T10:40:00Z"
+    },
+    {
+      "supplier_id": 12,
+      "name": "Spin City",
+      "contact_email": "support@spincity.com",
+      "phone": "+31213234567",
+      "address": "Ceintuurbaan 22, Amsterdam, NL",
+      "created_at": "2026-02-01T10:50:00Z"
+    },
+    {
+      "supplier_id": 13,
+      "name": "Vinyl Masters",
+      "contact_email": "contact@vinylmasters.com",
+      "phone": "+31214234567",
+      "address": "Weteringschans 30, Amsterdam, NL",
+      "created_at": "2026-02-01T11:00:00Z"
+    },
+    {
+      "supplier_id": 14,
+      "name": "Retro Groove",
+      "contact_email": "sales@retro-groove.com",
+      "phone": "+31215234567",
+      "address": "Sarphatistraat 40, Amsterdam, NL",
+      "created_at": "2026-02-01T11:10:00Z"
+    },
+    {
+      "supplier_id": 15,
+      "name": "Vinyl Central",
+      "contact_email": "info@vinylcentral.com",
+      "phone": "+31216234567",
+      "address": "Stadhouderskade 45, Amsterdam, NL",
+      "created_at": "2026-02-01T11:20:00Z"
+    },
+    {
+      "supplier_id": 16,
+      "name": "Spin Masters",
+      "contact_email": "support@spinmasters.com",
+      "phone": "+31217234567",
+      "address": "Rozengracht 50, Amsterdam, NL",
+      "created_at": "2026-02-01T11:30:00Z"
+    },
+    {
+      "supplier_id": 17,
+      "name": "Vinyl Nation",
+      "contact_email": "contact@vinylnation.com",
+      "phone": "+31218234567",
+      "address": "Elandsgracht 55, Amsterdam, NL",
+      "created_at": "2026-02-01T11:40:00Z"
+    },
+    {
+      "supplier_id": 18,
+      "name": "Groove Vinyl",
+      "contact_email": "sales@groovevinyl.com",
+      "phone": "+31219234567",
+      "address": "Haarlemmerstraat 60, Amsterdam, NL",
+      "created_at": "2026-02-01T11:50:00Z"
+    },
+    {
+      "supplier_id": 19,
+      "name": "Vinyl Universe",
+      "contact_email": "info@vinyluniverse.com",
+      "phone": "+31220234567",
+      "address": "Nieuwmarkt 5, Amsterdam, NL",
+      "created_at": "2026-02-01T12:00:00Z"
+    },
+    {
+      "supplier_id": 20,
+      "name": "Record Hub",
+      "contact_email": "support@recordhub.com",
+      "phone": "+31221234567",
+      "address": "Amstel 10, Amsterdam, NL",
+      "created_at": "2026-02-01T12:10:00Z"
+    }
+  ]
+}

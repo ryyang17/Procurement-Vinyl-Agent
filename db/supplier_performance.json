@@ -1,0 +1,165 @@
+[
+
+  {
+    "performance_id": 1,
+    "supplier_id": 1,
+    "total_orders": 50,
+    "late_deliveries": 2,
+    "reliability_score": 0.96,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 2,
+    "supplier_id": 2,
+    "total_orders": 40,
+    "late_deliveries": 5,
+    "reliability_score": 0.875,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 3,
+    "supplier_id": 3,
+    "total_orders": 60,
+    "late_deliveries": 3,
+    "reliability_score": 0.95,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 4,
+    "supplier_id": 4,
+    "total_orders": 30,
+    "late_deliveries": 1,
+    "reliability_score": 0.967,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 5,
+    "supplier_id": 5,
+    "total_orders": 45,
+    "late_deliveries": 4,
+    "reliability_score": 0.911,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 6,
+    "supplier_id": 6,
+    "total_orders": 35,
+    "late_deliveries": 2,
+    "reliability_score": 0.943,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 7,
+    "supplier_id": 7,
+    "total_orders": 25,
+    "late_deliveries": 0,
+    "reliability_score": 1.0,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 8,
+    "supplier_id": 8,
+    "total_orders": 55,
+    "late_deliveries": 6,
+    "reliability_score": 0.891,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 9,
+    "supplier_id": 9,
+    "total_orders": 20,
+    "late_deliveries": 1,
+    "reliability_score": 0.95,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 10,
+    "supplier_id": 10,
+    "total_orders": 30,
+    "late_deliveries": 2,
+    "reliability_score": 0.933,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 11,
+    "supplier_id": 11,
+    "total_orders": 40,
+    "late_deliveries": 3,
+    "reliability_score": 0.925,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 12,
+    "supplier_id": 12,
+    "total_orders": 50,
+    "late_deliveries": 4,
+    "reliability_score": 0.92,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 13,
+    "supplier_id": 13,
+    "total_orders": 45,
+    "late_deliveries": 2,
+    "reliability_score": 0.956,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 14,
+    "supplier_id": 14,
+    "total_orders": 60,
+    "late_deliveries": 5,
+    "reliability_score": 0.917,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 15,
+    "supplier_id": 15,
+    "total_orders": 35,
+    "late_deliveries": 1,
+    "reliability_score": 0.971,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 16,
+    "supplier_id": 16,
+    "total_orders": 25,
+    "late_deliveries": 0,
+    "reliability_score": 1.0,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 17,
+    "supplier_id": 17,
+    "total_orders": 40,
+    "late_deliveries": 3,
+    "reliability_score": 0.925,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 18,
+    "supplier_id": 18,
+    "total_orders": 30,
+    "late_deliveries": 2,
+    "reliability_score": 0.933,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 19,
+    "supplier_id": 19,
+    "total_orders": 20,
+    "late_deliveries": 0,
+    "reliability_score": 1.0,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  },
+  {
+    "performance_id": 20,
+    "supplier_id": 20,
+    "total_orders": 50,
+    "late_deliveries": 5,
+    "reliability_score": 0.9,
+    "evaluation_date": "2026-03-01T00:00:00Z"
+  }
+
+
+  ]
