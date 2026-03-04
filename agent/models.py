@@ -2,18 +2,17 @@ from typing import Any, Dict
 from pydantic import BaseModel
 
 class ProcurementState(BaseModel):
-    """Main state model for the procurement workflow"""
     step: str = "daily_inventory_check"
     status: str = "pending"
     message: str = ""
     data: Dict[str, Any] = {}
     errors: list[str] = []
 
+    """zorgt ervoor meer flexibiliteit in de types die in de data kunnen worden opgeslagen, zoals lists, dicts, of zelfs custom objects"""
     class Config:
         arbitrary_types_allowed = True
 
 class ReorderProposal(BaseModel):
-    """Model for bijhouden van reorder voorstellen"""
     product_code: str
     product_name: str
     current_qty: int
@@ -21,7 +20,6 @@ class ReorderProposal(BaseModel):
     min_threshold: int
 
 class SupplierOption(BaseModel):
-    """Model voor leverancieropties"""
     supplier_id: int
     supplier_name: str
     product_code: str

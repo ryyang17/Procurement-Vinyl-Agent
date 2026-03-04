@@ -1,149 +1,186 @@
-"""
-Main entry point - generates test data as JSON
-"""
+from agent.graph import create_procurement_workflow
+from agent.models import ProcurementState
+from agent.nodes.approval_nodes import process_approval_node
 
-import json
-import random
-from datetime import datetime, timedelta
-from pathlib import Path
+def print_separator():
+    print("\n" + "="*80 + "\n")
 
+def display_reorder_proposals(state):
+    """Display reorder proposals from inventory check"""
+    data = state if isinstance(state, dict) else state.data
+    proposals = data.get('reorder_proposals', [])
+    if not proposals:
+        return
 
-def generate_data(num_items=100):
-    """Generate all test data without external dependencies"""
-    data = {
-        'PRODUCT': [],
-        'SUPPLIER': [],
-        'INVENTORY': [],
-        'PURCHASE_ORDER': [],
-        'PURCHASE_ORDER_ITEM': [],
-        'PRICE_HISTORY': [],
-        'SUPPLIER_PERFORMANCE': []
-    }
+    print("VOORRAAD CONTROLE RESULTATEN")
+    print_separator()
+    print(f"Gevonden: {len(proposals)} producten met lage voorraad\n")
 
-    # Sample data for generation
-    product_names = ['Vinyl', 'Record', 'Album', 'Turntable', 'Speaker', 'Amplifier', 'Cable', 'Needle', 'Mat', 'Cleaner']
-    product_adjectives = ['Premium', 'Classic', 'Vintage', 'Professional', 'Deluxe', 'Ultra', 'Pro', 'Elite', 'Standard', 'Basic']
-    categories = ['Vinyl Records', 'Turntables', 'Speakers', 'Accessories', 'Cleaning Supplies']
+    for i, proposal in enumerate(proposals, 1):
+        print(f"{i}. {proposal['product_name']} ({proposal['product_code']})")
+        print(f"   Huidige voorraad: {proposal['current_qty']} stuks")
+        print(f"   Minimum niveau: {proposal['min_threshold']} stuks")
+        print(f"   Voorgestelde bestelhoeveelheid: {proposal['reorder_qty']} stuks")
+        print()
 
-    company_names = ['SoundWave Inc', 'Vinyl Masters', 'Audio Tech', 'Record House', 'Music Pro', 'Turntable Co', 'Speaker Systems', 'Audio Solutions', 'Vinyl Vault', 'Music Store']
+def display_supplier_selections(state):
+    """Display selected suppliers"""
+    data = state if isinstance(state, dict) else state.data
+    selections = data.get('supplier_selections', [])
+    if not selections:
+        return
 
-    statuses = ['Pending', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled']
+    print("LEVERANCIER SELECTIE")
+    print_separator()
 
-    # PRODUCT
-    for i in range(1, num_items + 1):
-        data['PRODUCT'].append({
-            'product_id': i,
-            'name': f"{random.choice(product_adjectives)} {random.choice(product_names)} {i}",
-            'description': f'High quality product for vinyl enthusiasts. SKU: SKU-{i:05d}',
-            'sku': f"SKU-{i:05d}",
-            'category': random.choice(categories),
-            'current_price': round(random.uniform(10, 500), 2),
-            'created_at': (datetime.now() - timedelta(days=random.randint(1, 365))).isoformat()
-        })
+    for i, sel in enumerate(selections, 1):
+        supplier = sel['selected_supplier']
+        print(f"{i}. Product: {sel['product_name']} ({sel['product_code']})")
+        print(f"   Hoeveelheid: {sel['reorder_qty']} stuks")
+        print(f"   Geselecteerde leverancier: {supplier['supplier_name']}")
+        print(f"   Prijs per unit: €{supplier['price_per_unit']:.2f}")
+        print(f"   Totaal: €{sel['reorder_qty'] * supplier['price_per_unit']:.2f}")
+        print(f"   Levertijd: {supplier['lead_time_days']} dagen")
+        print(f"   Kwaliteit: {supplier['quality_rating']}/10")
+        print(f"\n   AI Aanbeveling:")
+        for line in sel['ai_recommendation'].split('\n'):
+            print(f"   {line}")
+        print()
 
-    # SUPPLIER
-    for i in range(1, num_items + 1):
-        data['SUPPLIER'].append({
-            'supplier_id': i,
-            'name': f"{random.choice(company_names)} {i}",
-            'contact_email': f"contact{i}@supplier{i}.com",
-            'phone': f"+31 {random.randint(100, 999)} {random.randint(100000, 999999)}",
-            'address': f"Street {i}, {random.randint(1000, 9999)} City, Netherlands",
-            'created_at': (datetime.now() - timedelta(days=random.randint(1, 730))).isoformat()
-        })
+def display_draft_orders(state) -> list:
+    """Display draft orders for approval and get user input"""
+    data = state if isinstance(state, dict) else state.data
+    draft_orders = data.get('draft_orders', [])
+    if not draft_orders:
+        return []
 
-    # INVENTORY (1:1 with PRODUCT)
-    for i in range(1, num_items + 1):
-        data['INVENTORY'].append({
-            'inventory_id': i,
-            'product_id': i,
-            'quantity_in_stock': random.randint(0, 1000),
-            'reorder_level': random.randint(5, 50),
-            'last_updated': (datetime.now() - timedelta(days=random.randint(0, 30))).isoformat()
-        })
+    print("CONCEPTBESTELLINGEN VOOR GOEDKEURING")
+    print_separator()
 
-    # PURCHASE_ORDER
-    for i in range(1, num_items + 1):
-        order_date = datetime.now() - timedelta(days=random.randint(1, 180))
-        expected_delivery = order_date + timedelta(days=random.randint(5, 30))
-        actual_delivery = expected_delivery + timedelta(days=random.randint(-5, 10)) if random.random() > 0.2 else None
+    for i, order in enumerate(draft_orders):
+        print(f"\n{'='*80}")
+        print(f"BESTELLING #{i+1}")
+        print(f"{'='*80}\n")
+        print(f"Leverancier: {order['supplier_name']}")
+        print(f"Levertijd: {order['lead_time_days']} dagen")
+        print(f"Kwaliteitsbeoordeling: {order['quality_rating']}/10")
+        print(f"\nProducten:")
 
-        data['PURCHASE_ORDER'].append({
-            'purchase_order_id': i,
-            'supplier_id': random.randint(1, num_items),
-            'order_date': order_date.isoformat(),
-            'expected_delivery_date': expected_delivery.isoformat(),
-            'actual_delivery_date': actual_delivery.isoformat() if actual_delivery else None,
-            'status': random.choice(statuses),
-            'total_amount': round(random.uniform(100, 10000), 2)
-        })
+        for item in order['items']:
+            subtotal = item['quantity'] * item['unit_price']
+            print(f"  - {item['product_name']} ({item['product_code']})")
+            print(f"    {item['quantity']} x €{item['unit_price']:.2f} = €{subtotal:.2f}")
 
-    # PURCHASE_ORDER_ITEM
-    item_id = 1
-    for po_id in range(1, num_items + 1):
-        num_items_in_order = random.randint(2, 5)
-        for _ in range(num_items_in_order):
-            data['PURCHASE_ORDER_ITEM'].append({
-                'purchase_order_item_id': item_id,
-                'purchase_order_id': po_id,
-                'product_id': random.randint(1, num_items),
-                'quantity': random.randint(1, 100),
-                'unit_price': round(random.uniform(10, 500), 2)
-            })
-            item_id += 1
+        print(f"\nTOTAAL: EUR {order['total_amount']:.2f}")
+        print(f"\nAI AANBEVELING:")
+        for line in order['ai_recommendation'].split('\n'):
+            print(f"   {line}")
+        print()
 
-    # PRICE_HISTORY
-    price_id = 1
-    for product_id in range(1, num_items + 1):
-        num_prices = random.randint(1, 3)
-        for j in range(num_prices):
-            start_date = datetime.now() - timedelta(days=random.randint(1, 365))
-            end_date = start_date + timedelta(days=random.randint(30, 180)) if j < num_prices - 1 else None
+    # Get user approval
+    print_separator()
+    print("Welke bestellingen wil je goedkeuren?")
+    print("Voer de nummers in, gescheiden door komma's (bijv: 1,2,3)")
+    print("Of voer 'all' in om alles goed te keuren, of 'none' om alles te annuleren")
+    print()
 
-            data['PRICE_HISTORY'].append({
-                'price_history_id': price_id,
-                'product_id': product_id,
-                'price': round(random.uniform(10, 500), 2),
-                'start_date': start_date.isoformat(),
-                'end_date': end_date.isoformat() if end_date else None
-            })
-            price_id += 1
+    user_input = input("Jouw keuze: ").strip().lower()
 
-    # SUPPLIER_PERFORMANCE
-    for i in range(1, num_items + 1):
-        total_orders = random.randint(1, 50)
-        late_deliveries = random.randint(0, min(total_orders, 10))
-        reliability = round(100 - (late_deliveries / total_orders * 100), 2) if total_orders > 0 else 100
+    if user_input == 'none':
+        return []
+    elif user_input == 'all':
+        return list(range(len(draft_orders)))
+    else:
+        try:
+            # Parse comma-separated numbers
+            approved = [int(x.strip()) - 1 for x in user_input.split(',')]
+            # Filter valid indices
+            approved = [idx for idx in approved if 0 <= idx < len(draft_orders)]
+            return approved
+        except:
+            print("Ongeldige invoer. Geen bestellingen goedgekeurd.")
+            return []
 
-        data['SUPPLIER_PERFORMANCE'].append({
-            'performance_id': i,
-            'supplier_id': i,
-            'total_orders': total_orders,
-            'late_deliveries': late_deliveries,
-            'reliability_score': reliability,
-            'evaluation_date': (datetime.now() - timedelta(days=random.randint(0, 30))).isoformat()
-        })
+def display_final_results(state):
+    """Display final results"""
+    data = state if isinstance(state, dict) else state.data
+    created_orders = data.get('created_orders', [])
 
-    return data
+    print_separator()
+    print("VOLTOOIDE BESTELLINGEN")
+    print_separator()
 
+    if not created_orders:
+        print("Geen bestellingen aangemaakt.")
+        return
+
+    print(f"Succesvol {len(created_orders)} bestelling(en) aangemaakt:\n")
+
+    total_spent = 0
+    for order in created_orders:
+        print(f"Order #{order['order_id']}")
+        print(f"   Leverancier: {order['supplier_name']}")
+        print(f"   Totaalbedrag: EUR {order['total_amount']:.2f}")
+        print()
+        total_spent += order['total_amount']
+
+    print(f"TOTAAL BESTEED: EUR {total_spent:.2f}")
+    print()
+
+def main():
+    """Main function to run the procurement agent"""
+    print("\n" + "="*80)
+    print(" "*20 + "VINYL PROCUREMENT AGENT")
+    print("="*80 + "\n")
+
+    # Create workflow
+    print("Workflow wordt geïnitialiseerd...")
+    workflow = create_procurement_workflow()
+
+    # Initialize state
+    initial_state = ProcurementState()
+
+    print("Agent start met dagelijkse voorraad controle...\n")
+
+    # Run workflow until it needs human input
+    result = workflow.invoke(initial_state)
+
+    # Display results step by step
+    print_separator()
+    display_reorder_proposals(result)
+
+    # Handle both dict and ProcurementState
+    status = result.get('status') if isinstance(result, dict) else result.status
+    step = result.get('step') if isinstance(result, dict) else result.step
+
+    if status == 'ok':
+        print("Alle voorraden zijn op niveau. Geen actie nodig.")
+        return
+
+    print_separator()
+    display_supplier_selections(result)
+
+    print_separator()
+
+    # If we have draft orders, get approval
+    if step == "awaiting_human_input":
+        approved_orders = display_draft_orders(result)
+
+        if approved_orders:
+            # Process approvals
+            print("\nBestellingen worden verwerkt...")
+            approved_by = input("Je naam (voor goedkeuring): ").strip() or "manager"
+
+            result = process_approval_node(result, approved_orders, approved_by)
+
+            # Display final results
+            display_final_results(result)
+        else:
+            print("\nGeen bestellingen goedgekeurd. Proces geannuleerd.")
+
+    print_separator()
+    print("Agent voltooid.")
+    print("="*80 + "\n")
 
 if __name__ == "__main__":
-    print("Generating test data...")
-    data = generate_data(100)
-
-    # Save to JSON in db directory
-    db_dir = Path(__file__).parent / "db"
-    db_dir.mkdir(exist_ok=True)
-
-    output_file = db_dir / "inventory.json"
-    with open(output_file, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=2)
-
-    # Print summary
-    print(f"\n✓ Data generated successfully!")
-    print(f"\nSummary:")
-    for table_name, records in data.items():
-        print(f"  {table_name}: {len(records)} records")
-
-    print(f"\n✓ Saved to: {output_file}")
-
+    main()
