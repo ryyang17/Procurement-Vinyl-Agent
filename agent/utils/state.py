@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from pydantic import BaseModel
 
 class ProcurementState(BaseModel):
@@ -7,6 +7,15 @@ class ProcurementState(BaseModel):
     message: str = ""
     data: Dict[str, Any] = {}
     errors: list[str] = []
+
+    # Checkpointing & human-in-the-loop fields
+    thread_id: Optional[str] = None  # For workflow resumption across sessions
+    approval_requested_at: Optional[str] = None
+    approval_decision: Optional[str] = None  # 'approved', 'rejected', 'pending'
+    approval_reason: Optional[str] = None  # Human-provided reason for approval/rejection
+    approved_by: Optional[str] = None
+    approved_orders: list[int] = []
+    rejection_reasons: Dict[int, str] = {}
 
     """zorgt ervoor meer flexibiliteit in de types die in de data kunnen worden opgeslagen, zoals lists, dicts, of zelfs custom objects"""
     class Config:

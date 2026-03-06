@@ -1,4 +1,4 @@
-from agent.models import ProcurementState
+from agent.utils.state import ProcurementState
 from agent.procurement_data import ProcurementDatabase
 from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -6,6 +6,7 @@ db = ProcurementDatabase()
 llm = ChatGoogleGenerativeAI(model="gemini-3-pro-preview", temperature=0.7)
 
 def create_purchase_order_node(state: ProcurementState) -> ProcurementState:
+    """Create draft purchase orders based on supplier selections from previous node"""
 
     supplier_selections = state.data.get('supplier_selections', [])
 
@@ -21,7 +22,8 @@ def create_purchase_order_node(state: ProcurementState) -> ProcurementState:
         if supplier_id not in orders_by_supplier:
             orders_by_supplier[supplier_id] = {
                 'supplier': selection['selected_supplier'],
-                'items': []
+                'items': [],
+                'ai_recommendation': selection.get('ai_recommendation', 'Leverancier geselecteerd door AI analyse.')
             }
         orders_by_supplier[supplier_id]['items'].append({
             'product_id': selection['product_id'],
@@ -31,46 +33,17 @@ def create_purchase_order_node(state: ProcurementState) -> ProcurementState:
             'unit_price': selection['selected_supplier']['price_per_unit']
         })
 
-    # Create draft purchase orders
+    # Create draft purchase orders (no additional LLM call - use existing recommendation)
     draft_orders = []
     for supplier_id, order_data in orders_by_supplier.items():
         total = sum(item['quantity'] * item['unit_price'] for item in order_data['items'])
-
-        # Generate AI recommendation for approval
-        recommendation_prompt = f"""
-Je bent een procurement manager voor een vinyl platenwinkel.
-
-Beoordeel deze bestelling:
-
-Leverancier: {order_data['supplier']['supplier_name']}
-Levertijd: {order_data['supplier']['lead_time_days']} dagen
-Kwaliteitsbeoordeling: {order_data['supplier']['quality_rating']}/10
-
-Producten:
-"""
-        for item in order_data['items']:
-            recommendation_prompt += f"\n- {item['product_name']} ({item['product_code']}): {item['quantity']} x €{item['unit_price']:.2f}"
-
-        recommendation_prompt += f"\n\nTotaal: €{total:.2f}"
-        recommendation_prompt += """\n\nGeef een aanbeveling of deze bestelling goedgekeurd moet worden.
-Overweeg:
-1. Totale kosten
-2. Leverbetrouwbaarheid
-3. Kwaliteit van leverancier
-4. Urgentie van de voorraad
-
-Antwoord met: AANBEVELING: [GOEDKEUREN/AFWIJZEN]
-REDEN: [korte uitleg]"""
-
-        ai_response = llm.invoke(recommendation_prompt)
-        ai_recommendation = ai_response.content
 
         draft_orders.append({
             'supplier_id': supplier_id,
             'supplier_name': order_data['supplier']['supplier_name'],
             'items': order_data['items'],
             'total_amount': total,
-            'ai_recommendation': ai_recommendation,
+            'ai_recommendation': order_data['ai_recommendation'],  # Use existing recommendation
             'lead_time_days': order_data['supplier']['lead_time_days'],
             'quality_rating': order_data['supplier']['quality_rating']
         })

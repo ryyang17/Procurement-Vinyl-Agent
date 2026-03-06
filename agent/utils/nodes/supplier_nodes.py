@@ -1,15 +1,13 @@
-from agent.models import ProcurementState, SupplierOption
+from agent.utils.state import ProcurementState
 from agent.procurement_data import ProcurementDatabase
+from agent.utils.memory import get_last_rejection_reason, get_recent_rejections
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 db = ProcurementDatabase()
 llm = ChatGoogleGenerativeAI(model="gemini-3-pro-preview", temperature=0.7)
 
 def find_suppliers_node(state: ProcurementState) -> ProcurementState:
-    """
-    R4: Agent finds and compares up to 3 suppliers with LLM analysis
-    R5: Best supplier is selected based on AI recommendation considering price, lead time, and quality
-    """
+
     proposals = state.data.get('reorder_proposals', [])
     if not proposals:
         state.message = "Geen reorder voorstellen om leveranciers voor te zoeken."
@@ -39,13 +37,13 @@ def find_suppliers_node(state: ProcurementState) -> ProcurementState:
 
         # Use LLM to analyze and select best supplier
         analysis_prompt = f"""
-Je bent een procurement specialist voor een vinyl platenwinkel.
-
-Product: {proposal['product_name']} ({product_code})
-Hoeveelheid nodig: {proposal['reorder_qty']} stuks
-
-Beschikbare leveranciers:
-"""
+            Je bent een procurement specialist voor een vinyl platenwinkel.
+            
+            Product: {proposal['product_name']} ({product_code})
+            Hoeveelheid nodig: {proposal['reorder_qty']} stuks
+            
+            Beschikbare leveranciers:
+            """
         for i, opt in enumerate(supplier_options, 1):
             analysis_prompt += f"\n{i}. {opt['supplier_name']}"
             analysis_prompt += f"\n   - Prijs per unit: €{opt['price_per_unit']:.2f}"
@@ -53,15 +51,25 @@ Beschikbare leveranciers:
             analysis_prompt += f"\n   - Late leveringen: {opt['late_deliveries_count']}"
             analysis_prompt += f"\n   - Kwaliteitsbeoordeling: {opt['quality_rating']}/10"
 
-        analysis_prompt += """\n\nSelecteer de beste leverancier op basis van:
-1. Prijs (totale kosten)
-2. Levertijd
-3. Betrouwbaarheid (late leveringen)
-4. Kwaliteit
+            # Check for recent rejection history
+            rejection_reason = get_last_rejection_reason(opt['supplier_id'])
+            if rejection_reason:
+                analysis_prompt += f"\n   - ⚠️ WAARSCHUWING: Recent afgekeurd wegens: {rejection_reason}"
 
-Geef je aanbeveling in dit formaat:
-LEVERANCIER: [naam]
-REDEN: [korte uitleg waarom deze leverancier het beste is]"""
+            recent_rejections = get_recent_rejections(opt['supplier_id'], days=7)
+            if recent_rejections:
+                analysis_prompt += f"\n   - {len(recent_rejections)} afkeuring(en) in afgelopen week"
+
+        analysis_prompt += """\n\nSelecteer de beste leverancier op basis van:
+            1. Prijs (totale kosten)
+            2. Levertijd
+            3. Betrouwbaarheid (late leveringen)
+            4. Kwaliteit
+            5. BELANGRIJK: Let op waarschuwingen over recente afkeuringen!
+            
+            Geef je aanbeveling in dit formaat:
+            LEVERANCIER: [naam]
+            REDEN: [korte uitleg waarom deze leverancier het beste is]"""
 
         response = llm.invoke(analysis_prompt)
         recommendation = response.content

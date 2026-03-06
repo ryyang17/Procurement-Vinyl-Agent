@@ -1,0 +1,52 @@
+[
+  {
+    "timestamp": "2026-03-06T09:12:31.091069+00:00",
+    "type": "supplier_approved",
+    "supplier_id": 11,
+    "supplier_name": "Groove House",
+    "reason": null,
+    "po_id": 16,
+    "context": {
+      "items_count": 1
+    },
+    "actor": "user"
+  },
+  {
+    "timestamp": "2026-03-06T09:31:54.396986+00:00",
+    "type": "supplier_rejected",
+    "supplier_id": 5,
+    "supplier_name": "Vinyl Masters",
+    "reason": "Leverancier heeft vertraging op vinyl producten",
+    "po_id": null,
+    "context": {
+      "draft_order_idx": 0,
+      "test": true
+    },
+    "actor": "test_manager"
+  },
+  {
+    "timestamp": "2026-03-06T09:31:54.422860+00:00",
+    "type": "supplier_rejected",
+    "supplier_id": 8,
+    "supplier_name": "Classic Vinyl",
+    "reason": "Leverancier is tijdelijk niet bereikbaar",
+    "po_id": null,
+    "context": {
+      "draft_order_idx": 0,
+      "test": true
+    },
+    "actor": "test_manager"
+  },
+  {
+    "timestamp": "2026-03-06T11:05:50.468465+00:00",
+    "type": "supplier_approved",
+    "supplier_id": 4,
+    "supplier_name": "Spin That Record",
+    "reason": null,
+    "po_id": 17,
+    "context": {
+      "items_count": 1
+    },
+    "actor": "user"
+  }
+]

@@ -1,186 +1,199 @@
-from agent.graph import create_procurement_workflow
-from agent.models import ProcurementState
-from agent.nodes.approval_nodes import process_approval_node
+import uuid
 
-def print_separator():
-    print("\n" + "="*80 + "\n")
+from agent.agent import create_procurement_workflow
+from agent.procurement_data import ProcurementDatabase
+from agent.utils.memory import get_all_decisions
+from agent.utils.state import ProcurementState
 
-def display_reorder_proposals(state):
-    """Display reorder proposals from inventory check"""
-    data = state if isinstance(state, dict) else state.data
-    proposals = data.get('reorder_proposals', [])
-    if not proposals:
-        return
 
-    print("VOORRAAD CONTROLE RESULTATEN")
-    print_separator()
-    print(f"Gevonden: {len(proposals)} producten met lage voorraad\n")
+db = ProcurementDatabase()
 
-    for i, proposal in enumerate(proposals, 1):
-        print(f"{i}. {proposal['product_name']} ({proposal['product_code']})")
-        print(f"   Huidige voorraad: {proposal['current_qty']} stuks")
-        print(f"   Minimum niveau: {proposal['min_threshold']} stuks")
-        print(f"   Voorgestelde bestelhoeveelheid: {proposal['reorder_qty']} stuks")
-        print()
 
-def display_supplier_selections(state):
-    """Display selected suppliers"""
-    data = state if isinstance(state, dict) else state.data
-    selections = data.get('supplier_selections', [])
-    if not selections:
-        return
-
-    print("LEVERANCIER SELECTIE")
-    print_separator()
-
-    for i, sel in enumerate(selections, 1):
-        supplier = sel['selected_supplier']
-        print(f"{i}. Product: {sel['product_name']} ({sel['product_code']})")
-        print(f"   Hoeveelheid: {sel['reorder_qty']} stuks")
-        print(f"   Geselecteerde leverancier: {supplier['supplier_name']}")
-        print(f"   Prijs per unit: €{supplier['price_per_unit']:.2f}")
-        print(f"   Totaal: €{sel['reorder_qty'] * supplier['price_per_unit']:.2f}")
-        print(f"   Levertijd: {supplier['lead_time_days']} dagen")
-        print(f"   Kwaliteit: {supplier['quality_rating']}/10")
-        print(f"\n   AI Aanbeveling:")
-        for line in sel['ai_recommendation'].split('\n'):
-            print(f"   {line}")
-        print()
-
-def display_draft_orders(state) -> list:
-    """Display draft orders for approval and get user input"""
-    data = state if isinstance(state, dict) else state.data
-    draft_orders = data.get('draft_orders', [])
-    if not draft_orders:
-        return []
-
-    print("CONCEPTBESTELLINGEN VOOR GOEDKEURING")
-    print_separator()
-
-    for i, order in enumerate(draft_orders):
-        print(f"\n{'='*80}")
-        print(f"BESTELLING #{i+1}")
-        print(f"{'='*80}\n")
-        print(f"Leverancier: {order['supplier_name']}")
-        print(f"Levertijd: {order['lead_time_days']} dagen")
-        print(f"Kwaliteitsbeoordeling: {order['quality_rating']}/10")
-        print(f"\nProducten:")
-
-        for item in order['items']:
-            subtotal = item['quantity'] * item['unit_price']
-            print(f"  - {item['product_name']} ({item['product_code']})")
-            print(f"    {item['quantity']} x €{item['unit_price']:.2f} = €{subtotal:.2f}")
-
-        print(f"\nTOTAAL: EUR {order['total_amount']:.2f}")
-        print(f"\nAI AANBEVELING:")
-        for line in order['ai_recommendation'].split('\n'):
-            print(f"   {line}")
-        print()
-
-    # Get user approval
-    print_separator()
-    print("Welke bestellingen wil je goedkeuren?")
-    print("Voer de nummers in, gescheiden door komma's (bijv: 1,2,3)")
-    print("Of voer 'all' in om alles goed te keuren, of 'none' om alles te annuleren")
-    print()
-
-    user_input = input("Jouw keuze: ").strip().lower()
-
-    if user_input == 'none':
-        return []
-    elif user_input == 'all':
-        return list(range(len(draft_orders)))
-    else:
-        try:
-            # Parse comma-separated numbers
-            approved = [int(x.strip()) - 1 for x in user_input.split(',')]
-            # Filter valid indices
-            approved = [idx for idx in approved if 0 <= idx < len(draft_orders)]
-            return approved
-        except:
-            print("Ongeldige invoer. Geen bestellingen goedgekeurd.")
-            return []
-
-def display_final_results(state):
-    """Display final results"""
-    data = state if isinstance(state, dict) else state.data
-    created_orders = data.get('created_orders', [])
-
-    print_separator()
-    print("VOLTOOIDE BESTELLINGEN")
-    print_separator()
-
-    if not created_orders:
-        print("Geen bestellingen aangemaakt.")
-        return
-
-    print(f"Succesvol {len(created_orders)} bestelling(en) aangemaakt:\n")
-
-    total_spent = 0
-    for order in created_orders:
-        print(f"Order #{order['order_id']}")
-        print(f"   Leverancier: {order['supplier_name']}")
-        print(f"   Totaalbedrag: EUR {order['total_amount']:.2f}")
-        print()
-        total_spent += order['total_amount']
-
-    print(f"TOTAAL BESTEED: EUR {total_spent:.2f}")
-    print()
-
-def main():
-    """Main function to run the procurement agent"""
-    print("\n" + "="*80)
-    print(" "*20 + "VINYL PROCUREMENT AGENT")
-    print("="*80 + "\n")
-
-    # Create workflow
-    print("Workflow wordt geïnitialiseerd...")
+def run_procurement_workflow() -> None:
+    """Run the procurement workflow with human approval step."""
+    print("\n🔄 VINYL PROCUREMENT AGENT WORKFLOW\n")
     workflow = create_procurement_workflow()
+    thread_id = str(uuid.uuid4())[:8].upper()
+    state = ProcurementState(thread_id=thread_id)
+    config = {"configurable": {"thread_id": thread_id}}
 
-    # Initialize state
-    initial_state = ProcurementState()
+    # Start workflow
+    result = workflow.invoke(state, config=config)
+    if isinstance(result, dict):
+        result = ProcurementState(**result)
 
-    print("Agent start met dagelijkse voorraad controle...\n")
-
-    # Run workflow until it needs human input
-    result = workflow.invoke(initial_state)
-
-    # Display results step by step
-    print_separator()
-    display_reorder_proposals(result)
-
-    # Handle both dict and ProcurementState
-    status = result.get('status') if isinstance(result, dict) else result.status
-    step = result.get('step') if isinstance(result, dict) else result.step
-
-    if status == 'ok':
-        print("Alle voorraden zijn op niveau. Geen actie nodig.")
+    # Show what needs to be ordered
+    proposals = result.data.get("reorder_proposals", [])
+    if proposals:
+        print(f"📦 Te bestellen producten: {[p['product_name'] for p in proposals]}")
+    else:
+        print("✅ Alles op voorraad. Geen actie nodig.")
         return
 
-    print_separator()
-    display_supplier_selections(result)
+    # Show supplier selections
+    selections = result.data.get("supplier_selections", [])
+    if selections:
+        print("\n🏪 Geselecteerde leveranciers:")
+        for i, sel in enumerate(selections, 1):
+            s = sel["selected_supplier"]
+            print(f"  {i}. {sel['product_name']} bij {s['supplier_name']} voor €{s['price_per_unit']:.2f}")
 
-    print_separator()
+    # Handle human approval
+    draft_orders = result.data.get("draft_orders", [])
+    if draft_orders and result.step == "awaiting_human_input":
+        print("\n📋 CONCEPTBESTELLINGEN VOOR GOEDKEURING:\n")
 
-    # If we have draft orders, get approval
-    if step == "awaiting_human_input":
-        approved_orders = display_draft_orders(result)
+        for idx, order in enumerate(draft_orders, 1):
+            print(f"Concept #{idx}")
+            print(f"  Leverancier: {order.get('supplier_name', '-')}")
+            print(f"  Levertijd: {order.get('lead_time_days', '-')} dagen")
+            print(f"  Kwaliteit: {order.get('quality_rating', '-')}/10")
+            print("  Producten:")
+            for item in order.get("items", []):
+                print(f"    • {item.get('product_name', '-')} x {item.get('quantity', '-')} @ €{item.get('unit_price', '-')}")
+            print(f"  💰 Totaal: €{order.get('total_amount', '-')}")
 
-        if approved_orders:
-            # Process approvals
-            print("\nBestellingen worden verwerkt...")
-            approved_by = input("Je naam (voor goedkeuring): ").strip() or "manager"
+            # Show AI recommendation
+            ai_rec = order.get("ai_recommendation", "Geen AI-analyse beschikbaar")
+            ai_text = ai_rec if isinstance(ai_rec, str) else str(ai_rec)
+            print(f"  🤖 AI Aanbeveling: {ai_text}")
+            print()
 
-            result = process_approval_node(result, approved_orders, approved_by)
+        print("🔍 Goedkeuren? Opties:")
+        print("  • 'all' - Alles goedkeuren")
+        print("  • '1,2,3' - Specifieke orders goedkeuren")
+        print("  • 'none' - Alles afwijzen")
+        print("  • 'reject:1,2' - Specifieke orders afwijzen")
 
-            # Display final results
-            display_final_results(result)
+        try:
+            user_input = input("\n👤 Uw beslissing: ").strip().lower()
+        except EOFError:
+            print("❌ Geen invoer. Workflow gestopt.")
+            return
+
+        approved = []
+        rejected = {}
+
+        # Process user input
+        if user_input == "all":
+            approved = list(range(len(draft_orders)))
+        elif user_input == "none":
+            print("📝 Reden voor afwijzing van alle orders? (Enter om over te slaan)")
+            try:
+                reason = input().strip() or "Alle orders afgewezen door manager"
+            except EOFError:
+                reason = "Alle orders afgewezen door manager"
+            rejected = {i: reason for i in range(len(draft_orders))}
+        elif user_input.startswith("reject:"):
+            parts = user_input[7:].split(",")
+            for part in parts:
+                try:
+                    idx = int(part.strip()) - 1
+                    if 0 <= idx < len(draft_orders):
+                        rejected[idx] = "Afgewezen door manager"
+                except ValueError:
+                    continue
         else:
-            print("\nGeen bestellingen goedgekeurd. Proces geannuleerd.")
+            try:
+                approved = [
+                    int(x.strip()) - 1
+                    for x in user_input.split(",")
+                    if x.strip().isdigit() and 0 < int(x.strip()) <= len(draft_orders)
+                ]
+            except Exception:
+                print("❌ Ongeldige invoer. Workflow gestopt.")
+                return
 
-    print_separator()
-    print("Agent voltooid.")
-    print("="*80 + "\n")
+        # Set approval data and continue workflow
+        result.approved_orders = approved
+        result.rejection_reasons = rejected
+        result.approved_by = "user"
+        result.approval_decision = "approved"
+
+        # Process approval
+        result = workflow.invoke(result, config=config)
+        if isinstance(result, dict):
+            result = ProcurementState(**result)
+
+    # Show results
+    created = result.data.get("created_orders", [])
+    if created:
+        print(f"\n✅ Bestellingen aangemaakt: {[f'#{o['order_id']}' for o in created]}")
+    else:
+        print("\n❌ Geen bestellingen aangemaakt.")
+
+
+def show_pending_orders() -> None:
+    """Show pending purchase orders awaiting approval."""
+    pending = db.get_pending_purchase_orders()
+    if not pending:
+        print("\n✅ Geen openstaande bestellingen.")
+        return
+
+    print(f"\n📋 OPENSTAANDE BESTELLINGEN ({len(pending)})\n")
+    for order in pending:
+        print(f"Order #{order['purchase_order_id']} - {order['supplier_name']}")
+        print(f"  💰 Totaal: €{order['total_amount']:.2f}")
+        print(f"  📅 Verwacht: {order['expected_delivery_date'] or 'TBD'}")
+        print(f"  📦 Items: {len(order['items'])}")
+        print()
+
+
+def show_decision_history(limit: int = 5) -> None:
+    """Show recent procurement decisions."""
+    decisions = get_all_decisions(limit=limit)
+    if not decisions:
+        print("\n❌ Geen recente beslissingen.")
+        return
+
+    print(f"\n📜 RECENTE BESLISSINGEN (laatste {limit})\n")
+    for decision in reversed(decisions):
+        timestamp = decision['timestamp'][:16].replace('T', ' ')
+        print(f"{timestamp} - {decision['type']}")
+        if decision.get("supplier_name"):
+            print(f"  🏪 {decision['supplier_name']}")
+        if decision.get("reason"):
+            print(f"  📝 {decision['reason']}")
+        if decision.get("po_id"):
+            print(f"  📋 Order #{decision['po_id']}")
+        print()
+
+
+def interactive_menu() -> None:
+    """Main interactive menu with essential procurement workflow options."""
+    while True:
+        print("\n" + "=" * 60)
+        print("🎵 VINYL PROCUREMENT AGENT")
+        print("=" * 60)
+        print("\n1. ▶️  Start Procurement Workflow")
+        print("2. 📋 Bekijk Openstaande Bestellingen")
+        print("3. 📜 Bekijk Recente Beslissingen")
+        print("0. 🚪 Afsluiten")
+
+        try:
+            choice = input("\n👤 Kies optie (0-3): ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\n👋 Tot ziens!")
+            break
+
+        if choice == "1":
+            run_procurement_workflow()
+        elif choice == "2":
+            show_pending_orders()
+        elif choice == "3":
+            try:
+                limit_input = input("Aantal beslissingen (standaard 5): ").strip()
+                limit = int(limit_input) if limit_input else 5
+                show_decision_history(limit)
+            except ValueError:
+                print("❌ Ongeldig aantal, gebruik standaard 5")
+                show_decision_history(5)
+        elif choice == "0":
+            print("\n👋 Tot ziens!")
+            break
+        else:
+            print("❌ Ongeldige keuze, probeer opnieuw")
+
 
 if __name__ == "__main__":
-    main()
+    interactive_menu()

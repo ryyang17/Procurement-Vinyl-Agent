@@ -1,5 +1,4 @@
 [
-
   {
     "performance_id": 1,
     "supplier_id": 1,
@@ -36,9 +35,10 @@
     "performance_id": 5,
     "supplier_id": 5,
     "total_orders": 45,
-    "late_deliveries": 4,
-    "reliability_score": 0.911,
-    "evaluation_date": "2026-03-01T00:00:00Z"
+    "late_deliveries": 5,
+    "reliability_score": 0.8888888888888888,
+    "evaluation_date": "2026-03-06T09:31:54.398691+00:00",
+    "last_rejection_reason": "Leverancier heeft vertraging op vinyl producten"
   },
   {
     "performance_id": 6,
@@ -61,8 +61,11 @@
     "supplier_id": 8,
     "total_orders": 55,
     "late_deliveries": 6,
-    "reliability_score": 0.891,
-    "evaluation_date": "2026-03-01T00:00:00Z"
+    "reliability_score": 0.791,
+    "evaluation_date": "2026-03-06T09:31:54.424784+00:00",
+    "temporarily_unavailable": true,
+    "unavailable_since": "2026-03-06T09:31:54.424764+00:00",
+    "last_rejection_reason": "Leverancier is tijdelijk niet bereikbaar"
   },
   {
     "performance_id": 9,
@@ -160,6 +163,4 @@
     "reliability_score": 0.9,
     "evaluation_date": "2026-03-01T00:00:00Z"
   }
-
-
-  ]
+]

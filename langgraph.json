@@ -1,0 +1,8 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "procurement_agent": "./agent/agent.py:create_procurement_workflow"
+  },
+  "env": ".env"
+}
+
