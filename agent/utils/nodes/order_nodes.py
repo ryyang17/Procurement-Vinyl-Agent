@@ -33,7 +33,7 @@ def create_purchase_order_node(state: ProcurementState) -> ProcurementState:
             'unit_price': selection['selected_supplier']['price_per_unit']
         })
 
-    # Create draft purchase orders (no additional LLM call - use existing recommendation)
+    # Create draft purchase orders
     draft_orders = []
     for supplier_id, order_data in orders_by_supplier.items():
         total = sum(item['quantity'] * item['unit_price'] for item in order_data['items'])

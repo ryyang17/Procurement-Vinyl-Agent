@@ -3,9 +3,10 @@
     "performance_id": 1,
     "supplier_id": 1,
     "total_orders": 50,
-    "late_deliveries": 2,
-    "reliability_score": 0.96,
-    "evaluation_date": "2026-03-01T00:00:00Z"
+    "late_deliveries": 4,
+    "reliability_score": 0.92,
+    "evaluation_date": "2026-03-10T14:22:10.579841+00:00",
+    "last_rejection_reason": "Vertraging in levering - bestelling was 5 dagen te laat bezorgd"
   },
   {
     "performance_id": 2,

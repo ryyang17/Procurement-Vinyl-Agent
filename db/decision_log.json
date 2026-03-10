@@ -48,5 +48,117 @@
       "items_count": 1
     },
     "actor": "user"
+  },
+  {
+    "timestamp": "2026-03-08T11:42:24.448225+00:00",
+    "type": "supplier_approved",
+    "supplier_id": 17,
+    "supplier_name": "Vinyl Nation",
+    "reason": null,
+    "po_id": 18,
+    "context": {
+      "items_count": 1
+    },
+    "actor": "user"
+  },
+  {
+    "timestamp": "2026-03-10T13:42:39.270062+00:00",
+    "type": "supplier_approved",
+    "supplier_id": 12,
+    "supplier_name": "Spin City",
+    "reason": "Low stock detected: 0 < 20. Best price available.",
+    "po_id": null,
+    "context": {
+      "product_id": 17,
+      "product_name": "A Night at the Opera",
+      "current_stock": 0,
+      "reorder_qty": 500,
+      "scenario": "inventory_shortage"
+    },
+    "actor": "procurement_agent"
+  },
+  {
+    "timestamp": "2026-03-10T13:43:25.246207+00:00",
+    "type": "supplier_rejected",
+    "supplier_id": 1,
+    "supplier_name": "Vinyl World",
+    "reason": "Vertraging in levering - bestelling was 5 dagen te laat bezorgd",
+    "po_id": null,
+    "context": {
+      "order_id": "PO-2026-001",
+      "expected_date": "2026-03-10",
+      "actual_date": "2026-03-15",
+      "delay_days": 5,
+      "scenario": "late_delivery"
+    },
+    "actor": "system"
+  },
+  {
+    "timestamp": "2026-03-10T14:04:45.414405+00:00",
+    "type": "supplier_approved",
+    "supplier_id": 16,
+    "supplier_name": "Spin Masters",
+    "reason": "Low stock detected: 0 < 20. Best price available.",
+    "po_id": null,
+    "context": {
+      "product_id": 17,
+      "product_name": "A Night at the Opera",
+      "current_stock": 0,
+      "reorder_qty": 500,
+      "scenario": "inventory_shortage"
+    },
+    "actor": "procurement_agent"
+  },
+  {
+    "timestamp": "2026-03-10T14:22:10.579025+00:00",
+    "type": "supplier_rejected",
+    "supplier_id": 1,
+    "supplier_name": "Vinyl World",
+    "reason": "Vertraging in levering - bestelling was 5 dagen te laat bezorgd",
+    "po_id": null,
+    "context": {
+      "order_id": "PO-2026-001",
+      "expected_date": "2026-03-10",
+      "actual_date": "2026-03-15",
+      "delay_days": 5,
+      "scenario": "late_delivery"
+    },
+    "actor": "system"
+  },
+  {
+    "timestamp": "2026-03-10T18:37:17.756955+00:00",
+    "type": "supplier_approved",
+    "supplier_id": 13,
+    "supplier_name": "Vinyl Masters",
+    "reason": null,
+    "po_id": 19,
+    "context": {
+      "items_count": 1
+    },
+    "actor": "integration_test_user"
+  },
+  {
+    "timestamp": "2026-03-10T18:38:08.052128+00:00",
+    "type": "supplier_approved",
+    "supplier_id": 7,
+    "supplier_name": "Record Planet",
+    "reason": null,
+    "po_id": 20,
+    "context": {
+      "items_count": 1
+    },
+    "actor": "integration_test_user"
+  },
+  {
+    "timestamp": "2026-03-10T18:38:42.544006+00:00",
+    "type": "supplier_approved",
+    "supplier_id": 18,
+    "supplier_name": "Groove Vinyl",
+    "reason": null,
+    "po_id": 21,
+    "context": {
+      "items_count": 1
+    },
+    "actor": "integration_test_user"
   }
 ]
