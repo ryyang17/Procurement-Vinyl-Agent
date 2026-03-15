@@ -14,5 +14,10 @@ dependencies = [
     "python-dotenv>=1.1.1",
     "pydantic>=2.11.7",
     "ipython>=9.10.0",
+    "requests>=2.31.0",
+    "mcp>=1.0.0",
+    "httpx>=0.24.0",
+    "discogs-client>=2.3.0",
+
 ]
 

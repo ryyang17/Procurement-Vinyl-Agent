@@ -1,15 +1,40 @@
 # Procurement Vinyl Agent
 
-Data generator voor het Procurement Vinyl Agent project.
+Een intelligente AI-agent voor vinylprocurement met MCP (Model Context Protocol) integratie voor realtime Discogs API toegang.
+
+## 🌟 Nieuwe Functies
+
+### 📡 MCP Discogs Integration
+- **Realtime data**: Echte vinylreleases via Discogs API  
+- **Gestandaardiseerd protocol**: Model Context Protocol voor robuuste API integratie
+- **Automatische fallback**: Graceful degradation naar simulatie modus
+- **Artist search**: Zoek specifieke artiesten voor procurement analyse
+
+Zie [MCP_README.md](MCP_README.md) voor gedetailleerde MCP documentatie.
 
 ## Snelle Start
 
-1. **Data genereren:**
+1. **Basis installatie:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **MCP functionaliteit (optioneel):**
+   ```bash
+   pip install mcp httpx
+   ```
+
+3. **Start de agent:**
    ```bash
    python main.py
    ```
-   
-   Dit genereert een `data.json` bestand met test data voor alle 7 tabellen.
+
+### Menu Opties
+- **1. Procurement Workflow**: Normale inventory en order workflow
+- **2. MCP New Release Detection**: Realtime Discogs data (als MCP beschikbaar)
+- **3. Simulation Mode**: Mock data voor testing
+- **4. Pending Orders**: Bekijk openstaande bestellingen  
+- **5. Decision History**: Recente procurement beslissingen
 
 ## Database Schema
 

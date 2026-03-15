@@ -3,11 +3,16 @@ load_dotenv()
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from agent.utils.state import ProcurementState
-from agent.utils.nodes.inventory_nodes import daily_inventory_check_node
-from agent.utils.nodes.supplier_nodes import find_suppliers_node
-from agent.utils.nodes.order_nodes import create_purchase_order_node
 from agent.utils.nodes.approval_nodes import human_approval_node, process_approval_node_workflow
 from agent.utils.nodes.delivery_nodes import process_due_deliveries_node
+from agent.utils.nodes.inventory_nodes import daily_inventory_check_node
+from agent.utils.nodes.order_nodes import create_purchase_order_node
+from agent.utils.nodes.supplier_nodes import find_suppliers_node
+from agent.utils.nodes.new_release_nodes import (
+    detect_new_releases_node,
+    create_new_release_orders_node,
+    check_existing_new_releases_node
+)
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.sqlite import SqliteSaver
 import os
@@ -32,32 +37,55 @@ def get_checkpointer():
         _checkpointer = SqliteSaver(conn)
     return _checkpointer
 
+def _state_get(state: ProcurementState, key: str, default=None):
+    """Read state values from either dict-like or object-like ProcurementState."""
+    if isinstance(state, dict):
+        return state.get(key, default)
+    return getattr(state, key, default)
+
 def route_after_inventory(state: ProcurementState) -> str:
     """op basis van status van de inventarisatie, route bepalen"""
-    if state.status == 'proposed':
+    if _state_get(state, "status") == "proposed":
         return "find_suppliers"
-    else:
-        return "end"
+    # After regular inventory, check for new releases
+    return "check_existing_new_releases"
+
+def route_after_new_release_check(state: ProcurementState) -> str:
+    """Route after checking existing new releases"""
+    next_action = _state_get(state, "next_action", "scan_for_new_releases")
+
+    if next_action == "create_restock_orders":
+        return "find_suppliers"  # Use existing supplier/order flow
+    if next_action == "scan_for_new_releases":
+        return "detect_new_releases"
+    return "end"
+
+def route_after_new_release_detection(state: ProcurementState) -> str:
+    """Route after detecting new releases"""
+    next_action = _state_get(state, "next_action", "complete")
+
+    if next_action == "create_new_release_orders":
+        return "create_new_release_orders"
+    return "end"
 
 def route_after_approval(state: ProcurementState) -> str:
     """Route based on approval status"""
-    # Check if human has made any approval decision
-    has_approved_orders = hasattr(state, 'approved_orders') and state.approved_orders
-    has_rejection_reasons = hasattr(state, 'rejection_reasons') and state.rejection_reasons
-    has_approval_decision = hasattr(state, 'approval_decision') and state.approval_decision
+    approved_orders = _state_get(state, "approved_orders")
+    rejection_reasons = _state_get(state, "rejection_reasons")
+    approval_decision = _state_get(state, "approval_decision")
 
     # If any decision has been made, process it
-    if has_approved_orders or has_rejection_reasons or has_approval_decision:
+    if approved_orders or rejection_reasons or approval_decision:
         return "process_approval"
     # If still awaiting human input, pause workflow
-    elif state.step == "awaiting_human_input":
+    if _state_get(state, "step") == "awaiting_human_input":
         return "end"
-    else:
-        return "end"
+    return "end"
 
 def create_procurement_workflow():
     workflow = StateGraph(ProcurementState)
 
+    # Herstel alle bestaande nodes
     workflow.add_node("process_due_deliveries", process_due_deliveries_node)
     workflow.add_node("daily_inventory_check", daily_inventory_check_node)
     workflow.add_node("find_suppliers", find_suppliers_node)
@@ -65,9 +93,11 @@ def create_procurement_workflow():
     workflow.add_node("human_approval", human_approval_node)
     workflow.add_node("process_approval", process_approval_node_workflow)
 
-    workflow.set_entry_point("process_due_deliveries")
+    workflow.add_node("check_existing_new_releases", check_existing_new_releases_node)
+    workflow.add_node("detect_new_releases", detect_new_releases_node)
+    workflow.add_node("create_new_release_orders", create_new_release_orders_node)
 
-    # First process deliveries, then check inventory
+    workflow.set_entry_point("process_due_deliveries")
     workflow.add_edge("process_due_deliveries", "daily_inventory_check")
 
     workflow.add_conditional_edges(
@@ -75,14 +105,18 @@ def create_procurement_workflow():
         route_after_inventory,
         {
             "find_suppliers": "find_suppliers",
-            "end": END
+            "check_existing_new_releases": "check_existing_new_releases"
         }
     )
 
+    # Vereenvoudigde new release flow
+    workflow.add_edge("check_existing_new_releases", "detect_new_releases")
+    workflow.add_edge("detect_new_releases", "create_new_release_orders")
+    workflow.add_edge("create_new_release_orders", END)
+
+    # Herstel overige routes
     workflow.add_edge("find_suppliers", "create_purchase_order")
     workflow.add_edge("create_purchase_order", "human_approval")
-
-    # After approval, route based on decision
     workflow.add_conditional_edges(
         "human_approval",
         route_after_approval,
@@ -91,14 +125,7 @@ def create_procurement_workflow():
             "end": END
         }
     )
-
-    # After processing approval, end
     workflow.add_edge("process_approval", END)
 
-    # SqliteSaver voor persistent checkpointing
-    # Beslissingen en state worden bewaard in checkpoints.sqlite
-    # Bij herstart kan de workflow hervat worden met dezelfde thread_id
     checkpointer = get_checkpointer()
-
     return workflow.compile(checkpointer=checkpointer)
-

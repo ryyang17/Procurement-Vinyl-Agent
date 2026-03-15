@@ -1,5 +1,7 @@
 # Memory Systeem Testresultaten
 
+**Let op:** De onderstaande 4 testen zijn alleen unit- en integratietests van je eigen code en zijn niet afhankelijk van LangGraph. Met LangGraph kun je end-to-end workflowtesten uitvoeren; deze worden in een andere map weergegeven.
+
 Hieronder vind je een samenvatting van de long term en short term memory testresultaten. Per test staat wat er wordt getest en hoe het geheugen jouw agent slimmer maakt.
 
 ---

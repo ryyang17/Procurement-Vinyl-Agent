@@ -4,11 +4,7 @@ from agent.utils.state import ProcurementState, ReorderProposal
 from agent.procurement_data import ProcurementDatabase
 
 def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
-    """
-    Check inventory levels and identify products that need reordering.
-    Always reads fresh data from disk to ensure latest state after deliveries.
-    """
-    # Use ProcurementDatabase to get the freshest data
+
     db = ProcurementDatabase()
 
     try:

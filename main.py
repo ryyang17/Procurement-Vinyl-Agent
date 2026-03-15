@@ -4,9 +4,26 @@ from agent.agent import create_procurement_workflow
 from agent.procurement_data import ProcurementDatabase
 from agent.utils.memory import get_all_decisions
 from agent.utils.state import ProcurementState
+from agent.utils.nodes.new_release_nodes import detect_new_releases_node
 
 
 db = ProcurementDatabase()
+
+
+def demonstrate_new_release_detection():
+    """Demonstrate the new release detection functionality (Spotify)"""
+    print("\n🎵 === NEW RELEASE DETECTION ===\n")
+    state = ProcurementState()
+    result = detect_new_releases_node(state)
+    new_releases = result.get("new_releases", [])
+    if new_releases:
+        print(f"📀 Found {len(new_releases)} new releases:")
+        for release in new_releases:
+            print(f"   • {release['title']} by {release.get('artist', '-')}")
+    else:
+        print("Geen nieuwe releases gevonden.")
+    print("\n🎯 New release detection complete!")
+    return new_releases
 
 
 def run_procurement_workflow() -> None:
@@ -165,13 +182,15 @@ def interactive_menu() -> None:
         print("\n" + "=" * 60)
         print("🎵 VINYL PROCUREMENT AGENT")
         print("=" * 60)
-        print("\n1. ▶️  Start Procurement Workflow")
-        print("2. 📋 Bekijk Openstaande Bestellingen")
-        print("3. 📜 Bekijk Recente Beslissingen")
+
+        print("1. ▶️  Start Procurement Workflow")
+        print("2. 🎵 New Release Detection")
+        print("4. 📋 Bekijk Openstaande Bestellingen")
+        print("5. 📜 Bekijk Recente Beslissingen")
         print("0. 🚪 Afsluiten")
 
         try:
-            choice = input("\n👤 Kies optie (0-3): ").strip()
+            choice = input(f"\n👤 Kies optie (0-5): ").strip()
         except (EOFError, KeyboardInterrupt):
             print("\n👋 Tot ziens!")
             break
@@ -179,8 +198,10 @@ def interactive_menu() -> None:
         if choice == "1":
             run_procurement_workflow()
         elif choice == "2":
+            demonstrate_new_release_detection()
+        elif choice == "4":
             show_pending_orders()
-        elif choice == "3":
+        elif choice == "5":
             try:
                 limit_input = input("Aantal beslissingen (standaard 5): ").strip()
                 limit = int(limit_input) if limit_input else 5

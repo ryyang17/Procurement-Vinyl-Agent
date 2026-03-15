@@ -43,7 +43,7 @@ def create_purchase_order_node(state: ProcurementState) -> ProcurementState:
             'supplier_name': order_data['supplier']['supplier_name'],
             'items': order_data['items'],
             'total_amount': total,
-            'ai_recommendation': order_data['ai_recommendation'],  # Use existing recommendation
+            'ai_recommendation': order_data['ai_recommendation'],
             'lead_time_days': order_data['supplier']['lead_time_days'],
             'quality_rating': order_data['supplier']['quality_rating']
         })

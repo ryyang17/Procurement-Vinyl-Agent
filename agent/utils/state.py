@@ -9,7 +9,7 @@ class ProcurementState(BaseModel):
     errors: list[str] = []
 
     # Checkpointing & human-in-the-loop fields
-    thread_id: Optional[str] = None  # For workflow resumption across sessions
+    thread_id: Optional[str] = None
     approval_requested_at: Optional[str] = None
     approval_decision: Optional[str] = None  # 'approved', 'rejected', 'pending'
     approval_reason: Optional[str] = None  # Human-provided reason for approval/rejection

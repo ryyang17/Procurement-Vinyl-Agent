@@ -4,7 +4,6 @@ from agent.procurement_data import ProcurementDatabase
 db = ProcurementDatabase()
 
 def process_due_deliveries_node(state: ProcurementState) -> ProcurementState:
-    """Process deliveries that are due and update inventory"""
 
     processed_deliveries = db.process_due_deliveries()
 

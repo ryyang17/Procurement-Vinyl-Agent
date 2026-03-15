@@ -114,9 +114,9 @@
   {
     "inventory_id": 17,
     "product_id": 17,
-    "quantity_in_stock": 0,
+    "quantity_in_stock": 40,
     "reorder_level": 10,
-    "last_updated": "2026-03-04T11:35:00Z"
+    "last_updated": "2026-03-15T13:18:54.721776"
   },
   {
     "inventory_id": 18,
@@ -138,5 +138,89 @@
     "quantity_in_stock": 40,
     "reorder_level": 10,
     "last_updated": "2026-03-04T11:50:00Z"
+  },
+  {
+    "inventory_id": 21,
+    "product_id": 21,
+    "quantity_in_stock": 2,
+    "reorder_level": 15,
+    "last_updated": "2026-03-12T14:41:37.071149"
+  },
+  {
+    "inventory_id": 22,
+    "product_id": 22,
+    "quantity_in_stock": 0,
+    "reorder_level": 18,
+    "last_updated": "2026-03-12T14:41:37.074263"
+  },
+  {
+    "inventory_id": 23,
+    "product_id": 23,
+    "quantity_in_stock": 1,
+    "reorder_level": 19,
+    "last_updated": "2026-03-12T14:41:37.077225"
+  },
+  {
+    "inventory_id": 24,
+    "product_id": 21,
+    "quantity_in_stock": 0,
+    "reorder_level": 25,
+    "last_updated": "2026-03-15T12:58:33.137288"
+  },
+  {
+    "inventory_id": 25,
+    "product_id": 22,
+    "quantity_in_stock": 0,
+    "reorder_level": 25,
+    "last_updated": "2026-03-15T12:58:33.143094"
+  },
+  {
+    "inventory_id": 26,
+    "product_id": 23,
+    "quantity_in_stock": 0,
+    "reorder_level": 25,
+    "last_updated": "2026-03-15T12:58:33.147571"
+  },
+  {
+    "inventory_id": 27,
+    "product_id": 24,
+    "quantity_in_stock": 0,
+    "reorder_level": 25,
+    "last_updated": "2026-03-15T13:03:28.545267"
+  },
+  {
+    "inventory_id": 28,
+    "product_id": 25,
+    "quantity_in_stock": 0,
+    "reorder_level": 25,
+    "last_updated": "2026-03-15T13:03:28.549653"
+  },
+  {
+    "inventory_id": 29,
+    "product_id": 26,
+    "quantity_in_stock": 0,
+    "reorder_level": 25,
+    "last_updated": "2026-03-15T13:03:28.553569"
+  },
+  {
+    "inventory_id": 30,
+    "product_id": 27,
+    "quantity_in_stock": 0,
+    "reorder_level": 25,
+    "last_updated": "2026-03-15T13:09:22.745054"
+  },
+  {
+    "inventory_id": 31,
+    "product_id": 28,
+    "quantity_in_stock": 0,
+    "reorder_level": 25,
+    "last_updated": "2026-03-15T13:09:22.749867"
+  },
+  {
+    "inventory_id": 32,
+    "product_id": 29,
+    "quantity_in_stock": 0,
+    "reorder_level": 25,
+    "last_updated": "2026-03-15T13:09:22.753155"
   }
 ]

@@ -23,7 +23,7 @@
     "description": "Michael Jackson best-selling album",
     "sku": "VIN003",
     "category": "Pop",
-    "current_price": 27.50,
+    "current_price": 27.5,
     "created_at": "2026-03-01T09:10:00Z"
   },
   {
@@ -32,7 +32,7 @@
     "description": "AC/DC legendary album",
     "sku": "VIN004",
     "category": "Hard Rock",
-    "current_price": 31.00,
+    "current_price": 31.0,
     "created_at": "2026-03-01T09:15:00Z"
   },
   {
@@ -41,7 +41,7 @@
     "description": "Fleetwood Mac classic",
     "sku": "VIN005",
     "category": "Rock",
-    "current_price": 28.00,
+    "current_price": 28.0,
     "created_at": "2026-03-01T09:20:00Z"
   },
   {
@@ -50,7 +50,7 @@
     "description": "Including Stairway to Heaven",
     "sku": "VIN006",
     "category": "Rock",
-    "current_price": 32.00,
+    "current_price": 32.0,
     "created_at": "2026-03-01T09:25:00Z"
   },
   {
@@ -59,7 +59,7 @@
     "description": "Eagles classic",
     "sku": "VIN007",
     "category": "Rock",
-    "current_price": 30.50,
+    "current_price": 30.5,
     "created_at": "2026-03-01T09:30:00Z"
   },
   {
@@ -68,7 +68,7 @@
     "description": "Nirvana breakthrough album",
     "sku": "VIN008",
     "category": "Grunge",
-    "current_price": 29.50,
+    "current_price": 29.5,
     "created_at": "2026-03-01T09:35:00Z"
   },
   {
@@ -77,7 +77,7 @@
     "description": "The Beatles masterpiece",
     "sku": "VIN009",
     "category": "Rock",
-    "current_price": 35.00,
+    "current_price": 35.0,
     "created_at": "2026-03-01T09:40:00Z"
   },
   {
@@ -86,7 +86,7 @@
     "description": "Pink Floyd rock opera",
     "sku": "VIN010",
     "category": "Progressive Rock",
-    "current_price": 36.00,
+    "current_price": 36.0,
     "created_at": "2026-03-01T09:45:00Z"
   },
   {
@@ -95,7 +95,7 @@
     "description": "Guns N' Roses debut",
     "sku": "VIN011",
     "category": "Hard Rock",
-    "current_price": 33.50,
+    "current_price": 33.5,
     "created_at": "2026-03-01T09:50:00Z"
   },
   {
@@ -104,7 +104,7 @@
     "description": "Bruce Springsteen classic",
     "sku": "VIN012",
     "category": "Rock",
-    "current_price": 28.50,
+    "current_price": 28.5,
     "created_at": "2026-03-01T09:55:00Z"
   },
   {
@@ -113,7 +113,7 @@
     "description": "Prince iconic album",
     "sku": "VIN013",
     "category": "Pop",
-    "current_price": 31.00,
+    "current_price": 31.0,
     "created_at": "2026-03-01T10:00:00Z"
   },
   {
@@ -122,7 +122,7 @@
     "description": "U2 classic album",
     "sku": "VIN014",
     "category": "Rock",
-    "current_price": 32.50,
+    "current_price": 32.5,
     "created_at": "2026-03-01T10:05:00Z"
   },
   {
@@ -131,7 +131,7 @@
     "description": "Def Leppard popular album",
     "sku": "VIN015",
     "category": "Rock",
-    "current_price": 29.00,
+    "current_price": 29.0,
     "created_at": "2026-03-01T10:10:00Z"
   },
   {
@@ -140,7 +140,7 @@
     "description": "Metallica metal classic",
     "sku": "VIN016",
     "category": "Metal",
-    "current_price": 34.00,
+    "current_price": 34.0,
     "created_at": "2026-03-01T10:15:00Z"
   },
   {
@@ -149,7 +149,7 @@
     "description": "Queen legendary album",
     "sku": "VIN017",
     "category": "Rock",
-    "current_price": 33.00,
+    "current_price": 33.0,
     "created_at": "2026-03-01T10:20:00Z"
   },
   {
@@ -158,7 +158,7 @@
     "description": "Radiohead critically acclaimed",
     "sku": "VIN018",
     "category": "Alternative",
-    "current_price": 30.00,
+    "current_price": 30.0,
     "created_at": "2026-03-01T10:25:00Z"
   },
   {
@@ -167,7 +167,7 @@
     "description": "Elton John classic",
     "sku": "VIN019",
     "category": "Pop",
-    "current_price": 28.50,
+    "current_price": 28.5,
     "created_at": "2026-03-01T10:30:00Z"
   },
   {
@@ -176,7 +176,97 @@
     "description": "Sex Pistols punk album",
     "sku": "VIN020",
     "category": "Punk",
-    "current_price": 27.00,
+    "current_price": 27.0,
     "created_at": "2026-03-01T10:35:00Z"
+  },
+  {
+    "product_id": 21,
+    "name": "The Beatles - Live In Stockholm 1964",
+    "description": "The Beatles - Live In Stockholm 1964 - New Release",
+    "sku": "VIN-NEW-021",
+    "category": "Rock",
+    "current_price": 29.99,
+    "created_at": "2026-03-15T12:58:33.136809",
+    "artist": "The Beatles"
+  },
+  {
+    "product_id": 22,
+    "name": "The Beatles - Live In Holland 1964",
+    "description": "The Beatles - Live In Holland 1964 - New Release",
+    "sku": "VIN-NEW-022",
+    "category": "Rock",
+    "current_price": 29.99,
+    "created_at": "2026-03-15T12:58:33.143080",
+    "artist": "The Beatles"
+  },
+  {
+    "product_id": 23,
+    "name": "Pink Floyd - From Oblivion Vol.2",
+    "description": "Pink Floyd - From Oblivion Vol.2 - New Release",
+    "sku": "VIN-NEW-023",
+    "category": "Rock",
+    "current_price": 29.99,
+    "created_at": "2026-03-15T12:58:33.147559",
+    "artist": "Pink Floyd"
+  },
+  {
+    "product_id": 24,
+    "name": "The Beatles - Live In Stockholm 1964",
+    "description": "The Beatles - Live In Stockholm 1964 - New Release",
+    "sku": "VIN-NEW-024",
+    "category": "Rock",
+    "current_price": 29.99,
+    "created_at": "2026-03-15T13:03:28.545247",
+    "artist": "The Beatles"
+  },
+  {
+    "product_id": 25,
+    "name": "The Beatles - Live In Holland 1964",
+    "description": "The Beatles - Live In Holland 1964 - New Release",
+    "sku": "VIN-NEW-025",
+    "category": "Rock",
+    "current_price": 29.99,
+    "created_at": "2026-03-15T13:03:28.549633",
+    "artist": "The Beatles"
+  },
+  {
+    "product_id": 26,
+    "name": "Pink Floyd - From Oblivion Vol.2",
+    "description": "Pink Floyd - From Oblivion Vol.2 - New Release",
+    "sku": "VIN-NEW-026",
+    "category": "Rock",
+    "current_price": 29.99,
+    "created_at": "2026-03-15T13:03:28.553559",
+    "artist": "Pink Floyd"
+  },
+  {
+    "product_id": 27,
+    "name": "The Beatles - Let It Down",
+    "description": "The Beatles - Let It Down - New Release",
+    "sku": "VIN-NEW-027",
+    "category": "Rock",
+    "current_price": 29.99,
+    "created_at": "2026-03-15T13:09:22.745023",
+    "artist": "The Beatles"
+  },
+  {
+    "product_id": 28,
+    "name": "Wu-Tang* vs The Beatles - Enter The Magical Mystery Chambers",
+    "description": "Wu-Tang* vs The Beatles - Enter The Magical Mystery Chambers - New Release",
+    "sku": "VIN-NEW-028",
+    "category": "Rock",
+    "current_price": 29.99,
+    "created_at": "2026-03-15T13:09:22.749857",
+    "artist": "Wu-Tang* vs The Beatles"
+  },
+  {
+    "product_id": 29,
+    "name": "Pink Floyd - Live At Leeds",
+    "description": "Pink Floyd - Live At Leeds - New Release",
+    "sku": "VIN-NEW-029",
+    "category": "Rock",
+    "current_price": 29.99,
+    "created_at": "2026-03-15T13:09:22.753144",
+    "artist": "Pink Floyd"
   }
 ]
