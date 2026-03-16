@@ -17,9 +17,18 @@ class ProcurementState(BaseModel):
     approved_orders: list[int] = []
     rejection_reasons: Dict[int, str] = {}
 
-    """zorgt ervoor meer flexibiliteit in de types die in de data kunnen worden opgeslagen, zoals lists, dicts, of zelfs custom objects"""
-    class Config:
-        arbitrary_types_allowed = True
+    # New release detection fields
+    new_releases: list[Dict[str, Any]] = []
+    existing_new_releases: list[Dict[str, Any]] = []
+    new_releases_needing_stock: list[Dict[str, Any]] = []
+    purchase_order_proposals: list[Dict[str, Any]] = []
+    next_action: Optional[str] = None
+    country: str = "US"  # Spotify API country code
+    limit: int = 5  # Number of releases to fetch
+
+    model_config = {
+        "arbitrary_types_allowed": True
+    }
 
 class ReorderProposal(BaseModel):
     product_code: str

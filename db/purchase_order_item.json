@@ -110,5 +110,166 @@
     "product_id": 17,
     "quantity": 20,
     "unit_price": 36.13
+  },
+  {
+    "purchase_order_item_id": 17,
+    "purchase_order_id": 22,
+    "product_id": 1,
+    "quantity": 50,
+    "unit_price": 32.92
+  },
+  {
+    "purchase_order_item_id": 18,
+    "purchase_order_id": 23,
+    "product_id": 1,
+    "quantity": 100,
+    "unit_price": 29.9
+  },
+  {
+    "purchase_order_item_id": 19,
+    "purchase_order_id": 24,
+    "product_id": 1,
+    "quantity": 50,
+    "unit_price": 27.08
+  },
+  {
+    "purchase_order_item_id": 20,
+    "purchase_order_id": 25,
+    "product_id": 1,
+    "quantity": 100,
+    "unit_price": 31.29
+  },
+  {
+    "purchase_order_item_id": 21,
+    "purchase_order_id": 26,
+    "product_id": 1,
+    "quantity": 60,
+    "unit_price": 26.43
+  },
+  {
+    "purchase_order_item_id": 22,
+    "purchase_order_id": 26,
+    "product_id": 25,
+    "quantity": 50,
+    "unit_price": 27.93
+  },
+  {
+    "purchase_order_item_id": 23,
+    "purchase_order_id": 27,
+    "product_id": 21,
+    "quantity": 28,
+    "unit_price": 33.07
+  },
+  {
+    "purchase_order_item_id": 24,
+    "purchase_order_id": 27,
+    "product_id": 26,
+    "quantity": 50,
+    "unit_price": 33.02
+  },
+  {
+    "purchase_order_item_id": 25,
+    "purchase_order_id": 28,
+    "product_id": 22,
+    "quantity": 36,
+    "unit_price": 28.69
+  },
+  {
+    "purchase_order_item_id": 26,
+    "purchase_order_id": 29,
+    "product_id": 23,
+    "quantity": 37,
+    "unit_price": 33.18
+  },
+  {
+    "purchase_order_item_id": 27,
+    "purchase_order_id": 30,
+    "product_id": 21,
+    "quantity": 50,
+    "unit_price": 33.67
+  },
+  {
+    "purchase_order_item_id": 28,
+    "purchase_order_id": 31,
+    "product_id": 22,
+    "quantity": 50,
+    "unit_price": 29.83
+  },
+  {
+    "purchase_order_item_id": 29,
+    "purchase_order_id": 32,
+    "product_id": 23,
+    "quantity": 50,
+    "unit_price": 27.86
+  },
+  {
+    "purchase_order_item_id": 30,
+    "purchase_order_id": 33,
+    "product_id": 24,
+    "quantity": 50,
+    "unit_price": 32.83
+  },
+  {
+    "purchase_order_item_id": 31,
+    "purchase_order_id": 34,
+    "product_id": 1,
+    "quantity": 100,
+    "unit_price": 32.51
+  },
+  {
+    "purchase_order_item_id": 32,
+    "purchase_order_id": 35,
+    "product_id": 1,
+    "quantity": 50,
+    "unit_price": 26.44
+  },
+  {
+    "purchase_order_item_id": 33,
+    "purchase_order_id": 36,
+    "product_id": 1,
+    "quantity": 100,
+    "unit_price": 32.5
+  },
+  {
+    "purchase_order_item_id": 34,
+    "purchase_order_id": 37,
+    "product_id": 1,
+    "quantity": 50,
+    "unit_price": 30.48
+  },
+  {
+    "purchase_order_item_id": 35,
+    "purchase_order_id": 38,
+    "product_id": 1,
+    "quantity": 100,
+    "unit_price": 25.64
+  },
+  {
+    "purchase_order_item_id": 36,
+    "purchase_order_id": 39,
+    "product_id": 1,
+    "quantity": 50,
+    "unit_price": 28.08
+  },
+  {
+    "purchase_order_item_id": 37,
+    "purchase_order_id": 40,
+    "product_id": 1,
+    "quantity": 100,
+    "unit_price": 33.44
+  },
+  {
+    "purchase_order_item_id": 38,
+    "purchase_order_id": 41,
+    "product_id": 1,
+    "quantity": 50,
+    "unit_price": 28.37
+  },
+  {
+    "purchase_order_item_id": 39,
+    "purchase_order_id": 42,
+    "product_id": 1,
+    "quantity": 100,
+    "unit_price": 32.58
   }
 ]

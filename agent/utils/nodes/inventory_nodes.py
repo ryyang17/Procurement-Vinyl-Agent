@@ -43,7 +43,7 @@ def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
     # Update state with findings
     if proposals:
         msg = f"Voorstel: bestel bij voor {len(proposals)} producten met lage voorraad."
-        state.data['reorder_proposals'] = [p.dict() for p in proposals]
+        state.data['reorder_proposals'] = [p.model_dump() for p in proposals]
         state.message = msg
         state.status = 'proposed'
     else:

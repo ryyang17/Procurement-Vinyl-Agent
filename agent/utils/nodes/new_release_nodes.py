@@ -1,7 +1,3 @@
-"""
-New Release Detection Node
-Handles detection of new vinyl releases and creates purchase order proposals
-"""
 from typing import Dict, Any
 from agent.utils.state import ProcurementState
 from agent.procurement_data import ProcurementDatabase

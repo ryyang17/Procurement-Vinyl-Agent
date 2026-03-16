@@ -2,9 +2,9 @@
   {
     "inventory_id": 1,
     "product_id": 1,
-    "quantity_in_stock": 122,
+    "quantity_in_stock": 822,
     "reorder_level": 30,
-    "last_updated": "2026-03-06T11:58:07.408390"
+    "last_updated": "2026-03-16T15:37:44.297607"
   },
   {
     "inventory_id": 2,

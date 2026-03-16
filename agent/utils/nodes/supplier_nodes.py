@@ -2,11 +2,17 @@ from agent.utils.state import ProcurementState
 from agent.procurement_data import ProcurementDatabase
 from agent.utils.memory import get_last_rejection_reason, get_recent_rejections
 from langchain_google_genai import ChatGoogleGenerativeAI
+import os
 
 db = ProcurementDatabase()
-llm = ChatGoogleGenerativeAI(model="gemini-3-pro-preview", temperature=0.7)
 
 def find_suppliers_node(state: ProcurementState) -> ProcurementState:
+    # Initialiseer LLM pas binnen de functie zodat de env key altijd beschikbaar is en mocking mogelijk blijft
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-3-pro-preview",
+        temperature=0.7,
+        api_key=os.getenv("GOOGLE_API_KEY")
+    )
 
     proposals = state.data.get('reorder_proposals', [])
     if not proposals:
