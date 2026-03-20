@@ -61,18 +61,26 @@ def find_suppliers_node(state: ProcurementState) -> ProcurementState:
             analysis_prompt += f"\n   - Late leveringen: {opt['late_deliveries_count']}"
             analysis_prompt += f"\n   - Kwaliteitsbeoordeling: {opt['quality_rating']}/10"
 
-            # Check for recent rejection history
-            rejection_reason = get_last_rejection_reason(opt['supplier_id'])
+            products = db.get_products()
+            # Build product map by product_id for robust lookup
+            product_map = {p['product_id']: p for p in products}
             if rejection_reason:
-                analysis_prompt += f"\n   - ⚠️ WAARSCHUWING: Recent afgekeurd wegens: {rejection_reason}"
-
-            recent_rejections = get_recent_rejections(opt['supplier_id'], days=7)
+            for proposal in proposals:
+                # Try to match product using product_id if available, else fallback to sku
+                product_id = proposal.get('product_id')
+                product = None
+                if product_id is not None:
+                    product = product_map.get(product_id)
+                if not product:
+                    # Fallback: try matching by sku
+                    product = next((p for p in products if p.get('sku') == proposal.get('product_code')), None)
+                product_code = proposal['product_code']
             if recent_rejections:
                 analysis_prompt += f"\n   - {len(recent_rejections)} afkeuring(en) in afgelopen week"
 
         analysis_prompt += """\n\nSelecteer de beste leverancier op basis van:
             1. Prijs (totale kosten)
-            2. Levertijd
+                supplier_options = db.get_suppliers_for_product(product['product_id'])
             3. Betrouwbaarheid (late leveringen)
             4. Kwaliteit
             5. BELANGRIJK: Let op waarschuwingen over recente afkeuringen!

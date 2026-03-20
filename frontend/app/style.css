@@ -1,17 +1,18 @@
 .vinyl-layout {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1.7fr 1fr;
-  gap: 16px;
+  display: flex;
+  flex-direction: row;
   padding: 16px;
   background: #f4f6f8;
   color: #1f2937;
 }
 
 .vinyl-main {
+  flex: 1 1 0%;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
 }
 
 .vinyl-header h1 {
@@ -119,10 +120,21 @@ th {
 }
 
 .vinyl-chat {
-  min-width: 0;
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: 380px;
+  max-width: 90vw;
+  height: 80vh;
+  z-index: 100;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  background: #fff;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
 }
 
 

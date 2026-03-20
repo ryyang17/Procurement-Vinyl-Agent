@@ -48,15 +48,17 @@ def _state_get(state: ProcurementState, key: str, default=None):
 
 # Bepaal routing na goedkeuring
 def route_after_approval(state: ProcurementState) -> str:
-    approved_orders = _state_get(state, "approved_orders")
-    rejection_reasons = _state_get(state, "rejection_reasons")
+    # Support both legacy and current frontend fields.
+    approved_orders = _state_get(state, "approved_orders") or _state_get(state, "approval_order_indices")
+    rejection_reasons = _state_get(state, "rejection_reasons") or _state_get(state, "rejection_reasons_by_index")
     approval_decision = _state_get(state, "approval_decision")
+    awaiting_human_approval = _state_get(state, "awaiting_human_approval")
 
     # Als er een beslissing is, ga naar process_approval
     if approved_orders or rejection_reasons or approval_decision:
         return "process_approval"
     # Als er nog gewacht wordt op input, stop workflow
-    if _state_get(state, "step") == "awaiting_human_input":
+    if awaiting_human_approval or _state_get(state, "step") == "awaiting_human_input":
         return "end"
     return "end"
 
@@ -71,7 +73,6 @@ def route_after_inventory(state: ProcurementState) -> str:
         return "end"
 
     # Wacht op path keuze van user als deze nog niet gemaakt is
-    # BELANGRIJK: Dit gebeurt ALTIJD, niet afhankelijk van voorraden
     if path_choice is None:
         return "await_path_selection"
 
@@ -80,11 +81,10 @@ def route_after_inventory(state: ProcurementState) -> str:
     elif path_choice == "path_2_new_releases":
         return "check_existing_new_releases"
 
-    return "find_suppliers"
+    # Onbekende keuze: vraag opnieuw om expliciete user input.
+    return "await_path_selection"
 
 # Node die wacht op user path selection
-# FIX: Support both dict and object state
-
 def await_path_selection_node(state: ProcurementState) -> ProcurementState:
     """
     Workflow pauses here, waiting for user to select a path via frontend UI.
@@ -92,13 +92,15 @@ def await_path_selection_node(state: ProcurementState) -> ProcurementState:
     """
     if isinstance(state, dict):
         state["awaiting_path_selection"] = True
-        state["step"] = "awaiting_path_selection"
-        state["status"] = "awaiting_user_input"
+        # Zelfde HITL contract als human approval: workflow pauzeert op awaiting_human_input.
+        state["step"] = "awaiting_human_input"
+        state["status"] = "awaiting_path_selection"
         state["message"] = "Selecteer een werkstroom: Pad 1 (Leveranciers zoeken) of Pad 2 (Controleer nieuwe releases)"
         return ProcurementState(**state)
     state.awaiting_path_selection = True
-    state.step = "awaiting_path_selection"
-    state.status = "awaiting_user_input"
+    # Zelfde HITL contract als human approval: workflow pauzeert op awaiting_human_input.
+    state.step = "awaiting_human_input"
+    state.status = "awaiting_path_selection"
     state.message = "Selecteer een werkstroom: Pad 1 (Leveranciers zoeken) of Pad 2 (Controleer nieuwe releases)"
     return state
 

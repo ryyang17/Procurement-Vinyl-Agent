@@ -178,5 +178,55 @@
     "category": "Punk",
     "current_price": 27.0,
     "created_at": "2026-03-01T10:35:00Z"
+  },
+  {
+    "id": "0QM1NGOJHTmglnHriAsYzQ",
+    "name": "The Way I Am",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Luke Combs",
+    "release_date": "2026-03-20",
+    "product_id": 21,
+    "created_at": "2026-03-20T10:24:01.560334"
+  },
+  {
+    "id": "16dAl7WPULgJnqi536jTjh",
+    "name": "Click Clack Symphony. (feat. Hans Zimmer)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "RAYE",
+    "release_date": "2026-03-20",
+    "product_id": 22,
+    "created_at": "2026-03-20T10:24:01.569237"
+  },
+  {
+    "id": "2QMHxhhWF1hicphwlSAtJC",
+    "name": "Loving Life Again",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Ella Langley",
+    "release_date": "2026-03-20",
+    "product_id": 23,
+    "created_at": "2026-03-20T10:24:01.576167"
+  },
+  {
+    "id": "3BuIzFRRm9jeLmZlMEbwnj",
+    "name": "HAVE U BN 2 HEAVEN @ NITE?",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Kid Cudi",
+    "release_date": "2026-03-19",
+    "product_id": 24,
+    "created_at": "2026-03-20T10:24:01.583974"
+  },
+  {
+    "id": "6swKsHBLuNUekcQcW2SOYK",
+    "name": "Caught In The Echo",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Foo Fighters",
+    "release_date": "2026-03-20",
+    "product_id": 25,
+    "created_at": "2026-03-20T10:24:01.589579"
   }
 ]

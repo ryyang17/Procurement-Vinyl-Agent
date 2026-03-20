@@ -159,5 +159,40 @@
     "quantity_in_stock": 1,
     "reorder_level": 19,
     "last_updated": "2026-03-12T14:41:37.077225"
+  },
+  {
+    "product_id": 21,
+    "quantity_in_stock": 0,
+    "reorder_level": 5,
+    "inventory_id": 24,
+    "last_updated": "2026-03-20T10:24:01.563646"
+  },
+  {
+    "product_id": 22,
+    "quantity_in_stock": 0,
+    "reorder_level": 5,
+    "inventory_id": 25,
+    "last_updated": "2026-03-20T10:24:01.571723"
+  },
+  {
+    "product_id": 23,
+    "quantity_in_stock": 0,
+    "reorder_level": 5,
+    "inventory_id": 26,
+    "last_updated": "2026-03-20T10:24:01.579247"
+  },
+  {
+    "product_id": 24,
+    "quantity_in_stock": 0,
+    "reorder_level": 5,
+    "inventory_id": 27,
+    "last_updated": "2026-03-20T10:24:01.585158"
+  },
+  {
+    "product_id": 25,
+    "quantity_in_stock": 0,
+    "reorder_level": 5,
+    "inventory_id": 28,
+    "last_updated": "2026-03-20T10:24:01.591812"
   }
 ]

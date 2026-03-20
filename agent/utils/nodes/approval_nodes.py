@@ -1,6 +1,6 @@
 from agent.utils.state import ProcurementState
 from agent.procurement_data import ProcurementDatabase
-from agent.utils.memory import log_decision, update_supplier_performance_on_rejection
+from agent.utils.memory import log_decision, update_supplier_performance_on_rejection, get_all_decisions
 from datetime import datetime, timezone
 
 db = ProcurementDatabase()
@@ -43,6 +43,7 @@ def _process_approval_logic(state: ProcurementState, approved_orders: list, appr
         state.message = "Geen bestellingen goedgekeurd."
         state.step = "complete"
         state.status = "cancelled"
+        state.data['decision_history'] = get_all_decisions(limit=10)
         return state
 
     draft_orders = state.data.get('draft_orders', [])
@@ -106,6 +107,7 @@ def _process_approval_logic(state: ProcurementState, approved_orders: list, appr
             })
 
     state.data['created_orders'] = created_orders
+    state.data['decision_history'] = get_all_decisions(limit=10)
     state.message = f"{len(created_orders)} bestellingen succesvol aangemaakt en goedgekeurd."
     state.step = "complete"
     state.status = "orders_placed"
