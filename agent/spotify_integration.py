@@ -59,11 +59,17 @@ class SpotifyClient:
             albums = response.json().get("albums", {}).get("items", [])
             releases = []
             for album in albums:
+                artists = album.get("artists", [])
+                primary_artist = artists[0] if artists else {}
+                artist_genres = self._get_artist_genres(primary_artist.get("id"), token) if primary_artist.get("id") else []
+
                 releases.append(
                     {
                         "id": album.get("id"),
                         "title": album.get("name"),
-                        "artist": ", ".join(a.get("name", "") for a in album.get("artists", [])),
+                        "artist": ", ".join(a.get("name", "") for a in artists),
+                        "genre": ", ".join(artist_genres) if artist_genres else "Unknown",
+                        "category": ", ".join(artist_genres) if artist_genres else "New Release",
                         "release_date": album.get("release_date"),
                         "total_tracks": album.get("total_tracks"),
                         "external_url": album.get("external_urls", {}).get("spotify")
@@ -74,6 +80,19 @@ class SpotifyClient:
             print(f"Error fetching new releases from Spotify: {e}")
             if hasattr(e, 'response') and e.response is not None:
                 print(f"Response: {e.response.text}")
+            return []
+
+    def _get_artist_genres(self, artist_id: str, token: str):
+        if not artist_id:
+            return []
+
+        url = f"{self.base_url}/artists/{artist_id}"
+        headers = {"Authorization": f"Bearer {token}"}
+        try:
+            response = requests.get(url, headers=headers, timeout=20)
+            response.raise_for_status()
+            return response.json().get("genres", [])[:3]
+        except Exception:
             return []
 
 

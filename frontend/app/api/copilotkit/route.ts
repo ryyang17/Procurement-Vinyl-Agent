@@ -12,13 +12,12 @@ const deploymentUrl = process.env.LANGGRAPH_DEPLOYMENT_URL || "http://127.0.0.1:
 const langsmithApiKey = process.env.LANGSMITH_API_KEY || "";
 
 let agents = {};
-if (deploymentUrl && langsmithApiKey !== null) {
-
+if (deploymentUrl) {
   agents = {
     procurement_agent: new LangGraphAgent({
       deploymentUrl,
       graphId: "procurement_agent",
-      langsmithApiKey,
+      ...(langsmithApiKey ? { langsmithApiKey } : {}),
     }),
   };
 } else {

@@ -10,7 +10,7 @@
 ✅ **Beide memory-systemen zijn nodig en hebben VERSCHILLENDE doelen:**
 
 1. **Checkpointing (checkpoints.sqlite)** = SHORT-TERM workflow state  
-2. **Decision Log (decision_log.json)** = LONG-TERM business memory
+2. **Decision Log (decision_log.json)** = LONG-TERM business memory; deze log wordt nu in de sqlite database opgeslagen. 
 
 Deze twee zijn **NIET redundant** en moeten gescheiden blijven.
 

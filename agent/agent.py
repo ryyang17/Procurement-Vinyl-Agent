@@ -46,6 +46,22 @@ def _state_get(state: ProcurementState, key: str, default=None):
         return state.get(key, default)
     return getattr(state, key, default)
 
+
+def _normalize_path_choice(path_choice: str | None) -> str | None:
+    """Accept both UI and backend aliases for path selection values."""
+    if path_choice is None:
+        return None
+
+    aliases = {
+        "path_1_suppliers": "path_1_suppliers",
+        "find_suppliers": "path_1_suppliers",
+        "suppliers": "path_1_suppliers",
+        "path_2_new_releases": "path_2_new_releases",
+        "check_existing_new_releases": "path_2_new_releases",
+        "new_releases": "path_2_new_releases",
+    }
+    return aliases.get(str(path_choice).strip(), None)
+
 # Bepaal routing na goedkeuring
 def route_after_approval(state: ProcurementState) -> str:
     # Support both legacy and current frontend fields.
@@ -64,44 +80,74 @@ def route_after_approval(state: ProcurementState) -> str:
 
 
 def route_after_inventory(state: ProcurementState) -> str:
-    path_choice = _state_get(state, "path_choice")
+    path_choice = _normalize_path_choice(_state_get(state, "path_choice"))
     awaiting_path_selection = _state_get(state, "awaiting_path_selection")
 
-    # Als we wachten op path selection EN user heeft nog niet gekozen, stop de workflow
-    # Frontend zal state updaten en workflow opnieuw starten
-    if awaiting_path_selection and path_choice is None:
-        return "end"
+    # Keep state canonical to avoid drift between frontend and backend values.
+    if path_choice is not None:
+        if isinstance(state, dict):
+            state["path_choice"] = path_choice
+        else:
+            state.path_choice = path_choice
 
-    # Wacht op path keuze van user als deze nog niet gemaakt is
+    # Geen keuze gemaakt: ga naar path selection node (zal daar pauzeren).
     if path_choice is None:
         return "await_path_selection"
 
+    # Keuze gemaakt: route naar juiste pad
     if path_choice == "path_1_suppliers":
         return "find_suppliers"
     elif path_choice == "path_2_new_releases":
         return "check_existing_new_releases"
 
-    # Onbekende keuze: vraag opnieuw om expliciete user input.
+    # Onbekende keuze: ga terug naar path selection node.
     return "await_path_selection"
+
+
+def route_after_new_release_check(state: ProcurementState) -> str:
+    """Route after checking existing new releases."""
+    next_action = _state_get(state, "next_action")
+
+    if next_action == "detect_new_releases" or next_action == "scan_for_new_releases":
+        return "detect_new_releases"
+    elif next_action == "create_restock_orders":
+        # For now, route to create_new_release_orders as it handles both cases
+        return "create_new_release_orders"
+    else:
+        return "detect_new_releases"
+
+
+def route_after_new_release_detection(state: ProcurementState) -> str:
+    """Route after detecting new releases from Spotify."""
+    next_action = _state_get(state, "next_action")
+    new_releases = _state_get(state, "new_releases", [])
+
+    if next_action == "create_new_release_orders" and new_releases:
+        return "create_new_release_orders"
+    elif next_action == "end" or not new_releases:
+        return "human_approval"  # Show empty approval panel
+    else:
+        return "create_new_release_orders"
 
 # Node die wacht op user path selection
 def await_path_selection_node(state: ProcurementState) -> ProcurementState:
     """
-    Workflow pauses here, waiting for user to select a path via frontend UI.
-    The frontend will update the state with path_choice and resume.
+    This node just sets up state to show manual buttons.
+    No pausing, no complex logic - just use the frontend buttons!
     """
+    print(f"⏳ await_path_selection_node: Setting up manual selection")
+    
     if isinstance(state, dict):
         state["awaiting_path_selection"] = True
-        # Zelfde HITL contract als human approval: workflow pauzeert op awaiting_human_input.
         state["step"] = "awaiting_human_input"
         state["status"] = "awaiting_path_selection"
-        state["message"] = "Selecteer een werkstroom: Pad 1 (Leveranciers zoeken) of Pad 2 (Controleer nieuwe releases)"
+        state["message"] = "Gebruik de blauwe handmatige knoppen hieronder om een werkstroom te kiezen!"
         return ProcurementState(**state)
+    
     state.awaiting_path_selection = True
-    # Zelfde HITL contract als human approval: workflow pauzeert op awaiting_human_input.
     state.step = "awaiting_human_input"
     state.status = "awaiting_path_selection"
-    state.message = "Selecteer een werkstroom: Pad 1 (Leveranciers zoeken) of Pad 2 (Controleer nieuwe releases)"
+    state.message = "Gebruik de blauwe handmatige knoppen hieronder om een werkstroom te kiezen!"
     return state
 
 
@@ -137,7 +183,6 @@ def create_procurement_workflow():
             "await_path_selection": "await_path_selection",
             "find_suppliers": "find_suppliers",
             "check_existing_new_releases": "check_existing_new_releases",
-            "end": END
         }
     )
 
@@ -149,14 +194,31 @@ def create_procurement_workflow():
             "await_path_selection": "await_path_selection",
             "find_suppliers": "find_suppliers",
             "check_existing_new_releases": "check_existing_new_releases",
-            "end": END
         }
     )
 
-    workflow.add_edge("check_existing_new_releases", "detect_new_releases")
-    workflow.add_edge("detect_new_releases", "create_new_release_orders")
+    # New release path routing
+    workflow.add_conditional_edges(
+        "check_existing_new_releases",
+        route_after_new_release_check,
+        {
+            "detect_new_releases": "detect_new_releases",
+            "create_new_release_orders": "create_new_release_orders",
+        }
+    )
+
+    workflow.add_conditional_edges(
+        "detect_new_releases",
+        route_after_new_release_detection,
+        {
+            "create_new_release_orders": "create_new_release_orders",
+            "human_approval": "human_approval",
+        }
+    )
+
     workflow.add_edge("create_new_release_orders", "human_approval")
 
+    # Supplier path routing
     workflow.add_edge("find_suppliers", "create_purchase_order")
     workflow.add_edge("create_purchase_order", "human_approval")
 
@@ -172,4 +234,9 @@ def create_procurement_workflow():
     workflow.add_edge("process_approval", END)
 
     checkpointer = get_checkpointer()
-    return workflow.compile(checkpointer=checkpointer)
+    # No interrupts - let the workflow flow naturally
+    # Use the manual buttons in frontend to directly trigger desired paths
+    return workflow.compile(
+        checkpointer=checkpointer
+        # Removed interrupt_after - workflow runs continuously
+    )

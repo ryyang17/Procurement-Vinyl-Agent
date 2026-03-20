@@ -18,7 +18,11 @@ def create_purchase_order_node(state: ProcurementState) -> ProcurementState:
     if not supplier_selections:
         state.message = "Geen leverancier selecties beschikbaar voor het maken van bestellingen."
         state.step = "complete"
+        state.status = "ok"
         return state
+
+    # Clean supplier path to prevent cross-contamination
+    state.clear_path_data("suppliers")
 
     # Group by supplier
     orders_by_supplier = {}
@@ -34,28 +38,35 @@ def create_purchase_order_node(state: ProcurementState) -> ProcurementState:
             'product_id': selection['product_id'],
             'product_name': selection['product_name'],
             'product_code': selection['product_code'],
+            'category': selection.get('category', 'Unknown'),
+            'source_type': selection.get('source_type', 'inventory_low_stock'),
             'quantity': selection['reorder_qty'],
             'unit_price': selection['selected_supplier']['price_per_unit']
         })
 
-    # Create draft purchase orders
-    draft_orders = []
+    # Create draft purchase orders using path-specific method
     for supplier_id, order_data in orders_by_supplier.items():
         total = sum(item['quantity'] * item['unit_price'] for item in order_data['items'])
 
-        draft_orders.append({
+        supplier_order = {
             'supplier_id': supplier_id,
             'supplier_name': order_data['supplier']['supplier_name'],
+            'source_type': 'inventory_low_stock',
             'items': order_data['items'],
             'total_amount': total,
             'ai_recommendation': order_data['ai_recommendation'],
             'lead_time_days': order_data['supplier']['lead_time_days'],
             'quality_rating': order_data['supplier']['quality_rating']
-        })
+        }
 
-    state.data['draft_orders'] = draft_orders
-    state.message = f"{len(draft_orders)} conceptbestellingen aangemaakt, wachten op goedkeuring."
+        # Use the path-specific helper method
+        state.add_supplier_order(supplier_order)
+
+    # Update state
+    supplier_orders = state.get_supplier_orders()
+    state.message = f"{len(supplier_orders)} conceptbestellingen voor leveranciers aangemaakt, wachten op goedkeuring."
     state.step = "human_approval"
     state.status = "awaiting_approval"
+    state.awaiting_human_approval = True
 
     return state

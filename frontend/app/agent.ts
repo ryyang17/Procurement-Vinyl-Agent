@@ -8,7 +8,11 @@ export type NextAction =
 export interface SupplierOffer {
   supplier_name?: string;
   supplier_id?: number;
+  price_per_unit?: number;
   unit_price?: number;
+  product_name?: string;
+  category?: string;
+  source_type?: string;
   lead_time_days?: number;
   quality_rating?: number;
   late_deliveries_count?: number;
@@ -17,6 +21,8 @@ export interface SupplierOffer {
 export interface DraftOrderLine {
   product_id?: number;
   product_name?: string;
+  category?: string;
+  source_type?: string;
   quantity?: number;
   unit_price?: number;
 }
@@ -24,6 +30,7 @@ export interface DraftOrderLine {
 export interface DraftOrder {
   supplier_id?: number;
   supplier_name?: string;
+  source_type?: string;
   items?: DraftOrderLine[];
   total_amount?: number;
   ai_recommendation?: string;
@@ -32,24 +39,34 @@ export interface DraftOrder {
 }
 
 export interface ReorderProposal {
+  product_id?: number;
   product_code?: string;
   product_name?: string;
+  category?: string;
+  source_type?: string;
   current_qty?: number;
   reorder_qty?: number;
   min_threshold?: number;
 }
 
 export interface SupplierSelection {
+  product_id?: number;
   product_name?: string;
+  category?: string;
+  source_type?: string;
   selected_supplier?: SupplierOffer;
   all_options?: SupplierOffer[];
   ai_recommendation?: string;
+  ai_recommendation_summary?: string;
 }
 
 export interface NewRelease {
   id?: string;
   title?: string;
   artist?: string;
+  category?: string;
+  genre?: string;
+  source_type?: string;
   release_date?: string;
 }
 
@@ -68,12 +85,26 @@ export interface DecisionHistoryEntry {
   actor?: string;
 }
 
+export interface DbOrderHistoryEntry {
+  order_id?: number;
+  supplier_id?: number;
+  supplier_name?: string;
+  status?: string;
+  order_date?: string;
+  expected_delivery_date?: string;
+  delivery_date?: string;
+  total_amount?: number;
+  approved_by?: string;
+}
+
 export interface PurchaseOrderProposal {
   product_id?: number;
   product_name?: string;
   quantity?: number;
   status?: string;
   artist?: string;
+  category?: string;
+  source_type?: string;
 }
 
 export interface WorkflowData {
@@ -83,9 +114,11 @@ export interface WorkflowData {
   created_orders?: CreatedOrder[];
   purchase_order_proposals?: PurchaseOrderProposal[];
   decision_history?: DecisionHistoryEntry[];
+  order_history?: DbOrderHistoryEntry[];
 }
 
 export interface ProcurementAgentState {
+  thread_id?: string;
   step?: string;
   status?: string;
   message?: string;

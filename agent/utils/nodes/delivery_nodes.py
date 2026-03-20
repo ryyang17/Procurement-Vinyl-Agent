@@ -4,6 +4,7 @@ from agent.procurement_data import ProcurementDatabase
 db = ProcurementDatabase()
 
 def process_due_deliveries_node(state: ProcurementState) -> ProcurementState:
+    state.data['order_history'] = db.get_order_history(limit=20)
 
     processed_deliveries = db.process_due_deliveries()
 

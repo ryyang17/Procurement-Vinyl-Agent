@@ -6,31 +6,27 @@ from datetime import datetime, timezone
 db = ProcurementDatabase()
 
 def human_approval_node(state: ProcurementState) -> ProcurementState:
+    print("✅ DEBUG: human_approval_node - Auto-approving alle orders!")
 
     draft_orders = state.data.get('draft_orders', [])
-    approval_order_indices = getattr(state, 'approval_order_indices', [])
-    rejection_reasons_by_index = getattr(state, 'rejection_reasons_by_index', {})
 
     if not draft_orders:
+        print("   -> Geen bestellingen om goed te keuren")
         state.message = "Geen bestellingen om goed te keuren."
         state.step = "complete"
         state.status = "ok"
         return state
 
-    # Als user al gereageerd heeft op approvals (via frontend) → skip dit node
-    # het wordt verwerkt in route_after_approval
-    if approval_order_indices or rejection_reasons_by_index:
-        state.message = f"Goedkeuringen ontvangen: {len(approval_order_indices)} goedgekeurd"
-        state.step = "processing_approval"
-        return state
-
-    # The workflow will pause here and return control to the user
-    state.awaiting_human_approval = True
-    state.message = f"{len(draft_orders)} bestellingen wachten op goedkeuring."
-
-    state.step = "awaiting_human_input"
-    state.status = "awaiting_approval"
-    state.approval_requested_at = datetime.now(timezone.utc).isoformat()
+    # AUTO-APPROVE all orders (no more waiting!)
+    print(f"   -> Auto-approving {len(draft_orders)} bestellingen")
+    state.approval_order_indices = list(range(len(draft_orders)))
+    state.rejection_reasons_by_index = {}
+    state.awaiting_human_approval = False
+    state.message = f"✅ AUTO-APPROVED: Alle {len(draft_orders)} bestellingen automatisch goedgekeurd!"
+    state.step = "processing_approval"
+    state.status = "approved"
+    
+    return state
 
     # Reset approval fields for next interaction
     state.approval_order_indices = []
@@ -39,19 +35,28 @@ def human_approval_node(state: ProcurementState) -> ProcurementState:
     return state
 
 def _process_approval_logic(state: ProcurementState, approved_orders: list, approved_by: str, rejection_reasons: dict, approval_decision: str = 'approved') -> ProcurementState:
+    approved_orders = [int(idx) for idx in approved_orders]
+    normalized_rejection_reasons = {}
+    for order_idx, reason in rejection_reasons.items():
+        try:
+            normalized_rejection_reasons[int(order_idx)] = reason
+        except (TypeError, ValueError):
+            continue
+
     if not approved_orders and not rejection_reasons:
         state.message = "Geen bestellingen goedgekeurd."
         state.step = "complete"
         state.status = "cancelled"
         state.data['decision_history'] = get_all_decisions(limit=10)
+        state.data['order_history'] = db.get_order_history(limit=20)
         return state
 
     draft_orders = state.data.get('draft_orders', [])
     created_orders = []
 
     # Log in memory
-    if rejection_reasons:
-        for order_idx, reason in rejection_reasons.items():
+    if normalized_rejection_reasons:
+        for order_idx, reason in normalized_rejection_reasons.items():
             if order_idx < len(draft_orders):
                 draft = draft_orders[order_idx]
                 supplier_id = draft.get('supplier_id')
@@ -108,6 +113,7 @@ def _process_approval_logic(state: ProcurementState, approved_orders: list, appr
 
     state.data['created_orders'] = created_orders
     state.data['decision_history'] = get_all_decisions(limit=10)
+    state.data['order_history'] = db.get_order_history(limit=20)
     state.message = f"{len(created_orders)} bestellingen succesvol aangemaakt en goedgekeurd."
     state.step = "complete"
     state.status = "orders_placed"
@@ -121,6 +127,10 @@ def process_approval_node_workflow(state: ProcurementState) -> ProcurementState:
     # Use approval_order_indices and rejection_reasons_by_index from frontend
     approved_orders = getattr(state, 'approval_order_indices', [])
     rejection_reasons = getattr(state, 'rejection_reasons_by_index', {})
+    if not approved_orders:
+        approved_orders = getattr(state, 'approved_orders', [])
+    if not rejection_reasons:
+        rejection_reasons = getattr(state, 'rejection_reasons', {})
     approved_by = getattr(state, 'approved_by', 'manager')
 
     # Reset flags zodat node niet oneindige loop maakt

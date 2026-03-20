@@ -205,6 +205,35 @@ class ProcurementDatabase:
 
         return pending_orders
 
+    def get_order_history(self, limit: int = 20) -> List[Dict[str, Any]]:
+        """Get latest purchase orders from DB enriched with supplier names."""
+        orders = self.get_purchase_orders()
+        suppliers = self.get_suppliers()
+
+        supplier_map = {s.get('supplier_id'): s.get('name', 'Unknown') for s in suppliers}
+
+        sorted_orders = sorted(
+            orders,
+            key=lambda o: o.get('order_date') or '',
+            reverse=True,
+        )
+
+        history = []
+        for order in sorted_orders[:limit]:
+            history.append({
+                'order_id': order.get('purchase_order_id'),
+                'supplier_id': order.get('supplier_id'),
+                'supplier_name': supplier_map.get(order.get('supplier_id'), 'Unknown'),
+                'status': order.get('status'),
+                'order_date': order.get('order_date'),
+                'expected_delivery_date': order.get('expected_delivery_date'),
+                'delivery_date': order.get('delivery_date'),
+                'total_amount': order.get('total_amount'),
+                'approved_by': order.get('approved_by'),
+            })
+
+        return history
+
     def _calculate_expected_delivery_date(self, supplier_id: int) -> str:
         """Calculate expected delivery date based on supplier lead time"""
         from datetime import timedelta
