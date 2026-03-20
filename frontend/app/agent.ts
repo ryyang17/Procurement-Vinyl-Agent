@@ -7,138 +7,31 @@ export type NextAction =
 
 export interface SupplierOffer {
   supplier_name?: string;
-  supplier_id?: number;
-  price_per_unit?: number;
+  supplier_id?: string;
   unit_price?: number;
-  product_name?: string;
-  category?: string;
-  source_type?: string;
   lead_time_days?: number;
-  quality_rating?: number;
-  late_deliveries_count?: number;
+  reliability_score?: number;
+  notes?: string;
 }
 
-export interface DraftOrderLine {
-  product_id?: number;
+export interface DraftOrderItem {
+  product_id?: string;
   product_name?: string;
-  category?: string;
-  source_type?: string;
   quantity?: number;
   unit_price?: number;
-}
-
-export interface DraftOrder {
-  supplier_id?: number;
+  supplier_id?: string;
   supplier_name?: string;
-  source_type?: string;
-  items?: DraftOrderLine[];
-  total_amount?: number;
-  ai_recommendation?: string;
-  lead_time_days?: number;
-  quality_rating?: number;
-}
-
-export interface ReorderProposal {
-  product_id?: number;
-  product_code?: string;
-  product_name?: string;
-  category?: string;
-  source_type?: string;
-  current_qty?: number;
-  reorder_qty?: number;
-  min_threshold?: number;
-}
-
-export interface SupplierSelection {
-  product_id?: number;
-  product_name?: string;
-  category?: string;
-  source_type?: string;
-  selected_supplier?: SupplierOffer;
-  all_options?: SupplierOffer[];
-  ai_recommendation?: string;
-  ai_recommendation_summary?: string;
-}
-
-export interface NewRelease {
-  id?: string;
-  title?: string;
-  artist?: string;
-  category?: string;
-  genre?: string;
-  source_type?: string;
-  release_date?: string;
-}
-
-export interface CreatedOrder {
-  order_id?: number;
-  supplier_name?: string;
-  total_amount?: number;
-}
-
-export interface DecisionHistoryEntry {
-  timestamp?: string;
-  type?: string;
-  supplier_name?: string;
-  reason?: string;
-  po_id?: number;
-  actor?: string;
-}
-
-export interface DbOrderHistoryEntry {
-  order_id?: number;
-  supplier_id?: number;
-  supplier_name?: string;
-  status?: string;
-  order_date?: string;
-  expected_delivery_date?: string;
-  delivery_date?: string;
-  total_amount?: number;
-  approved_by?: string;
-}
-
-export interface PurchaseOrderProposal {
-  product_id?: number;
-  product_name?: string;
-  quantity?: number;
-  status?: string;
-  artist?: string;
-  category?: string;
-  source_type?: string;
-}
-
-export interface WorkflowData {
-  reorder_proposals?: ReorderProposal[];
-  supplier_selections?: SupplierSelection[];
-  draft_orders?: DraftOrder[];
-  created_orders?: CreatedOrder[];
-  purchase_order_proposals?: PurchaseOrderProposal[];
-  decision_history?: DecisionHistoryEntry[];
-  order_history?: DbOrderHistoryEntry[];
 }
 
 export interface ProcurementAgentState {
-  thread_id?: string;
   step?: string;
-  status?: string;
-  message?: string;
   next_action?: NextAction;
   current_date?: string;
-  data?: WorkflowData;
-  errors?: string[];
-
-  // Root-level new-release fields coming from nodes
-  new_releases?: NewRelease[];
-  existing_new_releases?: Record<string, unknown>[];
-  new_releases_needing_stock?: Record<string, unknown>[];
-  purchase_order_proposals?: PurchaseOrderProposal[];
-
-  // Legacy/derived UI fields
   inventory_alerts?: string[];
   new_release_alerts?: string[];
   supplier_offers?: SupplierOffer[];
-  draft_orders?: DraftOrder[];
-  approved_orders?: CreatedOrder[];
+  draft_orders?: DraftOrderItem[];
+  approved_orders?: DraftOrderItem[];
   rejection_reasons?: string[];
   approval_decision?: "approved" | "rejected" | "pending";
   summary?: string;
@@ -156,23 +49,8 @@ export interface ProcurementAgentState {
 
 export const INITIAL_AGENT_STATE: ProcurementAgentState = {
   step: "process_due_deliveries",
-  status: "pending",
-  message: "",
   next_action: "find_suppliers",
   current_date: new Date().toISOString().slice(0, 10),
-  data: {
-    reorder_proposals: [],
-    supplier_selections: [],
-    draft_orders: [],
-    created_orders: [],
-    purchase_order_proposals: [],
-    decision_history: [],
-  },
-  errors: [],
-  new_releases: [],
-  existing_new_releases: [],
-  new_releases_needing_stock: [],
-  purchase_order_proposals: [],
   inventory_alerts: [],
   new_release_alerts: [],
   supplier_offers: [],

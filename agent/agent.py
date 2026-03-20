@@ -104,6 +104,26 @@ def route_after_inventory(state: ProcurementState) -> str:
     return "await_path_selection"
 
 
+def route_from_path_selection(state: ProcurementState) -> str:
+    """
+    Route vanaf de await_path_selection node.
+    Als we al wachten op human input en er is nog geen keuze,
+    dan stoppen we de graph-run zodat HITL netjes pauzeert.
+    """
+    path_choice = _normalize_path_choice(_state_get(state, "path_choice"))
+    step = _state_get(state, "step")
+
+    if step == "awaiting_human_input" and path_choice is None:
+        return "end"
+
+    if path_choice == "path_1_suppliers":
+        return "find_suppliers"
+    elif path_choice == "path_2_new_releases":
+        return "check_existing_new_releases"
+
+    return "await_path_selection"
+
+
 def route_after_new_release_check(state: ProcurementState) -> str:
     """Route after checking existing new releases."""
     next_action = _state_get(state, "next_action")
@@ -132,22 +152,39 @@ def route_after_new_release_detection(state: ProcurementState) -> str:
 # Node die wacht op user path selection
 def await_path_selection_node(state: ProcurementState) -> ProcurementState:
     """
-    This node just sets up state to show manual buttons.
-    No pausing, no complex logic - just use the frontend buttons!
+    Workflow pauses here, waiting for user to select a path via frontend UI.
+    The frontend will update the state with path_choice and resume.
     """
-    print(f"⏳ await_path_selection_node: Setting up manual selection")
-    
+    path_choice = _normalize_path_choice(_state_get(state, "path_choice"))
+
+    # Als user al gekozen heeft, niet opnieuw pauzeren maar direct doorstromen.
+    if path_choice is not None:
+        if isinstance(state, dict):
+            state["path_choice"] = path_choice
+            state["awaiting_path_selection"] = False
+            state["status"] = "path_selected"
+            state["step"] = "path_selected"  # Clear awaiting_human_input
+            state["message"] = "Pad geselecteerd. Workflow wordt hervat."
+            return ProcurementState(**state)
+        state.path_choice = path_choice
+        state.awaiting_path_selection = False
+        state.status = "path_selected"
+        state.step = "path_selected"  # Clear awaiting_human_input
+        state.message = "Pad geselecteerd. Workflow wordt hervat."
+        return state
+
     if isinstance(state, dict):
         state["awaiting_path_selection"] = True
+        # Zelfde HITL contract als human approval: workflow pauzeert op awaiting_human_input.
         state["step"] = "awaiting_human_input"
         state["status"] = "awaiting_path_selection"
-        state["message"] = "Gebruik de blauwe handmatige knoppen hieronder om een werkstroom te kiezen!"
+        state["message"] = "Selecteer een werkstroom: Pad 1 (Leveranciers zoeken) of Pad 2 (Controleer nieuwe releases)"
         return ProcurementState(**state)
-    
     state.awaiting_path_selection = True
+    # Zelfde HITL contract als human approval: workflow pauzeert op awaiting_human_input.
     state.step = "awaiting_human_input"
     state.status = "awaiting_path_selection"
-    state.message = "Gebruik de blauwe handmatige knoppen hieronder om een werkstroom te kiezen!"
+    state.message = "Selecteer een werkstroom: Pad 1 (Leveranciers zoeken) of Pad 2 (Controleer nieuwe releases)"
     return state
 
 
@@ -189,9 +226,9 @@ def create_procurement_workflow():
     # Wanneer path selection gemaakt is, route naar juiste pad
     workflow.add_conditional_edges(
         "await_path_selection",
-        route_after_inventory,
+        route_from_path_selection,
         {
-            "await_path_selection": "await_path_selection",
+            "end": END,
             "find_suppliers": "find_suppliers",
             "check_existing_new_releases": "check_existing_new_releases",
         }
@@ -234,9 +271,4 @@ def create_procurement_workflow():
     workflow.add_edge("process_approval", END)
 
     checkpointer = get_checkpointer()
-    # No interrupts - let the workflow flow naturally
-    # Use the manual buttons in frontend to directly trigger desired paths
-    return workflow.compile(
-        checkpointer=checkpointer
-        # Removed interrupt_after - workflow runs continuously
-    )
+    return workflow.compile(checkpointer=checkpointer)
