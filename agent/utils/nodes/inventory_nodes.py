@@ -1,6 +1,21 @@
 from agent.utils.state import ProcurementState, ReorderProposal
 from agent.procurement_data import ProcurementDatabase
 
+
+def _normalize_path_choice(path_choice: str | None) -> str | None:
+    if path_choice is None:
+        return None
+
+    aliases = {
+        "path_1_suppliers": "path_1_suppliers",
+        "find_suppliers": "path_1_suppliers",
+        "suppliers": "path_1_suppliers",
+        "path_2_new_releases": "path_2_new_releases",
+        "check_existing_new_releases": "path_2_new_releases",
+        "new_releases": "path_2_new_releases",
+    }
+    return aliases.get(str(path_choice).strip(), None)
+
 def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
 
     db = ProcurementDatabase()
@@ -19,9 +34,15 @@ def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
     proposal_dicts = []
     seen_product_ids = set()
 
-    # Start every inventory cycle with clean path selection to avoid stale checkpoint routing.
-    state.path_choice = None
-    state.awaiting_path_selection = False
+    # Preserve a UI-selected path choice when a run is resumed from the frontend.
+    # If no valid choice is present, reset the path fields for a clean selection step.
+    selected_path = _normalize_path_choice(getattr(state, "path_choice", None))
+    if selected_path is not None:
+        state.path_choice = selected_path
+        state.awaiting_path_selection = False
+    else:
+        state.path_choice = None
+        state.awaiting_path_selection = False
 
     # Clear ALL path-specific artifacts so UI doesn't mix supplier and new-release flows.
     state.clear_path_data("suppliers")
