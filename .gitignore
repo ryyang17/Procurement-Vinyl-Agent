@@ -42,3 +42,6 @@ dmypy.json
 
 # Database
 *.db
+
+# LangGraph API
+.langgraph_api

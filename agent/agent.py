@@ -60,15 +60,47 @@ def route_after_approval(state: ProcurementState) -> str:
         return "end"
     return "end"
 
-# Bepaal routing na voorraadcontrole
+
 def route_after_inventory(state: ProcurementState) -> str:
-    next_action = _state_get(state, "next_action")
-    if next_action == "find_suppliers":
+    path_choice = _state_get(state, "path_choice")
+    awaiting_path_selection = _state_get(state, "awaiting_path_selection")
+
+    # Als we wachten op path selection EN user heeft nog niet gekozen, stop de workflow
+    # Frontend zal state updaten en workflow opnieuw starten
+    if awaiting_path_selection and path_choice is None:
+        return "end"
+
+    # Wacht op path keuze van user als deze nog niet gemaakt is
+    # BELANGRIJK: Dit gebeurt ALTIJD, niet afhankelijk van voorraden
+    if path_choice is None:
+        return "await_path_selection"
+
+    if path_choice == "path_1_suppliers":
         return "find_suppliers"
-    elif next_action == "check_existing_new_releases":
+    elif path_choice == "path_2_new_releases":
         return "check_existing_new_releases"
 
     return "find_suppliers"
+
+# Node die wacht op user path selection
+# FIX: Support both dict and object state
+
+def await_path_selection_node(state: ProcurementState) -> ProcurementState:
+    """
+    Workflow pauses here, waiting for user to select a path via frontend UI.
+    The frontend will update the state with path_choice and resume.
+    """
+    if isinstance(state, dict):
+        state["awaiting_path_selection"] = True
+        state["step"] = "awaiting_path_selection"
+        state["status"] = "awaiting_user_input"
+        state["message"] = "Selecteer een werkstroom: Pad 1 (Leveranciers zoeken) of Pad 2 (Controleer nieuwe releases)"
+        return ProcurementState(**state)
+    state.awaiting_path_selection = True
+    state.step = "awaiting_path_selection"
+    state.status = "awaiting_user_input"
+    state.message = "Selecteer een werkstroom: Pad 1 (Leveranciers zoeken) of Pad 2 (Controleer nieuwe releases)"
+    return state
 
 
 def create_procurement_workflow():
@@ -76,6 +108,9 @@ def create_procurement_workflow():
 
     workflow.add_node("process_due_deliveries", process_due_deliveries_node)
     workflow.add_node("daily_inventory_check", daily_inventory_check_node)
+
+    # Node dat wacht op path selection van user
+    workflow.add_node("await_path_selection", await_path_selection_node)
 
     # Pad 1: Leveranciers -> Inkooporder -> Goedkeuring
     workflow.add_node("find_suppliers", find_suppliers_node)
@@ -92,13 +127,27 @@ def create_procurement_workflow():
     workflow.set_entry_point("process_due_deliveries")
     workflow.add_edge("process_due_deliveries", "daily_inventory_check")
 
-    # Kies pad: leveranciers of nieuwe releases
+    # Kies pad: leveranciers of nieuwe releases op basis van user input
     workflow.add_conditional_edges(
         "daily_inventory_check",
         route_after_inventory,
         {
+            "await_path_selection": "await_path_selection",
             "find_suppliers": "find_suppliers",
-            "check_existing_new_releases": "check_existing_new_releases"
+            "check_existing_new_releases": "check_existing_new_releases",
+            "end": END
+        }
+    )
+
+    # Wanneer path selection gemaakt is, route naar juiste pad
+    workflow.add_conditional_edges(
+        "await_path_selection",
+        route_after_inventory,
+        {
+            "await_path_selection": "await_path_selection",
+            "find_suppliers": "find_suppliers",
+            "check_existing_new_releases": "check_existing_new_releases",
+            "end": END
         }
     )
 

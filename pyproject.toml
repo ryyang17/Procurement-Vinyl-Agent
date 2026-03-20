@@ -17,5 +17,7 @@ dependencies = [
     "requests>=2.31.0",
     "mcp>=1.0.0",
     "httpx>=0.24.0",
+    "copilotkit>=0.1.79",
+    "langchain-openai>=1.1.10",
 ]
 

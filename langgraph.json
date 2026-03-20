@@ -1,5 +1,8 @@
 {
+  "python_version": "3.11",
+  "dockerfile_lines": [],
   "dependencies": ["."],
+  "package_manager": "uv",
   "graphs": {
     "procurement_agent": "./agent/agent.py:create_procurement_workflow"
   },

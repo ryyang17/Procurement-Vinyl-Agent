@@ -17,6 +17,15 @@ class ProcurementState(BaseModel):
     approved_orders: list[int] = []
     rejection_reasons: Dict[int, str] = {}
 
+    # Path selection fields for human-in-the-loop workflow choice
+    awaiting_path_selection: bool = False
+    path_choice: Optional[str] = None  # 'path_1_suppliers' or 'path_2_new_releases'
+
+    # Approval interaction fields
+    awaiting_human_approval: bool = False
+    approval_order_indices: list[int] = []  # Indices of approved orders
+    rejection_reasons_by_index: Dict[int, str] = {}  # Rejection reasons by order index
+
     # New release detection fields
     new_releases: list[Dict[str, Any]] = []
     existing_new_releases: list[Dict[str, Any]] = []

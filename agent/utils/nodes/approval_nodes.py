@@ -8,6 +8,8 @@ db = ProcurementDatabase()
 def human_approval_node(state: ProcurementState) -> ProcurementState:
 
     draft_orders = state.data.get('draft_orders', [])
+    approval_order_indices = getattr(state, 'approval_order_indices', [])
+    rejection_reasons_by_index = getattr(state, 'rejection_reasons_by_index', {})
 
     if not draft_orders:
         state.message = "Geen bestellingen om goed te keuren."
@@ -15,11 +17,24 @@ def human_approval_node(state: ProcurementState) -> ProcurementState:
         state.status = "ok"
         return state
 
+    # Als user al gereageerd heeft op approvals (via frontend) → skip dit node
+    # het wordt verwerkt in route_after_approval
+    if approval_order_indices or rejection_reasons_by_index:
+        state.message = f"Goedkeuringen ontvangen: {len(approval_order_indices)} goedgekeurd"
+        state.step = "processing_approval"
+        return state
+
     # The workflow will pause here and return control to the user
+    state.awaiting_human_approval = True
     state.message = f"{len(draft_orders)} bestellingen wachten op goedkeuring."
+
     state.step = "awaiting_human_input"
     state.status = "awaiting_approval"
     state.approval_requested_at = datetime.now(timezone.utc).isoformat()
+
+    # Reset approval fields for next interaction
+    state.approval_order_indices = []
+    state.rejection_reasons_by_index = {}
 
     return state
 
@@ -101,9 +116,16 @@ def _process_approval_logic(state: ProcurementState, approved_orders: list, appr
 
 def process_approval_node_workflow(state: ProcurementState) -> ProcurementState:
 
-    approved_orders = getattr(state, 'approved_orders', [])
+    # Use approval_order_indices and rejection_reasons_by_index from frontend
+    approved_orders = getattr(state, 'approval_order_indices', [])
+    rejection_reasons = getattr(state, 'rejection_reasons_by_index', {})
     approved_by = getattr(state, 'approved_by', 'manager')
-    rejection_reasons = getattr(state, 'rejection_reasons', {})
+
+    # Reset flags zodat node niet oneindige loop maakt
+    state.awaiting_human_approval = False
+    state.approval_order_indices = []
+    state.rejection_reasons_by_index = {}
+
     return _process_approval_logic(state, approved_orders, approved_by, rejection_reasons, approval_decision='processed')
 
 

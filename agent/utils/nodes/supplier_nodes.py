@@ -15,9 +15,13 @@ def find_suppliers_node(state: ProcurementState) -> ProcurementState:
     )
 
     proposals = state.data.get('reorder_proposals', [])
+
+    # Als er geen tekorten zijn, geef informatie en stop (user kan hier mee verder)
     if not proposals:
-        state.message = "Geen reorder voorstellen om leveranciers voor te zoeken."
+        state.message = "Geen voorraden onder minimum. Leveranciers kunnen nog gescreend worden voor toekomstige aankopen."
+        state.status = "ok"
         state.step = "complete"
+        state.data['draft_orders'] = []
         return state
 
     products = db.get_products()
