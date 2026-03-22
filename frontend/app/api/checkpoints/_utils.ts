@@ -72,11 +72,6 @@ function isPending(state: LooseObject) {
   const step = String(state.step || "").toLowerCase();
   const status = String(state.status || "").toLowerCase();
 
-  // Exclude path-selection checkpoints from the pending approvals panel.
-  if (status === "awaiting_path_selection") {
-    return false;
-  }
-
   if (step !== "awaiting_human_input") {
     return false;
   }

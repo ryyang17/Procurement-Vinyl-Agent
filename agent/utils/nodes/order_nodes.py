@@ -14,11 +14,21 @@ def create_purchase_order_node(state: ProcurementState) -> ProcurementState:
     )
 
     supplier_selections = state.data.get('supplier_selections', [])
+    existing_draft_orders = list(state.data.get('draft_orders', []))
 
     if not supplier_selections:
-        state.message = "Geen leverancier selecties beschikbaar voor het maken van bestellingen."
-        state.step = "complete"
-        state.status = "ok"
+        if existing_draft_orders:
+            state.message = (
+                f"{len(existing_draft_orders)} conceptbestelling(en) klaar "
+                "(new releases). Wachten op goedkeuring."
+            )
+            state.step = "human_approval"
+            state.status = "awaiting_approval"
+            state.awaiting_human_approval = True
+        else:
+            state.message = "Geen leverancier selecties beschikbaar voor het maken van bestellingen."
+            state.step = "complete"
+            state.status = "ok"
         return state
 
     # Clean supplier path to prevent cross-contamination
@@ -64,7 +74,13 @@ def create_purchase_order_node(state: ProcurementState) -> ProcurementState:
 
     # Update state
     supplier_orders = state.get_supplier_orders()
-    state.message = f"{len(supplier_orders)} conceptbestellingen voor leveranciers aangemaakt, wachten op goedkeuring."
+    total_draft_orders = len(state.data.get('draft_orders', []))
+    new_release_orders = len(state.get_new_release_orders())
+    state.message = (
+        f"{len(supplier_orders)} reorder conceptbestellingen en "
+        f"{new_release_orders} new-release conceptbestellingen klaar "
+        f"(totaal {total_draft_orders}). Wachten op goedkeuring."
+    )
     state.step = "human_approval"
     state.status = "awaiting_approval"
     state.awaiting_human_approval = True

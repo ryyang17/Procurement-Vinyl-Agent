@@ -228,5 +228,95 @@
     "release_date": "2026-03-20",
     "product_id": 25,
     "created_at": "2026-03-20T10:24:01.589579"
+  },
+  {
+    "id": "0SNmOdT5rJuBw0GGVPgirK",
+    "name": "Sakhiye (From \"Youth - Telugu\")",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "G. V. Prakash, Kittu Vissapragada, Sinjith Yerramilli, Sindhuja Tanuku",
+    "release_date": "2026-03-21",
+    "product_id": 26,
+    "created_at": "2026-03-22T14:25:21.939669"
+  },
+  {
+    "id": "6PQ7B2uNo6I2gpOBq8EElP",
+    "name": "אישתי",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "בן צור",
+    "release_date": "2026-03-21",
+    "product_id": 27,
+    "created_at": "2026-03-22T14:25:21.966804"
+  },
+  {
+    "id": "2DVzVajsA95vk6OgKgWJKN",
+    "name": "Oru Murai Piranthen (Amapiano Mix)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Hariharan, Sadhana Sargam, Stan & Sam",
+    "release_date": "2026-03-22",
+    "product_id": 28,
+    "created_at": "2026-03-22T14:25:21.972914"
+  },
+  {
+    "id": "3FxPRo8XKttD6L8grGdUDv",
+    "name": "Sun Bhi Le (Sleep Lofi)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Arijit Singh, Vishal Mishra, Raj Shekhar, The Independeners",
+    "release_date": "2026-03-22",
+    "product_id": 29,
+    "created_at": "2026-03-22T14:25:21.978892"
+  },
+  {
+    "id": "5p3tKdhxRSZCgeih2U9nHT",
+    "name": "Shaoory - Holiday - A Soldier Is Never Off Duty",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Pritam, Salih Fakhri, Wafi Mohamd Kahoaje",
+    "release_date": "2026-03-21",
+    "product_id": 30,
+    "created_at": "2026-03-22T14:25:21.986237"
+  },
+  {
+    "id": "4k3VGzwNEM4aIJnpROjano",
+    "name": "Vi Vu",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Mason Nguyen, CONGB, WOKEUP",
+    "release_date": "2026-03-22",
+    "product_id": 31,
+    "created_at": "2026-03-22T14:25:21.991473"
+  },
+  {
+    "id": "6rkU7VAnGBL3EGNXP3Nu8j",
+    "name": "Aaro Nee (From \"Mazhameenukal\")",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Sooraj Santhosh, Aadi Manvin, Ardra V S",
+    "release_date": "2026-03-21",
+    "product_id": 32,
+    "created_at": "2026-03-22T14:25:21.997845"
+  },
+  {
+    "id": "2E1WqaMb2UoM3ivJyJT03q",
+    "name": "Porch Light",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Noah Kahan",
+    "release_date": "2026-03-13",
+    "product_id": 33,
+    "created_at": "2026-03-22T14:25:22.004041"
+  },
+  {
+    "id": "0yx1Y4gQni0WqCbBfietQv",
+    "name": "I Ain't No Cowboy",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Luke Combs",
+    "release_date": "2026-03-13",
+    "product_id": 34,
+    "created_at": "2026-03-22T14:25:22.011342"
   }
 ]

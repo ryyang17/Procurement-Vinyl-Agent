@@ -21,6 +21,18 @@ export interface DraftOrderItem {
   unit_price?: number;
   supplier_id?: string;
   supplier_name?: string;
+  source_type?: string;
+  order_path?: string;
+}
+
+export interface ProcurementDraftOrder {
+  supplier_id?: number;
+  supplier_name?: string;
+  total_amount?: number;
+  source_type?: string;
+  order_path?: string;
+  items?: DraftOrderItem[];
+  ai_recommendation?: string;
 }
 
 export interface SalesVelocityForecast {
@@ -42,7 +54,7 @@ export interface ProcurementAgentState {
   sales_velocity_alerts?: string[];
   new_release_alerts?: string[];
   supplier_offers?: SupplierOffer[];
-  draft_orders?: DraftOrderItem[];
+  draft_orders?: ProcurementDraftOrder[];
   approved_orders?: DraftOrderItem[];
   rejection_reasons?: string[];
   approval_decision?: "approved" | "rejected" | "pending";
@@ -51,10 +63,6 @@ export interface ProcurementAgentState {
     sales_velocity_forecasts?: SalesVelocityForecast[];
     [key: string]: unknown;
   };
-
-  // Path selection for human-in-the-loop
-  awaiting_path_selection?: boolean;
-  path_choice?: "path_1_suppliers" | "path_2_new_releases" | null;
 
   // Approval interaction fields
   awaiting_human_approval?: boolean;
@@ -106,10 +114,6 @@ export const INITIAL_AGENT_STATE: ProcurementAgentState = {
   rejection_reasons: [],
   approval_decision: "pending",
   summary: "",
-
-  // Path selection
-  awaiting_path_selection: false,
-  path_choice: null,
 
   // Approval fields
   awaiting_human_approval: false,

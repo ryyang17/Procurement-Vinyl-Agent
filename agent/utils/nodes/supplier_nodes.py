@@ -33,12 +33,15 @@ def find_suppliers_node(state: ProcurementState) -> ProcurementState:
         seen_keys.add(key)
         deduped_proposals.append(proposal)
 
-    # Als er geen tekorten zijn, geef informatie en stop (user kan hier mee verder)
+    # In de samengevoegde flow kan dit node ook draaien met alleen new-release orders.
     if not proposals:
-        state.message = "Geen voorraden onder minimum. Leveranciers kunnen nog gescreend worden voor toekomstige aankopen."
+        state.data['supplier_selections'] = []
+        state.message = (
+            "Geen voorraden onder minimum gevonden voor reorder. "
+            "Door naar orderopbouw voor eventuele new releases."
+        )
         state.status = "ok"
-        state.step = "complete"
-        state.data['draft_orders'] = []
+        state.step = "create_purchase_order"
         return state
 
     # Clear supplier path data to prevent mixing

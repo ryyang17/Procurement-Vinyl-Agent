@@ -16,6 +16,7 @@ import {
   INITIAL_AGENT_STATE,
   PendingCheckpointItem,
   PendingCheckpointResponse,
+  ProcurementDraftOrder,
   ProcurementAgentState,
   SalesVelocityForecast,
   formatCurrency,
@@ -29,131 +30,6 @@ type DashboardAgent = {
 };
 
 /**
- * Component voor pad selectie: user kiest tussen leveranciers of nieuwe releases
- */
-function PathSelectionPanel({ state, agent }: { state: ProcurementAgentState; agent: DashboardAgent }) {
-  const hasInventoryAlerts = (state.inventory_alerts?.length ?? 0) > 0;
-
-  const handlePathChoice = (choice: "path_1_suppliers" | "path_2_new_releases") => {
-    agent.setState({
-      ...state,
-      path_choice: choice,
-      awaiting_path_selection: false,
-    });
-  };
-
-  return (
-    <section className="panel" style={{ backgroundColor: "#f0f8ff", borderColor: "#0066cc", border: "2px solid #0066cc" }}>
-      <h2>🛣️ Selecteer Werkstroom</h2>
-
-      {/* Voorraadinformatie */}
-      <div style={{
-        backgroundColor: "#e8f4f8",
-        padding: "1rem",
-        borderRadius: "8px",
-        marginBottom: "1rem",
-        borderLeft: "4px solid #0066cc"
-      }}>
-        <strong>📦 Voorraadinformatie:</strong>
-        {hasInventoryAlerts ? (
-          <p style={{ margin: "0.5rem 0 0 0", color: "#d9534f" }}>
-            ⚠️ {state.inventory_alerts?.length} producten hebben voorraden onder minimum
-          </p>
-        ) : (
-          <p style={{ margin: "0.5rem 0 0 0", color: "#5cb85c" }}>
-            ✅ Alle voorraden zijn boven minimum. Geen actie nodig, maar je kunt nog:
-          </p>
-        )}
-      </div>
-
-      <p style={{ marginBottom: "1.5rem", fontWeight: "500" }}>
-        Kies wat je wilt doen:
-      </p>
-
-      <div style={{ display: "flex", gap: "1rem", marginTop: "1rem", flexDirection: "column" }}>
-        {/* Pad 1: Leveranciers */}
-        <button
-          onClick={() => handlePathChoice("path_1_suppliers")}
-          style={{
-            padding: "1.5rem",
-            backgroundColor: "#0066cc",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "1rem",
-            fontWeight: "bold",
-            textAlign: "left",
-            transition: "all 0.3s ease",
-          }}
-          onMouseEnter={(e) => {
-            (e.target as HTMLButtonElement).style.backgroundColor = "#0052a3";
-            (e.target as HTMLButtonElement).style.boxShadow = "0 4px 8px rgba(0, 102, 204, 0.3)";
-          }}
-          onMouseLeave={(e) => {
-            (e.target as HTMLButtonElement).style.backgroundColor = "#0066cc";
-            (e.target as HTMLButtonElement).style.boxShadow = "none";
-          }}
-        >
-          <div style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>
-            🏭 Pad 1: Leveranciers Controleren
-          </div>
-          <div style={{ fontSize: "0.9rem", opacity: 0.9 }}>
-            {hasInventoryAlerts
-              ? "Zoek best mogelijke leveranciers voor producten met lage voorraad"
-              : "Screen leveranciers op prijs, levertijd en betrouwbaarheid voor toekomstige aankopen"
-            }
-          </div>
-        </button>
-
-        {/* Pad 2: Nieuwe Releases */}
-        <button
-          onClick={() => handlePathChoice("path_2_new_releases")}
-          style={{
-            padding: "1.5rem",
-            backgroundColor: "#00aa00",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "1rem",
-            fontWeight: "bold",
-            textAlign: "left",
-            transition: "all 0.3s ease",
-          }}
-          onMouseEnter={(e) => {
-            (e.target as HTMLButtonElement).style.backgroundColor = "#008800";
-            (e.target as HTMLButtonElement).style.boxShadow = "0 4px 8px rgba(0, 170, 0, 0.3)";
-          }}
-          onMouseLeave={(e) => {
-            (e.target as HTMLButtonElement).style.backgroundColor = "#00aa00";
-            (e.target as HTMLButtonElement).style.boxShadow = "none";
-          }}
-        >
-          <div style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>
-            🎵 Pad 2: Nieuwe Releases Checken
-          </div>
-          <div style={{ fontSize: "0.9rem", opacity: 0.9 }}>
-            Controleer nieuwe vinyl releases en bepaal of inkoop nodig is
-          </div>
-        </button>
-      </div>
-
-      <div style={{
-        marginTop: "1.5rem",
-        padding: "1rem",
-        backgroundColor: "#fff3cd",
-        borderRadius: "8px",
-        borderLeft: "4px solid #ffc107",
-        fontSize: "0.9rem"
-      }}>
-        <strong>💡 Tip:</strong> Je kunt beide paden achtereenvolgens uitvoeren. Beide leiden tot inkoopbeslissingen die goedkeuring nodig hebben.
-      </div>
-    </section>
-  );
-}
-
-/**
  * Component voor goedkeuringspaneel: user keurt orders goed/af
  */
 function ApprovalPanel({ state, agent }: { state: ProcurementAgentState; agent: DashboardAgent }) {
@@ -161,6 +37,24 @@ function ApprovalPanel({ state, agent }: { state: ProcurementAgentState; agent: 
   const [localRejectionReasons, setLocalRejectionReasons] = useState<Record<number, string>>({});
 
   const draftOrders = state.draft_orders || [];
+
+  const getOrderTotal = (order: ProcurementDraftOrder) => {
+    if (typeof order.total_amount === "number") {
+      return order.total_amount;
+    }
+    return (order.items || []).reduce(
+      (acc, item) => acc + (item.quantity ?? 0) * (item.unit_price ?? 0),
+      0
+    );
+  };
+
+  const getOrderType = (order: ProcurementDraftOrder) => {
+    const source = String(order.source_type || order.order_path || "").toLowerCase();
+    if (source.includes("new_release") || source.includes("new_releases")) {
+      return "New Release";
+    }
+    return "Reorder";
+  };
 
   const handleToggleApproval = (index: number) => {
     setLocalApprovals((prev) => ({
@@ -237,11 +131,11 @@ function ApprovalPanel({ state, agent }: { state: ProcurementAgentState; agent: 
 
   return (
     <section className="panel" style={{ backgroundColor: "#fff8f0", borderColor: "#ff8800", border: "2px solid #ff8800" }}>
-      <h2>✅ Goedkeuring Bestellingen</h2>
-      <p>{draftOrders.length} bestellingen wachten op goedkeuring:</p>
+      <h2>✅ Goedkeuring Gecombineerde Bestellingen</h2>
+      <p>{draftOrders.length} bestellingen (new releases + reorders) wachten op goedkeuring:</p>
 
       <div style={{ marginTop: "1rem" }}>
-        {draftOrders.map((order, idx) => (
+        {draftOrders.map((order: ProcurementDraftOrder, idx) => (
           <div
             key={`approval-${idx}`}
             style={{
@@ -267,14 +161,20 @@ function ApprovalPanel({ state, agent }: { state: ProcurementAgentState; agent: 
                 style={{ width: "20px", height: "20px", cursor: "pointer" }}
               />
               <div style={{ flex: 1 }}>
-                <strong>{order.product_name || "Product " + idx}</strong>
+                <strong>{order.supplier_name || "Leverancier " + (idx + 1)}</strong>
                 <div style={{ fontSize: "0.9rem", color: "#666" }}>
-                  {order.quantity} stuks @ {formatCurrency(order.unit_price)} van{" "}
-                  {order.supplier_name || "Leverancier"}
+                  Type: {getOrderType(order)} | Items: {(order.items || []).length}
                 </div>
+                <ul className="list" style={{ marginTop: "0.45rem" }}>
+                  {(order.items || []).map((item, itemIdx) => (
+                    <li key={`approval-${idx}-item-${itemIdx}`}>
+                      {item.product_name || item.product_id || "Onbekend product"} - {item.quantity ?? 0} stuks @ {formatCurrency(item.unit_price)}
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div style={{ textAlign: "right", fontWeight: "bold" }}>
-                {formatCurrency((order.quantity ?? 0) * (order.unit_price ?? 0))}
+                {formatCurrency(getOrderTotal(order))}
               </div>
             </div>
 
@@ -469,6 +369,23 @@ function Dashboard() {
     return Array.isArray(forecasts) ? forecasts : [];
   }, [state.data]);
 
+  const draftOrderTypeSummary = useMemo(() => {
+    const orders = state.draft_orders || [];
+    let reorder = 0;
+    let newRelease = 0;
+
+    for (const order of orders) {
+      const source = String(order.source_type || order.order_path || "").toLowerCase();
+      if (source.includes("new_release") || source.includes("new_releases")) {
+        newRelease += 1;
+      } else {
+        reorder += 1;
+      }
+    }
+
+    return { reorder, newRelease };
+  }, [state.draft_orders]);
+
   return (
     <div className="vinyl-layout">
       <div className="vinyl-main">
@@ -598,9 +515,22 @@ function Dashboard() {
           )}
         </section>
 
-        {/* ...existing code... */}
-        {state.awaiting_path_selection && <PathSelectionPanel state={state} agent={agent} />}
         {state.awaiting_human_approval && <ApprovalPanel state={state} agent={agent} />}
+
+        <section className="panel" style={{ border: "2px solid #2e7d32", backgroundColor: "#f1fbf2" }}>
+          <h2>Samengevoegde Workflow</h2>
+          <p style={{ marginBottom: "0.6rem" }}>
+            Deze run gaat automatisch door: marktonderzoek → new releases → suppliers → create orders → human approval.
+          </p>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+            <span style={{ backgroundColor: "#d1fae5", borderRadius: "999px", padding: "0.35rem 0.7rem", fontWeight: 600 }}>
+              New release orders: {draftOrderTypeSummary.newRelease}
+            </span>
+            <span style={{ backgroundColor: "#dbeafe", borderRadius: "999px", padding: "0.35rem 0.7rem", fontWeight: 600 }}>
+              Reorder orders: {draftOrderTypeSummary.reorder}
+            </span>
+          </div>
+        </section>
 
         <section className="panel">
           <h2>Workflow Status</h2>
@@ -718,15 +648,29 @@ function Dashboard() {
 
         <section className="panel">
           <h2>Draft Orders</h2>
-          <ul className="list">
-            {(state.draft_orders || []).length === 0 && <li>Geen conceptorders</li>}
-            {(state.draft_orders || []).map((order, idx) => (
-              <li key={`draft-${idx}`}>
-                {order.product_name || order.product_id || "Onbekend product"} -{" "}
-                {order.quantity ?? 0} stuks - {formatCurrency(order.unit_price)}
-              </li>
+          {(state.draft_orders || []).length === 0 && <p>Geen conceptorders</p>}
+          <div style={{ display: "grid", gap: "0.8rem" }}>
+            {(state.draft_orders || []).map((order: ProcurementDraftOrder, idx) => (
+              <div key={`draft-${idx}`} style={{ border: "1px solid #e5e7eb", borderRadius: "8px", padding: "0.8rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: "0.8rem", flexWrap: "wrap" }}>
+                  <strong>{order.supplier_name || `Leverancier ${idx + 1}`}</strong>
+                  <span style={{ fontWeight: 600 }}>
+                    {String(order.source_type || order.order_path || "").toLowerCase().includes("new_release") ? "New Release" : "Reorder"}
+                  </span>
+                  <span>{formatCurrency(typeof order.total_amount === "number" ? order.total_amount : (order.items || []).reduce((acc, item) => acc + (item.quantity ?? 0) * (item.unit_price ?? 0), 0))}</span>
+                </div>
+
+                <ul className="list" style={{ marginTop: "0.45rem" }}>
+                  {(order.items || []).length === 0 && <li>Geen items</li>}
+                  {(order.items || []).map((item, itemIdx) => (
+                    <li key={`draft-${idx}-item-${itemIdx}`}>
+                      {item.product_name || item.product_id || "Onbekend product"} - {item.quantity ?? 0} stuks @ {formatCurrency(item.unit_price)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
       </div>
 
