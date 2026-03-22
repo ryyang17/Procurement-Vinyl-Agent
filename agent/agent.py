@@ -7,6 +7,7 @@ from agent.utils.state import ProcurementState
 # Importeer nodes voor goedkeuring, levering, voorraad, orders, leveranciers en nieuwe releases
 from agent.utils.nodes.approval_nodes import human_approval_node, process_approval_node_workflow
 from agent.utils.nodes.delivery_nodes import process_due_deliveries_node
+from agent.utils.nodes.sales_nodes import analyse_sales_velocity_node
 from agent.utils.nodes.inventory_nodes import daily_inventory_check_node
 from agent.utils.nodes.order_nodes import create_purchase_order_node
 from agent.utils.nodes.supplier_nodes import find_suppliers_node
@@ -192,6 +193,7 @@ def create_procurement_workflow():
     workflow = StateGraph(ProcurementState)
 
     workflow.add_node("process_due_deliveries", process_due_deliveries_node)
+    workflow.add_node("analyse_sales_velocity", analyse_sales_velocity_node)
     workflow.add_node("daily_inventory_check", daily_inventory_check_node)
 
     # Node dat wacht op path selection van user
@@ -210,7 +212,8 @@ def create_procurement_workflow():
 
     # Startpunt van de workflow
     workflow.set_entry_point("process_due_deliveries")
-    workflow.add_edge("process_due_deliveries", "daily_inventory_check")
+    workflow.add_edge("process_due_deliveries", "analyse_sales_velocity")
+    workflow.add_edge("analyse_sales_velocity", "daily_inventory_check")
 
     # Kies pad: leveranciers of nieuwe releases op basis van user input
     workflow.add_conditional_edges(

@@ -44,6 +44,7 @@ class ProcurementState(BaseModel):
 
     # UI helper fields (populated by nodes for frontend display)
     inventory_alerts: List[str] = []
+    sales_velocity_alerts: List[str] = []
     new_release_alerts: List[str] = []
     supplier_offers: List[Dict[str, Any]] = []
     draft_orders: List[Dict[str, Any]] = []

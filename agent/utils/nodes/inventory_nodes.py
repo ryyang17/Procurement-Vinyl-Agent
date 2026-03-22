@@ -59,7 +59,8 @@ def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
     for item in inventory:
         # Use quantity_in_stock as the current quantity
         qty = item.get('quantity_in_stock', 0)
-        min_qty = item.get('reorder_level', 0)
+        dynamic_levels = state.data.get('dynamic_reorder_levels', {})
+        min_qty = dynamic_levels.get(str(item.get('product_id')), item.get('reorder_level', 0))
         product_id = item.get('product_id')
 
         if product_id in seen_product_ids:
@@ -84,6 +85,7 @@ def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
                     'product_id': product_id,
                     'category': prod.get('category', 'Unknown'),
                     'source_type': 'inventory_low_stock',
+                    'reorder_basis': 'sales_velocity' if str(product_id) in dynamic_levels else 'static_threshold',
                 })
                 seen_product_ids.add(product_id)
 

@@ -12,17 +12,26 @@ import {
 import "@copilotkit/react-core/v2/styles.css";
 import "./style.css";
 import {
+  CheckpointStateResponse,
   INITIAL_AGENT_STATE,
+  PendingCheckpointItem,
+  PendingCheckpointResponse,
   ProcurementAgentState,
+  SalesVelocityForecast,
   formatCurrency,
 } from "./agent";
 
 const AGENT_ID = "procurement_agent";
 
+type DashboardAgent = {
+  setState: (state: ProcurementAgentState) => void;
+  state?: ProcurementAgentState;
+};
+
 /**
  * Component voor pad selectie: user kiest tussen leveranciers of nieuwe releases
  */
-function PathSelectionPanel({ state, agent }: { state: ProcurementAgentState; agent: any }) {
+function PathSelectionPanel({ state, agent }: { state: ProcurementAgentState; agent: DashboardAgent }) {
   const hasInventoryAlerts = (state.inventory_alerts?.length ?? 0) > 0;
 
   const handlePathChoice = (choice: "path_1_suppliers" | "path_2_new_releases") => {
@@ -147,7 +156,7 @@ function PathSelectionPanel({ state, agent }: { state: ProcurementAgentState; ag
 /**
  * Component voor goedkeuringspaneel: user keurt orders goed/af
  */
-function ApprovalPanel({ state, agent }: { state: ProcurementAgentState; agent: any }) {
+function ApprovalPanel({ state, agent }: { state: ProcurementAgentState; agent: DashboardAgent }) {
   const [localApprovals, setLocalApprovals] = useState<Record<number, boolean>>({});
   const [localRejectionReasons, setLocalRejectionReasons] = useState<Record<number, string>>({});
 
@@ -343,12 +352,109 @@ function Dashboard() {
   });
 
   const state = (agent.state as ProcurementAgentState) || INITIAL_AGENT_STATE;
+  const [pendingCheckpoints, setPendingCheckpoints] = useState<PendingCheckpointItem[]>([]);
+  const [pendingLoading, setPendingLoading] = useState(false);
+  const [pendingError, setPendingError] = useState<string | null>(null);
+  const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!agent.state) {
       agent.setState(INITIAL_AGENT_STATE);
     }
   }, [agent]);
+
+  const fetchPendingCheckpoints = async () => {
+    try {
+      setPendingLoading(true);
+      setPendingError(null);
+      const response = await fetch("/api/checkpoints/pending?limit=50", {
+        method: "GET",
+        cache: "no-store",
+      });
+      const payload = (await response.json()) as PendingCheckpointResponse | { error?: string };
+
+      if (!response.ok) {
+        const message = "error" in payload ? payload.error || "Onbekende fout" : "Onbekende fout";
+        throw new Error(message);
+      }
+
+      setPendingCheckpoints((payload as PendingCheckpointResponse).items || []);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      setPendingError(message);
+    } finally {
+      setPendingLoading(false);
+    }
+  };
+
+  const loadCheckpointIntoDashboard = async (threadId: string) => {
+    try {
+      setPendingError(null);
+      const response = await fetch(`/api/checkpoints/${encodeURIComponent(threadId)}`, {
+        method: "GET",
+        cache: "no-store",
+      });
+      const payload = (await response.json()) as CheckpointStateResponse | { error?: string };
+
+      if (!response.ok) {
+        const message = "error" in payload ? payload.error || "Onbekende fout" : "Onbekende fout";
+        throw new Error(message);
+      }
+
+      const statePayload = (payload as CheckpointStateResponse).state;
+      agent.setState(statePayload);
+      setActiveThreadId(threadId);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      setPendingError(message);
+    }
+  };
+
+  const submitCheckpointDecision = async (threadId: string, approveAll: boolean) => {
+    try {
+      setPendingError(null);
+      const checkpoint = pendingCheckpoints.find((item) => item.thread_id === threadId);
+      const draftCount = checkpoint?.draft_orders_count || 0;
+      const allIndices = Array.from({ length: draftCount }, (_, idx) => idx);
+
+      const rejectionReasonsByIndex = approveAll
+        ? {}
+        : Object.fromEntries(allIndices.map((idx) => [idx, "Afgewezen via frontend checkpointpanel"])) ;
+
+      const response = await fetch(`/api/checkpoints/${encodeURIComponent(threadId)}/decision`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          approved_indices: approveAll ? allIndices : [],
+          rejection_reasons_by_index: rejectionReasonsByIndex,
+          approved_by: "frontend_manager",
+          decision: approveAll ? "approved" : "rejected",
+        }),
+      });
+
+      const payload = (await response.json()) as CheckpointStateResponse | { error?: string };
+      if (!response.ok) {
+        const message = "error" in payload ? payload.error || "Onbekende fout" : "Onbekende fout";
+        throw new Error(message);
+      }
+
+      const statePayload = (payload as CheckpointStateResponse).state;
+      agent.setState(statePayload);
+      setActiveThreadId(threadId);
+      await fetchPendingCheckpoints();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      setPendingError(message);
+    }
+  };
+
+  useEffect(() => {
+    fetchPendingCheckpoints();
+    const interval = setInterval(fetchPendingCheckpoints, 15000);
+    return () => clearInterval(interval);
+  }, []);
 
   const kpis = useMemo(() => {
     const alerts = state.inventory_alerts?.length ?? 0;
@@ -357,6 +463,11 @@ function Dashboard() {
     const approvals = state.approved_orders?.length ?? 0;
     return { alerts, offers, draftOrders, approvals };
   }, [state]);
+
+  const salesVelocityForecasts = useMemo(() => {
+    const forecasts = state.data?.sales_velocity_forecasts;
+    return Array.isArray(forecasts) ? forecasts : [];
+  }, [state.data]);
 
   return (
     <div className="vinyl-layout">
@@ -383,6 +494,108 @@ function Dashboard() {
             <span>Approved Orders</span>
             <strong>{kpis.approvals}</strong>
           </div>
+        </section>
+
+        <section className="panel" style={{ border: "2px solid #0c7a6a", backgroundColor: "#f3fffc" }}>
+          <h2>Openstaande Checkpoints</h2>
+          <p style={{ marginBottom: "1rem" }}>
+            Herstel hier openstaande workflow-threads en neem direct een beslissing.
+          </p>
+
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+            <button
+              onClick={fetchPendingCheckpoints}
+              style={{
+                padding: "0.5rem 1rem",
+                border: "1px solid #0c7a6a",
+                borderRadius: "6px",
+                background: "white",
+                cursor: "pointer",
+              }}
+            >
+              Vernieuwen
+            </button>
+            {pendingLoading && <span>Bezig met laden...</span>}
+          </div>
+
+          {pendingError && (
+            <div style={{ color: "#b42318", marginBottom: "1rem" }}>
+              Fout bij ophalen/verwerken checkpoints: {pendingError}
+            </div>
+          )}
+
+          {pendingCheckpoints.length === 0 ? (
+            <p>Geen openstaande checkpoints gevonden.</p>
+          ) : (
+            <div style={{ display: "grid", gap: "0.8rem" }}>
+              {pendingCheckpoints.map((item) => (
+                <div
+                  key={item.thread_id}
+                  style={{
+                    border: "1px solid #cde9e3",
+                    borderRadius: "8px",
+                    padding: "0.8rem",
+                    backgroundColor: activeThreadId === item.thread_id ? "#e8fff9" : "white",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
+                    <div>
+                      <strong>Thread:</strong> {item.thread_id}
+                    </div>
+                    <div>
+                      <strong>Status:</strong> {item.status || "-"} / {item.step || "-"}
+                    </div>
+                    <div>
+                      <strong>Orders:</strong> {item.draft_orders_count}
+                    </div>
+                  </div>
+                  <div style={{ marginTop: "0.5rem", color: "#444" }}>{item.message || "-"}</div>
+
+                  <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.7rem", flexWrap: "wrap" }}>
+                    <button
+                      onClick={() => loadCheckpointIntoDashboard(item.thread_id)}
+                      style={{
+                        padding: "0.45rem 0.8rem",
+                        borderRadius: "6px",
+                        border: "1px solid #2563eb",
+                        backgroundColor: "#2563eb",
+                        color: "white",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Laden in dashboard
+                    </button>
+                    <button
+                      onClick={() => submitCheckpointDecision(item.thread_id, true)}
+                      style={{
+                        padding: "0.45rem 0.8rem",
+                        borderRadius: "6px",
+                        border: "1px solid #15803d",
+                        backgroundColor: "#15803d",
+                        color: "white",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Alles goedkeuren
+                    </button>
+                    <button
+                      onClick={() => submitCheckpointDecision(item.thread_id, false)}
+                      style={{
+                        padding: "0.45rem 0.8rem",
+                        borderRadius: "6px",
+                        border: "1px solid #b42318",
+                        backgroundColor: "#b42318",
+                        color: "white",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Alles afwijzen
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* ...existing code... */}
@@ -418,6 +631,48 @@ function Dashboard() {
               <li key={`${alert}-${idx}`}>{alert}</li>
             ))}
           </ul>
+        </section>
+
+        <section className="panel">
+          <h2>Sales Velocity Forecasts</h2>
+          <ul className="list" style={{ marginBottom: "0.8rem" }}>
+            {(state.sales_velocity_alerts || []).length === 0 && <li>Geen urgente velocity alerts</li>}
+            {(state.sales_velocity_alerts || []).map((alert, idx) => (
+              <li key={`velocity-alert-${idx}`}>{alert}</li>
+            ))}
+          </ul>
+
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Velocity / dag</th>
+                  <th>Stockout datum</th>
+                  <th>Reorder basis</th>
+                </tr>
+              </thead>
+              <tbody>
+                {salesVelocityForecasts.length === 0 && (
+                  <tr>
+                    <td colSpan={4}>Nog geen sales velocity data</td>
+                  </tr>
+                )}
+                {salesVelocityForecasts.map((forecast: SalesVelocityForecast, idx: number) => (
+                  <tr key={`velocity-${forecast.product_id ?? idx}`}>
+                    <td>{forecast.product_name || forecast.product_id || "-"}</td>
+                    <td>
+                      {typeof forecast.velocity_per_day === "number"
+                        ? forecast.velocity_per_day.toFixed(2)
+                        : "-"}
+                    </td>
+                    <td>{forecast.predicted_stockout_date || "-"}</td>
+                    <td>{forecast.reorder_basis || "-"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <section className="panel">

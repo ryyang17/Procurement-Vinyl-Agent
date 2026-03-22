@@ -5,7 +5,8 @@ Een intelligente AI-agent voor vinylprocurement met MCP (Model Context Protocol)
 ## 🌟 Nieuwe Functies
 
 ### 📡 MCP Discogs Integration
-- **Realtime data**: Echte vinylreleases via Discogs API  
+
+- **Realtime data**: Echte vinylreleases via Discogs API
 - **Gestandaardiseerd protocol**: Model Context Protocol voor robuuste API integratie
 - **Automatische fallback**: Graceful degradation naar simulatie modus
 - **Artist search**: Zoek specifieke artiesten voor procurement analyse
@@ -15,11 +16,13 @@ Zie [MCP_README.md](MCP_README.md) voor gedetailleerde MCP documentatie.
 ## Snelle Start
 
 1. **Basis installatie:**
+
    ```bash
    pip install -r requirements.txt
    ```
 
 2. **MCP functionaliteit (optioneel):**
+
    ```bash
    pip install mcp httpx
    ```
@@ -30,10 +33,11 @@ Zie [MCP_README.md](MCP_README.md) voor gedetailleerde MCP documentatie.
    ```
 
 ### Menu Opties
+
 - **1. Procurement Workflow**: Normale inventory en order workflow
 - **2. MCP New Release Detection**: Realtime Discogs data (als MCP beschikbaar)
 - **3. Simulation Mode**: Mock data voor testing
-- **4. Pending Orders**: Bekijk openstaande bestellingen  
+- **4. Pending Orders**: Bekijk openstaande bestellingen
 - **5. Decision History**: Recente procurement beslissingen
 
 ## Database Schema
@@ -68,6 +72,7 @@ Zie [MCP_README.md](MCP_README.md) voor gedetailleerde MCP documentatie.
 - faker (voor realistische test data)
 
 Installeer met:
+
 ```bash
 pip install faker
 ```
@@ -109,3 +114,36 @@ Dit systeem gebruikt **2 verschillende memory systemen** met verschillende doele
 
 **Zie [MEMORY_ARCHITECTURE.md](MEMORY_ARCHITECTURE.md) voor volledige uitleg waarom beide nodig zijn.**
 
+## Checkpoint API voor Frontend
+
+Voor een eenvoudige prototype setup gebruikt de Next.js frontend direct de LangGraph server (standaard `http://127.0.0.1:2024`) om workflow-checkpoints op te halen en te hervatten.
+
+De benodigde backend endpoints zijn:
+
+- `GET /checkpoints/pending`
+  - Geeft alle openstaande threads terug die wachten op human approval/path selectie.
+- `GET /checkpoints/{thread_id}`
+  - Geeft de laatste state van een specifieke thread terug.
+- `POST /checkpoints/{thread_id}/decision`
+  - Verwerkt een beslissing en hervat de workflow in dezelfde thread.
+
+Voorbeeld payload voor beslissing:
+
+```json
+{
+  "approved_indices": [0, 1],
+  "rejection_reasons_by_index": { "2": "Budget te hoog" },
+  "approved_by": "manager",
+  "decision": "approved"
+}
+```
+
+In de Next.js frontend zijn proxy routes toegevoegd zodat je vanuit de UI direct kunt werken met:
+
+- `GET /api/checkpoints/pending`
+- `GET /api/checkpoints/{threadId}`
+- `POST /api/checkpoints/{threadId}/decision`
+
+Stel eventueel backend URL in met:
+
+- `PROCUREMENT_BACKEND_URL=http://127.0.0.1:2024`

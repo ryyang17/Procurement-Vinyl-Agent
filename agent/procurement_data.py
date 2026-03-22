@@ -1,7 +1,7 @@
 import json
 import os
 from typing import List, Dict, Any, Optional
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class ProcurementDatabase:
     """Database helper class for managing procurement data from JSON files"""
@@ -45,6 +45,10 @@ class ProcurementDatabase:
         """Get price history"""
         return self.load_json('price_history.json')
 
+    def get_sales_history(self) -> List[Dict[str, Any]]:
+        """Get sales history (dummy or real sales events)."""
+        return self.load_json('sales.json')
+
     def get_purchase_orders(self) -> List[Dict[str, Any]]:
         """Get all purchase orders"""
         return self.load_json('purchase_order.json')
@@ -52,6 +56,66 @@ class ProcurementDatabase:
     def get_purchase_order_items(self) -> List[Dict[str, Any]]:
         """Get all purchase order items"""
         return self.load_json('purchase_order_item.json')
+
+    def get_sales_velocity_by_product(self, window_days: int = 30) -> Dict[int, Dict[str, Any]]:
+        """Calculate sales velocity metrics per product in a rolling time window."""
+        sales = self.get_sales_history()
+
+        now = datetime.now()
+        cutoff = now - timedelta(days=window_days)
+
+        grouped: Dict[int, Dict[str, Any]] = {}
+
+        for event in sales:
+            product_id = event.get('product_id')
+            quantity = int(event.get('quantity_sold', 0) or 0)
+            sold_at_raw = event.get('sold_at')
+
+            if product_id is None or quantity <= 0 or not sold_at_raw:
+                continue
+
+            try:
+                sold_at = datetime.fromisoformat(str(sold_at_raw).replace('Z', '+00:00')).replace(tzinfo=None)
+            except (ValueError, TypeError):
+                continue
+
+            if sold_at < cutoff:
+                continue
+
+            if product_id not in grouped:
+                grouped[product_id] = {
+                    'product_id': product_id,
+                    'total_quantity_sold': 0,
+                    'sales_events': 0,
+                    'first_sale_at': sold_at,
+                    'last_sale_at': sold_at,
+                }
+
+            grouped[product_id]['total_quantity_sold'] += quantity
+            grouped[product_id]['sales_events'] += 1
+
+            if sold_at < grouped[product_id]['first_sale_at']:
+                grouped[product_id]['first_sale_at'] = sold_at
+            if sold_at > grouped[product_id]['last_sale_at']:
+                grouped[product_id]['last_sale_at'] = sold_at
+
+        result: Dict[int, Dict[str, Any]] = {}
+        for product_id, stats in grouped.items():
+            span_days = max(1, (stats['last_sale_at'] - stats['first_sale_at']).days + 1)
+            velocity_per_day = stats['total_quantity_sold'] / span_days
+
+            result[product_id] = {
+                'product_id': product_id,
+                'window_days': window_days,
+                'total_quantity_sold': stats['total_quantity_sold'],
+                'sales_events': stats['sales_events'],
+                'velocity_per_day': round(velocity_per_day, 2),
+                'velocity_per_week': round(velocity_per_day * 7, 2),
+                'first_sale_at': stats['first_sale_at'].isoformat(),
+                'last_sale_at': stats['last_sale_at'].isoformat(),
+            }
+
+        return result
 
     def get_suppliers_for_product(self, product_id: int) -> List[Dict[str, Any]]:
         """Get all suppliers that can supply a specific product"""

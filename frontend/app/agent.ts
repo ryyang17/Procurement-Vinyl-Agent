@@ -23,11 +23,23 @@ export interface DraftOrderItem {
   supplier_name?: string;
 }
 
+export interface SalesVelocityForecast {
+  product_id?: number;
+  product_name?: string;
+  velocity_per_day?: number;
+  predicted_stockout_date?: string | null;
+  reorder_basis?: string;
+  dynamic_reorder_level?: number;
+  static_reorder_level?: number;
+}
+
 export interface ProcurementAgentState {
   step?: string;
   next_action?: NextAction;
   current_date?: string;
+  status?: string;
   inventory_alerts?: string[];
+  sales_velocity_alerts?: string[];
   new_release_alerts?: string[];
   supplier_offers?: SupplierOffer[];
   draft_orders?: DraftOrderItem[];
@@ -35,6 +47,10 @@ export interface ProcurementAgentState {
   rejection_reasons?: string[];
   approval_decision?: "approved" | "rejected" | "pending";
   summary?: string;
+  data?: {
+    sales_velocity_forecasts?: SalesVelocityForecast[];
+    [key: string]: unknown;
+  };
 
   // Path selection for human-in-the-loop
   awaiting_path_selection?: boolean;
@@ -45,6 +61,37 @@ export interface ProcurementAgentState {
   approval_order_indices?: number[];
   rejection_reasons_by_index?: Record<number, string>;
   approved_by?: string;
+}
+
+export interface CheckpointDraftOrder {
+  supplier_id?: number;
+  supplier_name?: string;
+  total_amount?: number;
+  items?: DraftOrderItem[];
+  [key: string]: unknown;
+}
+
+export interface PendingCheckpointItem {
+  thread_id: string;
+  step?: string;
+  status?: string;
+  message?: string;
+  approval_requested_at?: string;
+  updated_at?: string;
+  draft_orders_count: number;
+  draft_orders: CheckpointDraftOrder[];
+}
+
+export interface PendingCheckpointResponse {
+  items: PendingCheckpointItem[];
+  count: number;
+}
+
+export interface CheckpointStateResponse {
+  thread_id: string;
+  state: ProcurementAgentState;
+  pending: boolean;
+  draft_orders: CheckpointDraftOrder[];
 }
 
 export const INITIAL_AGENT_STATE: ProcurementAgentState = {
