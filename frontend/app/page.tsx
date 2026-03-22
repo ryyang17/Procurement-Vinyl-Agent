@@ -515,7 +515,10 @@ function Dashboard() {
           )}
         </section>
 
-        {state.awaiting_human_approval && <ApprovalPanel state={state} agent={agent} />}
+        {/* Show ApprovalPanel if awaiting_human_approval is true AND there are draft orders (including reorder-only) */}
+        {state.awaiting_human_approval && Array.isArray(state.draft_orders) && state.draft_orders.length > 0 && (
+          <ApprovalPanel state={state} agent={agent} />
+        )}
 
         <section className="panel" style={{ border: "2px solid #2e7d32", backgroundColor: "#f1fbf2" }}>
           <h2>Samengevoegde Workflow</h2>
