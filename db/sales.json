@@ -1,86 +1,7205 @@
 [
   {
     "sale_id": 1,
-    "product_id": 2,
-    "quantity_sold": 18,
-    "sold_at": "2026-03-01T10:00:00Z",
-    "channel": "webshop"
-  },
-  {
-    "sale_id": 2,
-    "product_id": 2,
-    "quantity_sold": 16,
-    "sold_at": "2026-03-04T11:00:00Z",
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-20T10:40:38.090557Z",
     "channel": "store"
   },
   {
+    "sale_id": 2,
+    "product_id": 1,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-20T18:54:06.090557Z",
+    "channel": "webshop"
+  },
+  {
     "sale_id": 3,
-    "product_id": 2,
-    "quantity_sold": 20,
-    "sold_at": "2026-03-08T09:30:00Z",
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-22T18:14:39.090557Z",
     "channel": "webshop"
   },
   {
     "sale_id": 4,
-    "product_id": 2,
-    "quantity_sold": 22,
-    "sold_at": "2026-03-12T15:20:00Z",
-    "channel": "marketplace"
+    "product_id": 1,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-22T16:00:40.090557Z",
+    "channel": "store"
   },
   {
     "sale_id": 5,
-    "product_id": 2,
-    "quantity_sold": 19,
-    "sold_at": "2026-03-16T14:10:00Z",
+    "product_id": 1,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-23T17:18:54.090557Z",
     "channel": "store"
   },
   {
     "sale_id": 6,
-    "product_id": 2,
-    "quantity_sold": 17,
-    "sold_at": "2026-03-20T12:45:00Z",
-    "channel": "webshop"
+    "product_id": 1,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-23T12:57:59.090557Z",
+    "channel": "store"
   },
   {
     "sale_id": 7,
-    "product_id": 5,
-    "quantity_sold": 3,
-    "sold_at": "2026-03-05T08:10:00Z",
-    "channel": "store"
+    "product_id": 1,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-24T20:12:00.090557Z",
+    "channel": "marketplace"
   },
   {
     "sale_id": 8,
-    "product_id": 5,
-    "quantity_sold": 4,
-    "sold_at": "2026-03-12T18:00:00Z",
-    "channel": "webshop"
-  },
-  {
-    "sale_id": 9,
-    "product_id": 5,
-    "quantity_sold": 2,
-    "sold_at": "2026-03-19T13:25:00Z",
+    "product_id": 1,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-24T10:31:21.090557Z",
     "channel": "store"
   },
   {
+    "sale_id": 9,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-25T11:31:22.090557Z",
+    "channel": "webshop"
+  },
+  {
     "sale_id": 10,
-    "product_id": 8,
-    "quantity_sold": 6,
-    "sold_at": "2026-03-02T16:00:00Z",
+    "product_id": 1,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-25T14:47:17.090557Z",
     "channel": "webshop"
   },
   {
     "sale_id": 11,
-    "product_id": 8,
-    "quantity_sold": 5,
-    "sold_at": "2026-03-10T11:40:00Z",
-    "channel": "marketplace"
+    "product_id": 1,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-26T15:57:51.090557Z",
+    "channel": "webshop"
   },
   {
     "sale_id": 12,
+    "product_id": 1,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-26T12:12:33.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 13,
+    "product_id": 1,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-28T11:18:01.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 14,
+    "product_id": 1,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-28T19:00:21.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 15,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-01T20:15:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 16,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-01T19:56:19.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 17,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-02T14:26:13.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 18,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-02T11:56:41.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 19,
+    "product_id": 1,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-03T19:15:27.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 20,
+    "product_id": 1,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-03T15:16:27.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 21,
+    "product_id": 1,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-03T19:25:40.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 22,
+    "product_id": 1,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-04T15:22:25.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 23,
+    "product_id": 1,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-04T19:33:40.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 24,
+    "product_id": 1,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-06T15:07:22.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 25,
+    "product_id": 1,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-06T09:53:14.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 26,
+    "product_id": 1,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-06T10:50:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 27,
+    "product_id": 1,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-06T10:21:09.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 28,
+    "product_id": 1,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-07T11:18:05.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 29,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-07T12:19:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 30,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-07T13:06:52.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 31,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-07T16:39:47.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 32,
+    "product_id": 1,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-07T14:27:15.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 33,
+    "product_id": 1,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-08T18:37:19.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 34,
+    "product_id": 1,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-08T18:10:50.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 35,
+    "product_id": 1,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-08T20:10:04.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 36,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-10T09:58:14.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 37,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-10T18:03:46.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 38,
+    "product_id": 1,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-10T15:54:00.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 39,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-13T11:47:24.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 40,
+    "product_id": 1,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-13T17:00:33.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 41,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-13T11:08:22.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 42,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-16T19:29:09.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 43,
+    "product_id": 1,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-16T19:32:58.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 44,
+    "product_id": 1,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-18T11:41:46.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 45,
+    "product_id": 1,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-18T18:23:49.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 46,
+    "product_id": 1,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-18T10:30:15.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 47,
+    "product_id": 1,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-19T13:13:23.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 48,
+    "product_id": 1,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-19T19:28:34.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 49,
+    "product_id": 1,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-20T17:26:46.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 50,
+    "product_id": 1,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-20T15:01:15.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 51,
+    "product_id": 1,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-22T13:32:11.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 52,
+    "product_id": 2,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-20T16:54:57.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 53,
+    "product_id": 2,
+    "quantity_sold": 1,
+    "sold_at": "2026-02-21T16:46:45.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 54,
+    "product_id": 2,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-01T09:42:31.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 55,
+    "product_id": 2,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-01T16:02:42.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 56,
+    "product_id": 2,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-01T20:20:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 57,
+    "product_id": 2,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-01T15:20:31.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 58,
+    "product_id": 2,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-02T10:28:43.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 59,
+    "product_id": 2,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-04T16:21:07.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 60,
+    "product_id": 2,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-04T17:47:36.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 61,
+    "product_id": 2,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-05T12:17:20.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 62,
+    "product_id": 2,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-05T20:13:05.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 63,
+    "product_id": 2,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-05T15:15:08.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 64,
+    "product_id": 2,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-10T15:51:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 65,
+    "product_id": 2,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-13T17:23:33.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 66,
+    "product_id": 2,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-13T12:22:51.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 67,
+    "product_id": 2,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-15T11:42:28.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 68,
+    "product_id": 2,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-17T12:33:09.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 69,
+    "product_id": 2,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-19T20:53:23.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 70,
+    "product_id": 2,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-22T13:31:53.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 71,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-20T19:32:33.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 72,
+    "product_id": 3,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-20T20:12:39.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 73,
+    "product_id": 3,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-21T18:44:43.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 74,
+    "product_id": 3,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-21T18:33:22.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 75,
+    "product_id": 3,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-21T16:41:48.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 76,
+    "product_id": 3,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-21T20:49:03.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 77,
+    "product_id": 3,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-22T19:22:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 78,
+    "product_id": 3,
+    "quantity_sold": 13,
+    "sold_at": "2026-02-22T09:22:48.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 79,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-22T15:27:37.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 80,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-23T11:42:50.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 81,
+    "product_id": 3,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-23T18:04:18.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 82,
+    "product_id": 3,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T11:40:55.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 83,
+    "product_id": 3,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-27T14:14:39.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 84,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-27T15:26:45.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 85,
+    "product_id": 3,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-27T11:38:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 86,
+    "product_id": 3,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-01T20:01:42.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 87,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-01T20:57:08.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 88,
+    "product_id": 3,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-02T11:55:06.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 89,
+    "product_id": 3,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-03T14:28:11.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 90,
+    "product_id": 3,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-03T20:08:12.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 91,
+    "product_id": 3,
+    "quantity_sold": 14,
+    "sold_at": "2026-03-04T12:35:45.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 92,
+    "product_id": 3,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-04T12:47:49.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 93,
+    "product_id": 3,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-05T17:50:55.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 94,
+    "product_id": 3,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-05T12:04:51.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 95,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-06T14:08:29.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 96,
+    "product_id": 3,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-06T18:20:59.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 97,
+    "product_id": 3,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-07T17:29:40.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 98,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-07T12:09:48.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 99,
+    "product_id": 3,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-07T18:52:29.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 100,
+    "product_id": 3,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-08T10:30:23.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 101,
+    "product_id": 3,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-08T19:29:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 102,
+    "product_id": 3,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-09T11:29:38.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 103,
+    "product_id": 3,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-10T09:15:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 104,
+    "product_id": 3,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-11T20:45:53.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 105,
+    "product_id": 3,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-11T13:00:02.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 106,
+    "product_id": 3,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-12T20:37:10.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 107,
+    "product_id": 3,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-12T11:12:57.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 108,
+    "product_id": 3,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-12T10:38:38.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 109,
+    "product_id": 3,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-14T19:13:07.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 110,
+    "product_id": 3,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-14T14:55:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 111,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-14T10:06:05.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 112,
+    "product_id": 3,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-14T14:54:54.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 113,
+    "product_id": 3,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-14T18:24:31.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 114,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-15T12:18:54.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 115,
+    "product_id": 3,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-15T09:37:12.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 116,
+    "product_id": 3,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-15T12:11:56.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 117,
+    "product_id": 3,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-16T19:30:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 118,
+    "product_id": 3,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-16T13:52:18.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 119,
+    "product_id": 3,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-16T20:05:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 120,
+    "product_id": 3,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-18T10:11:10.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 121,
+    "product_id": 3,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-18T19:47:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 122,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-19T19:51:28.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 123,
+    "product_id": 3,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-19T14:07:45.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 124,
+    "product_id": 3,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-20T10:21:19.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 125,
+    "product_id": 3,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-21T09:25:51.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 126,
+    "product_id": 3,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-21T20:25:16.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 127,
+    "product_id": 3,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-22T20:28:53.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 128,
+    "product_id": 3,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-22T19:03:36.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 129,
+    "product_id": 4,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-20T12:29:59.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 130,
+    "product_id": 4,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-20T20:23:04.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 131,
+    "product_id": 4,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-20T13:52:40.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 132,
+    "product_id": 4,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-22T16:14:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 133,
+    "product_id": 4,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-22T17:48:15.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 134,
+    "product_id": 4,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-23T16:04:34.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 135,
+    "product_id": 4,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-23T14:11:47.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 136,
+    "product_id": 4,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-24T12:55:53.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 137,
+    "product_id": 4,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-25T16:46:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 138,
+    "product_id": 4,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T17:16:12.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 139,
+    "product_id": 4,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-27T09:57:04.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 140,
+    "product_id": 4,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-27T10:20:00.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 141,
+    "product_id": 4,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-28T15:26:18.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 142,
+    "product_id": 4,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-28T19:37:43.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 143,
+    "product_id": 4,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-02T12:53:53.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 144,
+    "product_id": 4,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-02T18:27:52.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 145,
+    "product_id": 4,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-04T19:34:28.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 146,
+    "product_id": 4,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-04T20:00:00.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 147,
+    "product_id": 4,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-04T19:51:41.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 148,
+    "product_id": 4,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-05T09:30:53.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 149,
+    "product_id": 4,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-05T15:40:34.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 150,
+    "product_id": 4,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-07T18:59:47.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 151,
+    "product_id": 4,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-07T12:32:52.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 152,
+    "product_id": 4,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-08T19:23:35.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 153,
+    "product_id": 4,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-09T10:33:52.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 154,
+    "product_id": 4,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-10T14:39:16.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 155,
+    "product_id": 4,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-10T09:49:08.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 156,
+    "product_id": 4,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-10T19:35:08.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 157,
+    "product_id": 4,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-13T12:30:10.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 158,
+    "product_id": 4,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-13T13:52:48.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 159,
+    "product_id": 4,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-13T17:38:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 160,
+    "product_id": 4,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-15T09:33:33.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 161,
+    "product_id": 4,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-15T10:17:51.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 162,
+    "product_id": 4,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-18T13:55:26.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 163,
+    "product_id": 4,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-18T17:34:16.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 164,
+    "product_id": 4,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-19T15:59:19.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 165,
+    "product_id": 4,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-20T15:47:34.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 166,
+    "product_id": 4,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-20T18:04:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 167,
+    "product_id": 4,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-22T19:55:45.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 168,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-20T16:03:00.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 169,
+    "product_id": 5,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-21T16:57:17.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 170,
+    "product_id": 5,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-21T16:42:29.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 171,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-21T18:05:19.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 172,
+    "product_id": 5,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-22T15:12:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 173,
+    "product_id": 5,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-22T20:50:46.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 174,
+    "product_id": 5,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-23T17:28:11.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 175,
+    "product_id": 5,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-23T10:17:19.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 176,
+    "product_id": 5,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-24T19:10:26.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 177,
+    "product_id": 5,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-24T17:30:04.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 178,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T11:17:16.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 179,
+    "product_id": 5,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-25T14:13:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 180,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T12:34:45.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 181,
+    "product_id": 5,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-26T13:19:02.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 182,
+    "product_id": 5,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-26T11:03:33.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 183,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-26T17:06:55.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 184,
+    "product_id": 5,
+    "quantity_sold": 13,
+    "sold_at": "2026-02-26T17:42:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 185,
+    "product_id": 5,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-27T09:57:33.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 186,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-27T14:56:15.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 187,
+    "product_id": 5,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-27T16:47:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 188,
+    "product_id": 5,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-28T15:29:25.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 189,
+    "product_id": 5,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-28T11:39:01.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 190,
+    "product_id": 5,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-01T20:19:15.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 191,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-01T13:15:15.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 192,
+    "product_id": 5,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-02T13:42:18.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 193,
+    "product_id": 5,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-02T12:22:27.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 194,
+    "product_id": 5,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-04T11:09:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 195,
+    "product_id": 5,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-04T19:41:19.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 196,
+    "product_id": 5,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-04T11:29:27.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 197,
+    "product_id": 5,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-05T19:44:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 198,
+    "product_id": 5,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-06T11:57:58.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 199,
+    "product_id": 5,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-06T09:38:27.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 200,
+    "product_id": 5,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-06T12:59:38.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 201,
+    "product_id": 5,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-07T16:08:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 202,
+    "product_id": 5,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-07T14:46:32.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 203,
+    "product_id": 5,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-08T13:56:28.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 204,
+    "product_id": 5,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-08T17:23:59.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 205,
+    "product_id": 5,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-09T12:22:24.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 206,
+    "product_id": 5,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-11T20:17:27.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 207,
+    "product_id": 5,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-11T20:54:20.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 208,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-12T11:25:56.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 209,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-12T19:27:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 210,
+    "product_id": 5,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-14T18:00:14.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 211,
+    "product_id": 5,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-14T11:35:48.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 212,
+    "product_id": 5,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-14T17:25:10.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 213,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-16T09:53:10.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 214,
+    "product_id": 5,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-16T12:13:56.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 215,
+    "product_id": 5,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-17T09:40:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 216,
+    "product_id": 5,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-19T20:53:30.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 217,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-19T15:06:19.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 218,
+    "product_id": 5,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-22T14:34:55.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 219,
+    "product_id": 5,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-22T11:15:05.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 220,
+    "product_id": 5,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-22T14:13:44.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 221,
+    "product_id": 6,
+    "quantity_sold": 2,
+    "sold_at": "2026-02-20T18:40:18.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 222,
+    "product_id": 6,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-21T15:50:46.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 223,
+    "product_id": 6,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-21T11:11:01.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 224,
+    "product_id": 6,
+    "quantity_sold": 2,
+    "sold_at": "2026-02-21T13:41:30.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 225,
+    "product_id": 6,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-22T12:07:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 226,
+    "product_id": 6,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-22T11:23:50.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 227,
+    "product_id": 6,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-23T11:32:20.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 228,
+    "product_id": 6,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-23T09:19:10.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 229,
+    "product_id": 6,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-24T11:35:14.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 230,
+    "product_id": 6,
+    "quantity_sold": 1,
+    "sold_at": "2026-02-24T14:35:55.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 231,
+    "product_id": 6,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-25T16:36:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 232,
+    "product_id": 6,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-25T14:10:22.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 233,
+    "product_id": 6,
+    "quantity_sold": 2,
+    "sold_at": "2026-02-25T15:04:33.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 234,
+    "product_id": 6,
+    "quantity_sold": 2,
+    "sold_at": "2026-02-27T17:54:48.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 235,
+    "product_id": 6,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-01T20:19:31.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 236,
+    "product_id": 6,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-02T14:06:06.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 237,
+    "product_id": 6,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-02T20:43:15.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 238,
+    "product_id": 6,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-05T13:02:10.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 239,
+    "product_id": 6,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-05T19:26:36.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 240,
+    "product_id": 6,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-06T14:35:42.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 241,
+    "product_id": 6,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-10T16:10:44.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 242,
+    "product_id": 6,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-12T12:16:37.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 243,
+    "product_id": 6,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-12T18:59:39.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 244,
+    "product_id": 6,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-13T15:57:35.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 245,
+    "product_id": 6,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-13T15:56:15.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 246,
+    "product_id": 6,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-14T10:37:26.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 247,
+    "product_id": 6,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-14T09:37:37.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 248,
+    "product_id": 6,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-14T18:33:59.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 249,
+    "product_id": 6,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-15T18:52:14.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 250,
+    "product_id": 6,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-15T14:11:16.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 251,
+    "product_id": 6,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-16T13:43:40.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 252,
+    "product_id": 6,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-18T15:11:29.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 253,
+    "product_id": 6,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-19T20:08:43.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 254,
+    "product_id": 6,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-19T16:30:06.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 255,
+    "product_id": 6,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-22T13:52:38.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 256,
+    "product_id": 7,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-20T11:26:45.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 257,
+    "product_id": 7,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-20T19:11:44.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 258,
+    "product_id": 7,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-20T09:21:30.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 259,
+    "product_id": 7,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-21T15:58:55.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 260,
+    "product_id": 7,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-21T14:25:29.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 261,
+    "product_id": 7,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-23T12:50:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 262,
+    "product_id": 7,
+    "quantity_sold": 2,
+    "sold_at": "2026-02-23T11:01:37.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 263,
+    "product_id": 7,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-25T20:15:27.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 264,
+    "product_id": 7,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T12:07:39.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 265,
+    "product_id": 7,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-26T16:52:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 266,
+    "product_id": 7,
+    "quantity_sold": 2,
+    "sold_at": "2026-02-26T20:50:57.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 267,
+    "product_id": 7,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-26T20:04:20.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 268,
+    "product_id": 7,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-27T15:02:31.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 269,
+    "product_id": 7,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-02T19:32:22.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 270,
+    "product_id": 7,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-03T19:06:08.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 271,
+    "product_id": 7,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-04T10:18:24.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 272,
+    "product_id": 7,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-06T16:31:16.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 273,
+    "product_id": 7,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-06T13:18:07.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 274,
+    "product_id": 7,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-07T15:03:59.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 275,
+    "product_id": 7,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-09T14:06:40.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 276,
+    "product_id": 7,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-10T10:41:30.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 277,
+    "product_id": 7,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-10T10:34:18.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 278,
+    "product_id": 7,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-10T17:23:10.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 279,
+    "product_id": 7,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-10T11:20:57.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 280,
+    "product_id": 7,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-13T10:56:48.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 281,
+    "product_id": 7,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-13T13:19:20.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 282,
+    "product_id": 7,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-13T13:59:01.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 283,
+    "product_id": 7,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-15T15:31:06.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 284,
+    "product_id": 7,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-15T11:32:31.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 285,
+    "product_id": 7,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-15T16:05:54.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 286,
+    "product_id": 7,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-18T20:44:07.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 287,
+    "product_id": 7,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-20T16:49:29.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 288,
+    "product_id": 7,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-20T19:07:23.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 289,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-20T17:44:12.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 290,
+    "product_id": 8,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-20T09:31:55.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 291,
     "product_id": 8,
     "quantity_sold": 7,
-    "sold_at": "2026-03-18T19:10:00Z",
+    "sold_at": "2026-02-20T10:27:27.090557Z",
     "channel": "webshop"
+  },
+  {
+    "sale_id": 292,
+    "product_id": 8,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-20T18:17:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 293,
+    "product_id": 8,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-21T15:00:36.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 294,
+    "product_id": 8,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-21T19:12:46.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 295,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-21T18:34:19.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 296,
+    "product_id": 8,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-22T15:58:48.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 297,
+    "product_id": 8,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-22T09:32:20.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 298,
+    "product_id": 8,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-25T20:11:37.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 299,
+    "product_id": 8,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T18:14:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 300,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-27T09:55:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 301,
+    "product_id": 8,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-28T12:18:31.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 302,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-28T09:41:25.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 303,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-28T20:38:57.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 304,
+    "product_id": 8,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-02T20:55:20.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 305,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-04T15:56:57.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 306,
+    "product_id": 8,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-04T18:19:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 307,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-04T13:46:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 308,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-07T11:16:41.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 309,
+    "product_id": 8,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-07T16:28:07.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 310,
+    "product_id": 8,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-07T20:12:52.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 311,
+    "product_id": 8,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-08T13:32:35.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 312,
+    "product_id": 8,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-08T10:47:04.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 313,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-08T14:06:31.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 314,
+    "product_id": 8,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-10T14:18:47.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 315,
+    "product_id": 8,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-10T15:40:29.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 316,
+    "product_id": 8,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-11T20:31:10.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 317,
+    "product_id": 8,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-12T19:45:08.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 318,
+    "product_id": 8,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-12T11:57:33.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 319,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-15T11:21:09.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 320,
+    "product_id": 8,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-15T20:25:28.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 321,
+    "product_id": 8,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-18T10:59:41.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 322,
+    "product_id": 8,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-19T14:47:05.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 323,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-19T14:58:53.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 324,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-20T17:50:45.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 325,
+    "product_id": 8,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-20T15:03:50.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 326,
+    "product_id": 8,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-21T20:35:36.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 327,
+    "product_id": 8,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-22T17:03:50.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 328,
+    "product_id": 8,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-22T16:12:25.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 329,
+    "product_id": 9,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-21T16:03:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 330,
+    "product_id": 9,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-24T09:28:37.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 331,
+    "product_id": 9,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-24T18:08:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 332,
+    "product_id": 9,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-26T19:42:52.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 333,
+    "product_id": 9,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-26T19:20:25.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 334,
+    "product_id": 9,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-01T11:22:35.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 335,
+    "product_id": 9,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-02T14:56:26.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 336,
+    "product_id": 9,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-02T18:46:52.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 337,
+    "product_id": 9,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-04T11:11:17.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 338,
+    "product_id": 9,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-06T10:00:32.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 339,
+    "product_id": 9,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-06T14:52:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 340,
+    "product_id": 9,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-09T19:44:05.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 341,
+    "product_id": 9,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-12T12:31:35.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 342,
+    "product_id": 9,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-12T12:38:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 343,
+    "product_id": 9,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-13T10:14:52.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 344,
+    "product_id": 9,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-16T18:18:05.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 345,
+    "product_id": 9,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-16T11:42:19.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 346,
+    "product_id": 9,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-17T15:00:45.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 347,
+    "product_id": 9,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-17T11:44:03.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 348,
+    "product_id": 9,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-18T20:04:49.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 349,
+    "product_id": 9,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-18T11:29:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 350,
+    "product_id": 9,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-19T15:00:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 351,
+    "product_id": 9,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-22T10:27:44.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 352,
+    "product_id": 9,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-22T13:18:42.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 353,
+    "product_id": 9,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-22T17:10:07.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 354,
+    "product_id": 10,
+    "quantity_sold": 2,
+    "sold_at": "2026-02-20T13:16:28.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 355,
+    "product_id": 10,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-21T17:50:30.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 356,
+    "product_id": 10,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-25T13:57:43.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 357,
+    "product_id": 10,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-25T20:14:03.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 358,
+    "product_id": 10,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-26T12:02:57.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 359,
+    "product_id": 10,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-01T17:19:50.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 360,
+    "product_id": 10,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-04T13:45:14.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 361,
+    "product_id": 10,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-06T14:01:16.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 362,
+    "product_id": 10,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-07T20:25:17.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 363,
+    "product_id": 10,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-08T15:07:13.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 364,
+    "product_id": 10,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-09T11:37:14.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 365,
+    "product_id": 10,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-11T14:54:02.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 366,
+    "product_id": 10,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-12T20:18:14.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 367,
+    "product_id": 10,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-13T09:05:32.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 368,
+    "product_id": 10,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-14T15:16:53.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 369,
+    "product_id": 10,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-14T16:14:19.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 370,
+    "product_id": 10,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-15T16:38:51.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 371,
+    "product_id": 10,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-15T15:08:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 372,
+    "product_id": 10,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-16T16:38:04.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 373,
+    "product_id": 10,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-16T12:35:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 374,
+    "product_id": 10,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-20T15:29:17.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 375,
+    "product_id": 11,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-20T13:56:45.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 376,
+    "product_id": 11,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-21T20:58:23.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 377,
+    "product_id": 11,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-21T18:19:22.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 378,
+    "product_id": 11,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-22T18:28:41.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 379,
+    "product_id": 11,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-23T19:06:12.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 380,
+    "product_id": 11,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-24T11:59:24.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 381,
+    "product_id": 11,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-26T10:17:27.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 382,
+    "product_id": 11,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-27T12:57:17.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 383,
+    "product_id": 11,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-28T12:42:24.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 384,
+    "product_id": 11,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-28T14:02:10.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 385,
+    "product_id": 11,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-01T14:01:59.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 386,
+    "product_id": 11,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-01T20:03:01.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 387,
+    "product_id": 11,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-03T15:13:37.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 388,
+    "product_id": 11,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-04T15:11:40.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 389,
+    "product_id": 11,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-05T17:34:44.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 390,
+    "product_id": 11,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-05T12:17:09.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 391,
+    "product_id": 11,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-06T19:32:53.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 392,
+    "product_id": 11,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-12T11:47:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 393,
+    "product_id": 11,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-13T20:43:26.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 394,
+    "product_id": 11,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-14T14:17:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 395,
+    "product_id": 11,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-14T20:08:12.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 396,
+    "product_id": 11,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-14T12:42:26.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 397,
+    "product_id": 11,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-18T09:33:28.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 398,
+    "product_id": 11,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-19T11:26:03.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 399,
+    "product_id": 11,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-22T09:34:01.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 400,
+    "product_id": 12,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-21T16:04:23.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 401,
+    "product_id": 12,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-21T18:08:05.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 402,
+    "product_id": 12,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-21T20:10:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 403,
+    "product_id": 12,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-21T17:04:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 404,
+    "product_id": 12,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-22T14:28:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 405,
+    "product_id": 12,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-22T19:12:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 406,
+    "product_id": 12,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-22T20:09:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 407,
+    "product_id": 12,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-23T18:26:11.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 408,
+    "product_id": 12,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-23T15:59:59.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 409,
+    "product_id": 12,
+    "quantity_sold": 13,
+    "sold_at": "2026-02-23T14:12:06.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 410,
+    "product_id": 12,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-23T17:15:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 411,
+    "product_id": 12,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-24T15:30:56.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 412,
+    "product_id": 12,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-25T18:16:06.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 413,
+    "product_id": 12,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-28T13:44:43.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 414,
+    "product_id": 12,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-28T11:04:30.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 415,
+    "product_id": 12,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-01T11:07:32.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 416,
+    "product_id": 12,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-01T13:29:18.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 417,
+    "product_id": 12,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-03T11:09:21.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 418,
+    "product_id": 12,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-06T20:37:41.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 419,
+    "product_id": 12,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-06T13:08:17.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 420,
+    "product_id": 12,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-07T18:19:50.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 421,
+    "product_id": 12,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-07T11:43:38.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 422,
+    "product_id": 12,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-07T11:15:24.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 423,
+    "product_id": 12,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-09T20:35:23.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 424,
+    "product_id": 12,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-09T19:23:48.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 425,
+    "product_id": 12,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-11T19:19:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 426,
+    "product_id": 12,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-11T09:16:03.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 427,
+    "product_id": 12,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-12T14:47:00.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 428,
+    "product_id": 12,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-12T18:22:19.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 429,
+    "product_id": 12,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-12T09:37:09.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 430,
+    "product_id": 12,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-12T10:29:09.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 431,
+    "product_id": 12,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-13T13:53:23.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 432,
+    "product_id": 12,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-14T13:44:47.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 433,
+    "product_id": 12,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-14T13:15:20.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 434,
+    "product_id": 12,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-15T14:03:16.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 435,
+    "product_id": 12,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-16T14:57:01.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 436,
+    "product_id": 12,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-18T13:24:48.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 437,
+    "product_id": 12,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-18T09:11:39.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 438,
+    "product_id": 12,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-19T09:56:03.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 439,
+    "product_id": 12,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-19T15:31:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 440,
+    "product_id": 12,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-20T13:51:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 441,
+    "product_id": 12,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-20T15:02:12.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 442,
+    "product_id": 12,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-21T14:43:11.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 443,
+    "product_id": 12,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-21T13:44:18.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 444,
+    "product_id": 12,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-21T20:23:01.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 445,
+    "product_id": 12,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-21T18:15:47.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 446,
+    "product_id": 12,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-22T19:25:34.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 447,
+    "product_id": 12,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-22T18:01:43.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 448,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-21T11:16:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 449,
+    "product_id": 13,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-22T15:29:58.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 450,
+    "product_id": 13,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-23T12:53:58.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 451,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-25T19:36:03.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 452,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-26T13:41:37.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 453,
+    "product_id": 13,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-27T15:34:55.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 454,
+    "product_id": 13,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-27T15:32:46.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 455,
+    "product_id": 13,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-27T19:55:00.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 456,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-28T10:45:04.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 457,
+    "product_id": 13,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-28T09:23:18.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 458,
+    "product_id": 13,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-02T18:35:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 459,
+    "product_id": 13,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-04T12:40:23.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 460,
+    "product_id": 13,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-06T13:41:21.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 461,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-06T17:37:10.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 462,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-06T10:03:31.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 463,
+    "product_id": 13,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-06T16:02:58.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 464,
+    "product_id": 13,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-07T09:43:29.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 465,
+    "product_id": 13,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-07T20:08:25.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 466,
+    "product_id": 13,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-08T13:20:43.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 467,
+    "product_id": 13,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-08T11:13:15.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 468,
+    "product_id": 13,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-08T16:36:00.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 469,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-08T10:27:29.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 470,
+    "product_id": 13,
+    "quantity_sold": 16,
+    "sold_at": "2026-03-09T11:42:27.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 471,
+    "product_id": 13,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-09T14:23:15.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 472,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-10T10:04:18.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 473,
+    "product_id": 13,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-10T17:34:17.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 474,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-11T16:57:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 475,
+    "product_id": 13,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-13T09:01:47.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 476,
+    "product_id": 13,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-14T20:02:14.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 477,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-14T19:05:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 478,
+    "product_id": 13,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-14T12:29:36.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 479,
+    "product_id": 13,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-16T11:41:37.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 480,
+    "product_id": 13,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-16T11:55:56.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 481,
+    "product_id": 13,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-16T13:18:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 482,
+    "product_id": 13,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-17T13:46:32.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 483,
+    "product_id": 13,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-17T20:51:12.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 484,
+    "product_id": 13,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-17T09:04:52.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 485,
+    "product_id": 13,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-19T19:44:25.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 486,
+    "product_id": 13,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-19T12:01:52.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 487,
+    "product_id": 13,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-19T16:13:23.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 488,
+    "product_id": 13,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-19T13:40:54.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 489,
+    "product_id": 13,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-19T10:15:52.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 490,
+    "product_id": 13,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-20T10:01:11.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 491,
+    "product_id": 13,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-20T09:23:01.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 492,
+    "product_id": 13,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-20T10:48:47.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 493,
+    "product_id": 14,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-20T14:34:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 494,
+    "product_id": 14,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-20T20:19:47.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 495,
+    "product_id": 14,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-20T16:46:20.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 496,
+    "product_id": 14,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-22T13:35:06.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 497,
+    "product_id": 14,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-24T18:15:46.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 498,
+    "product_id": 14,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-24T17:06:39.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 499,
+    "product_id": 14,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-26T20:59:21.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 500,
+    "product_id": 14,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-27T20:29:00.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 501,
+    "product_id": 14,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-27T15:54:22.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 502,
+    "product_id": 14,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-05T15:22:14.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 503,
+    "product_id": 14,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-05T12:15:24.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 504,
+    "product_id": 14,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-07T11:28:59.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 505,
+    "product_id": 14,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-09T15:25:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 506,
+    "product_id": 14,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-09T13:48:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 507,
+    "product_id": 14,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-12T15:23:07.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 508,
+    "product_id": 14,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-12T09:04:07.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 509,
+    "product_id": 14,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-15T17:51:11.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 510,
+    "product_id": 14,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-15T12:12:50.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 511,
+    "product_id": 14,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-16T13:04:12.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 512,
+    "product_id": 14,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-16T15:02:45.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 513,
+    "product_id": 14,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-17T17:09:20.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 514,
+    "product_id": 14,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-17T18:23:37.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 515,
+    "product_id": 14,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-20T15:28:50.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 516,
+    "product_id": 14,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-21T16:49:47.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 517,
+    "product_id": 14,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-21T16:20:52.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 518,
+    "product_id": 15,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-20T10:59:59.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 519,
+    "product_id": 15,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-22T18:35:39.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 520,
+    "product_id": 15,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-23T18:00:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 521,
+    "product_id": 15,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-23T11:22:11.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 522,
+    "product_id": 15,
+    "quantity_sold": 1,
+    "sold_at": "2026-02-26T09:32:16.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 523,
+    "product_id": 15,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-01T17:09:54.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 524,
+    "product_id": 15,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-01T11:49:50.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 525,
+    "product_id": 15,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-02T15:21:37.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 526,
+    "product_id": 15,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-02T15:03:48.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 527,
+    "product_id": 15,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-06T09:06:47.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 528,
+    "product_id": 15,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-06T13:32:13.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 529,
+    "product_id": 15,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-06T11:07:59.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 530,
+    "product_id": 15,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-09T13:46:26.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 531,
+    "product_id": 15,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-10T10:54:09.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 532,
+    "product_id": 15,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-11T09:05:28.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 533,
+    "product_id": 15,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-11T15:03:41.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 534,
+    "product_id": 15,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-11T18:33:36.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 535,
+    "product_id": 15,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-14T14:30:50.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 536,
+    "product_id": 15,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-14T17:41:23.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 537,
+    "product_id": 15,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-15T19:57:31.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 538,
+    "product_id": 15,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-19T19:36:50.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 539,
+    "product_id": 15,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-19T19:20:01.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 540,
+    "product_id": 15,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-20T11:51:00.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 541,
+    "product_id": 15,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-21T14:46:01.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 542,
+    "product_id": 15,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-21T15:19:08.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 543,
+    "product_id": 16,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-20T20:16:09.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 544,
+    "product_id": 16,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-20T15:19:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 545,
+    "product_id": 16,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-21T17:27:16.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 546,
+    "product_id": 16,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-22T16:54:44.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 547,
+    "product_id": 16,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-23T15:50:09.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 548,
+    "product_id": 16,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-23T13:58:40.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 549,
+    "product_id": 16,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-24T12:28:06.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 550,
+    "product_id": 16,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-24T12:34:12.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 551,
+    "product_id": 16,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-24T12:01:08.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 552,
+    "product_id": 16,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T16:10:25.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 553,
+    "product_id": 16,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-26T15:46:44.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 554,
+    "product_id": 16,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-26T10:26:24.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 555,
+    "product_id": 16,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-27T12:27:51.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 556,
+    "product_id": 16,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-27T20:54:36.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 557,
+    "product_id": 16,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-03T14:07:15.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 558,
+    "product_id": 16,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-03T14:19:52.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 559,
+    "product_id": 16,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-05T17:08:50.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 560,
+    "product_id": 16,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-05T13:42:43.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 561,
+    "product_id": 16,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-05T11:22:14.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 562,
+    "product_id": 16,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-06T13:46:14.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 563,
+    "product_id": 16,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-06T20:51:43.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 564,
+    "product_id": 16,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-06T12:38:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 565,
+    "product_id": 16,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-09T15:44:53.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 566,
+    "product_id": 16,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-09T19:34:17.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 567,
+    "product_id": 16,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-10T20:11:05.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 568,
+    "product_id": 16,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-13T18:21:14.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 569,
+    "product_id": 16,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-13T09:05:43.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 570,
+    "product_id": 16,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-14T13:46:37.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 571,
+    "product_id": 16,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-14T13:14:06.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 572,
+    "product_id": 16,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-15T13:18:49.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 573,
+    "product_id": 16,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-17T15:56:26.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 574,
+    "product_id": 16,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-17T16:46:29.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 575,
+    "product_id": 16,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-19T17:32:33.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 576,
+    "product_id": 16,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-19T20:12:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 577,
+    "product_id": 16,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-19T19:30:12.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 578,
+    "product_id": 16,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-19T16:24:15.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 579,
+    "product_id": 16,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-20T13:06:32.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 580,
+    "product_id": 16,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-20T09:03:47.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 581,
+    "product_id": 16,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-20T18:13:55.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 582,
+    "product_id": 16,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-20T12:47:45.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 583,
+    "product_id": 16,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-21T16:17:51.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 584,
+    "product_id": 16,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-21T20:56:08.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 585,
+    "product_id": 16,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-21T16:12:46.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 586,
+    "product_id": 16,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-21T09:46:13.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 587,
+    "product_id": 16,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-22T10:45:40.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 588,
+    "product_id": 16,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-22T20:02:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 589,
+    "product_id": 16,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-22T18:40:37.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 590,
+    "product_id": 17,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-20T10:30:10.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 591,
+    "product_id": 17,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-21T18:45:45.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 592,
+    "product_id": 17,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-21T19:20:31.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 593,
+    "product_id": 17,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-21T18:56:57.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 594,
+    "product_id": 17,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-22T17:32:39.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 595,
+    "product_id": 17,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-23T10:32:10.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 596,
+    "product_id": 17,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-23T17:08:05.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 597,
+    "product_id": 17,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-23T11:13:55.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 598,
+    "product_id": 17,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-24T15:06:13.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 599,
+    "product_id": 17,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-24T16:18:24.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 600,
+    "product_id": 17,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-27T15:23:51.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 601,
+    "product_id": 17,
+    "quantity_sold": 16,
+    "sold_at": "2026-02-27T11:03:03.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 602,
+    "product_id": 17,
+    "quantity_sold": 14,
+    "sold_at": "2026-02-27T10:21:19.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 603,
+    "product_id": 17,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-27T16:12:43.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 604,
+    "product_id": 17,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-28T17:27:55.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 605,
+    "product_id": 17,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-03T11:22:07.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 606,
+    "product_id": 17,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-06T19:30:05.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 607,
+    "product_id": 17,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-07T14:07:19.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 608,
+    "product_id": 17,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-07T20:50:01.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 609,
+    "product_id": 17,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-08T11:48:49.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 610,
+    "product_id": 17,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-08T20:28:06.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 611,
+    "product_id": 17,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-08T13:23:49.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 612,
+    "product_id": 17,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-09T16:49:53.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 613,
+    "product_id": 17,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-10T15:05:52.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 614,
+    "product_id": 17,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-10T09:25:26.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 615,
+    "product_id": 17,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-11T09:06:58.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 616,
+    "product_id": 17,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-12T11:08:47.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 617,
+    "product_id": 17,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-13T14:38:43.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 618,
+    "product_id": 17,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-13T17:15:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 619,
+    "product_id": 17,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-14T10:36:33.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 620,
+    "product_id": 17,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-14T13:06:51.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 621,
+    "product_id": 17,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-15T16:32:34.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 622,
+    "product_id": 17,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-15T11:37:58.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 623,
+    "product_id": 17,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-15T09:33:55.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 624,
+    "product_id": 17,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-16T11:18:06.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 625,
+    "product_id": 17,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-16T12:29:55.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 626,
+    "product_id": 17,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-16T11:11:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 627,
+    "product_id": 17,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-17T13:32:01.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 628,
+    "product_id": 17,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-17T13:23:50.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 629,
+    "product_id": 17,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-17T10:19:52.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 630,
+    "product_id": 17,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-17T14:36:22.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 631,
+    "product_id": 17,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-18T16:14:17.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 632,
+    "product_id": 17,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-18T11:49:39.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 633,
+    "product_id": 17,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-18T15:54:59.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 634,
+    "product_id": 17,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-18T10:14:07.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 635,
+    "product_id": 17,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-19T15:42:15.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 636,
+    "product_id": 17,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-19T19:04:47.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 637,
+    "product_id": 17,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-20T19:00:28.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 638,
+    "product_id": 17,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-20T11:37:26.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 639,
+    "product_id": 17,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-21T12:17:43.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 640,
+    "product_id": 17,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-21T09:14:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 641,
+    "product_id": 17,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-21T10:38:31.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 642,
+    "product_id": 17,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-22T15:58:24.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 643,
+    "product_id": 17,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-22T20:18:40.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 644,
+    "product_id": 18,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-20T20:10:01.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 645,
+    "product_id": 18,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-20T09:54:54.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 646,
+    "product_id": 18,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-21T14:58:38.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 647,
+    "product_id": 18,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-21T11:18:13.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 648,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-21T15:34:18.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 649,
+    "product_id": 18,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-21T17:01:38.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 650,
+    "product_id": 18,
+    "quantity_sold": 2,
+    "sold_at": "2026-02-22T11:35:06.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 651,
+    "product_id": 18,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-23T13:17:03.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 652,
+    "product_id": 18,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-23T18:23:53.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 653,
+    "product_id": 18,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-25T12:34:12.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 654,
+    "product_id": 18,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-25T14:09:44.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 655,
+    "product_id": 18,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-25T09:33:41.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 656,
+    "product_id": 18,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-27T14:24:36.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 657,
+    "product_id": 18,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-27T11:16:10.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 658,
+    "product_id": 18,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-28T16:04:24.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 659,
+    "product_id": 18,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-28T09:02:01.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 660,
+    "product_id": 18,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-28T13:05:01.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 661,
+    "product_id": 18,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-01T16:16:45.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 662,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-01T09:59:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 663,
+    "product_id": 18,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-02T09:59:39.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 664,
+    "product_id": 18,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-02T09:38:59.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 665,
+    "product_id": 18,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-02T20:22:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 666,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-02T18:48:51.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 667,
+    "product_id": 18,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-04T13:58:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 668,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-04T18:42:47.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 669,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-05T14:22:51.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 670,
+    "product_id": 18,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-05T10:12:11.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 671,
+    "product_id": 18,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-08T10:01:07.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 672,
+    "product_id": 18,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-08T12:02:51.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 673,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-08T10:25:32.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 674,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-09T10:44:12.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 675,
+    "product_id": 18,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-09T11:29:52.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 676,
+    "product_id": 18,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-10T10:45:44.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 677,
+    "product_id": 18,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-10T14:21:08.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 678,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-12T17:01:27.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 679,
+    "product_id": 18,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-12T17:47:50.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 680,
+    "product_id": 18,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-12T17:30:19.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 681,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-13T15:10:36.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 682,
+    "product_id": 18,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-13T18:25:32.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 683,
+    "product_id": 18,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-13T11:19:25.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 684,
+    "product_id": 18,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-14T15:45:02.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 685,
+    "product_id": 18,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-14T14:26:22.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 686,
+    "product_id": 18,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-15T11:48:52.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 687,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-15T09:30:50.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 688,
+    "product_id": 18,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-15T16:00:48.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 689,
+    "product_id": 18,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-16T13:02:23.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 690,
+    "product_id": 18,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-16T14:29:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 691,
+    "product_id": 18,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-20T20:55:35.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 692,
+    "product_id": 18,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-20T13:13:22.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 693,
+    "product_id": 19,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-20T19:57:29.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 694,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-20T13:51:02.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 695,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-20T16:21:09.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 696,
+    "product_id": 19,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-20T18:31:09.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 697,
+    "product_id": 19,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-21T09:54:06.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 698,
+    "product_id": 19,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-21T12:58:27.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 699,
+    "product_id": 19,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-21T13:03:54.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 700,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-22T20:54:08.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 701,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-22T09:58:01.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 702,
+    "product_id": 19,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-22T10:57:04.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 703,
+    "product_id": 19,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-23T11:53:31.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 704,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-23T20:10:38.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 705,
+    "product_id": 19,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-24T18:24:43.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 706,
+    "product_id": 19,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-28T18:52:07.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 707,
+    "product_id": 19,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-28T14:18:09.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 708,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-28T18:55:13.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 709,
+    "product_id": 19,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-28T15:50:48.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 710,
+    "product_id": 19,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-02T16:46:29.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 711,
+    "product_id": 19,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-02T13:01:30.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 712,
+    "product_id": 19,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-03T12:33:10.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 713,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-03T18:48:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 714,
+    "product_id": 19,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-04T19:43:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 715,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-04T10:01:03.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 716,
+    "product_id": 19,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-04T10:53:41.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 717,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-05T15:03:36.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 718,
+    "product_id": 19,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-05T12:36:03.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 719,
+    "product_id": 19,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-05T19:22:06.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 720,
+    "product_id": 19,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-06T17:07:58.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 721,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-06T13:33:56.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 722,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-06T12:26:20.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 723,
+    "product_id": 19,
+    "quantity_sold": 15,
+    "sold_at": "2026-03-07T11:37:49.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 724,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-07T13:21:14.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 725,
+    "product_id": 19,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-07T20:14:24.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 726,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-07T11:16:47.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 727,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-08T10:17:21.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 728,
+    "product_id": 19,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-08T18:44:30.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 729,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-08T16:04:25.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 730,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-08T13:24:43.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 731,
+    "product_id": 19,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-09T16:15:26.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 732,
+    "product_id": 19,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-09T18:43:21.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 733,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-09T11:46:31.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 734,
+    "product_id": 19,
+    "quantity_sold": 14,
+    "sold_at": "2026-03-10T15:11:11.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 735,
+    "product_id": 19,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-11T19:10:43.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 736,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-11T18:00:42.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 737,
+    "product_id": 19,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-12T11:07:38.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 738,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-12T09:03:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 739,
+    "product_id": 19,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-13T19:07:51.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 740,
+    "product_id": 19,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-13T09:14:40.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 741,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-14T17:20:24.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 742,
+    "product_id": 19,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-14T15:18:12.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 743,
+    "product_id": 19,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-14T19:58:25.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 744,
+    "product_id": 19,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-14T20:05:14.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 745,
+    "product_id": 19,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-15T11:20:18.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 746,
+    "product_id": 19,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-15T10:01:40.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 747,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-15T13:00:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 748,
+    "product_id": 19,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-15T14:59:04.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 749,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-16T15:40:32.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 750,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-16T09:39:08.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 751,
+    "product_id": 19,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-16T20:46:52.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 752,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-17T09:20:20.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 753,
+    "product_id": 19,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-17T16:08:55.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 754,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-17T17:18:49.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 755,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-18T18:08:49.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 756,
+    "product_id": 19,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-18T10:23:08.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 757,
+    "product_id": 19,
+    "quantity_sold": 17,
+    "sold_at": "2026-03-20T15:16:10.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 758,
+    "product_id": 19,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-20T12:55:02.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 759,
+    "product_id": 19,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-20T14:46:10.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 760,
+    "product_id": 19,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-20T12:23:13.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 761,
+    "product_id": 19,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-20T19:46:06.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 762,
+    "product_id": 19,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-22T19:55:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 763,
+    "product_id": 19,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-22T17:52:38.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 764,
+    "product_id": 20,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-20T19:19:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 765,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-20T17:44:38.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 766,
+    "product_id": 20,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-20T14:00:13.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 767,
+    "product_id": 20,
+    "quantity_sold": 2,
+    "sold_at": "2026-02-21T16:15:11.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 768,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-21T09:51:11.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 769,
+    "product_id": 20,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-23T19:01:03.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 770,
+    "product_id": 20,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-23T09:12:54.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 771,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-24T10:49:22.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 772,
+    "product_id": 20,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-24T20:19:08.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 773,
+    "product_id": 20,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T15:34:11.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 774,
+    "product_id": 20,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-26T12:49:00.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 775,
+    "product_id": 20,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-26T14:15:19.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 776,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-27T11:46:16.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 777,
+    "product_id": 20,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-27T12:43:46.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 778,
+    "product_id": 20,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-28T11:40:54.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 779,
+    "product_id": 20,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-28T12:40:56.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 780,
+    "product_id": 20,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-01T10:33:54.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 781,
+    "product_id": 20,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-02T20:02:08.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 782,
+    "product_id": 20,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-02T14:36:47.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 783,
+    "product_id": 20,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-02T15:43:49.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 784,
+    "product_id": 20,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-03T09:12:34.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 785,
+    "product_id": 20,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-03T16:58:21.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 786,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-05T19:19:03.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 787,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-05T18:40:53.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 788,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-05T11:40:30.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 789,
+    "product_id": 20,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-06T10:03:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 790,
+    "product_id": 20,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-08T17:08:41.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 791,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-08T16:10:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 792,
+    "product_id": 20,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-08T14:33:55.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 793,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-09T16:43:20.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 794,
+    "product_id": 20,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-09T09:29:18.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 795,
+    "product_id": 20,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-11T12:14:13.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 796,
+    "product_id": 20,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-11T20:21:54.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 797,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-11T10:57:46.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 798,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-12T17:19:09.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 799,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-12T17:17:55.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 800,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-13T17:56:34.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 801,
+    "product_id": 20,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-13T09:57:00.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 802,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-14T13:37:32.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 803,
+    "product_id": 20,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-14T15:23:28.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 804,
+    "product_id": 20,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-14T15:38:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 805,
+    "product_id": 20,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-14T16:58:15.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 806,
+    "product_id": 20,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-16T09:31:44.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 807,
+    "product_id": 20,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-17T15:18:40.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 808,
+    "product_id": 20,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-19T10:25:32.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 809,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-19T13:49:12.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 810,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-19T19:58:55.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 811,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-19T12:31:02.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 812,
+    "product_id": 20,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-20T13:26:55.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 813,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-20T10:45:09.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 814,
+    "product_id": 20,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-21T11:35:46.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 815,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-21T15:20:24.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 816,
+    "product_id": 20,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-21T17:25:38.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 817,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-22T13:18:59.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 818,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-22T15:35:36.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 819,
+    "product_id": 20,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-22T14:14:03.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 820,
+    "product_id": 20,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-22T17:26:51.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 821,
+    "product_id": 21,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-20T11:23:37.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 822,
+    "product_id": 21,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-21T12:36:32.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 823,
+    "product_id": 21,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-24T13:16:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 824,
+    "product_id": 21,
+    "quantity_sold": 1,
+    "sold_at": "2026-02-25T10:53:48.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 825,
+    "product_id": 21,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T14:16:43.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 826,
+    "product_id": 21,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-27T13:10:38.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 827,
+    "product_id": 21,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-05T09:21:11.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 828,
+    "product_id": 21,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-06T18:56:18.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 829,
+    "product_id": 21,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-07T15:07:36.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 830,
+    "product_id": 21,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-08T13:45:48.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 831,
+    "product_id": 21,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-12T20:03:20.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 832,
+    "product_id": 21,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-13T11:06:45.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 833,
+    "product_id": 21,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-13T16:50:01.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 834,
+    "product_id": 21,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-13T12:28:25.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 835,
+    "product_id": 21,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-15T16:24:22.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 836,
+    "product_id": 21,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-15T12:25:43.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 837,
+    "product_id": 21,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-15T14:40:17.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 838,
+    "product_id": 21,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-17T11:43:53.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 839,
+    "product_id": 21,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-18T20:17:48.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 840,
+    "product_id": 21,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-18T20:56:14.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 841,
+    "product_id": 21,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-19T13:37:44.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 842,
+    "product_id": 21,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-19T12:30:07.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 843,
+    "product_id": 22,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-20T17:20:25.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 844,
+    "product_id": 22,
+    "quantity_sold": 1,
+    "sold_at": "2026-02-21T18:01:37.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 845,
+    "product_id": 22,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-21T15:09:56.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 846,
+    "product_id": 22,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-21T20:15:36.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 847,
+    "product_id": 22,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-21T18:58:40.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 848,
+    "product_id": 22,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-22T19:34:42.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 849,
+    "product_id": 22,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-22T19:56:48.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 850,
+    "product_id": 22,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-23T12:42:51.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 851,
+    "product_id": 22,
+    "quantity_sold": 1,
+    "sold_at": "2026-02-24T11:21:25.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 852,
+    "product_id": 22,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T15:11:27.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 853,
+    "product_id": 22,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-26T13:38:34.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 854,
+    "product_id": 22,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-26T18:19:16.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 855,
+    "product_id": 22,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-27T09:38:23.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 856,
+    "product_id": 22,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-27T13:29:57.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 857,
+    "product_id": 22,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-28T18:53:43.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 858,
+    "product_id": 22,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-28T14:30:23.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 859,
+    "product_id": 22,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-02T18:06:54.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 860,
+    "product_id": 22,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-02T11:28:24.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 861,
+    "product_id": 22,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-03T20:30:07.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 862,
+    "product_id": 22,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-03T09:16:40.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 863,
+    "product_id": 22,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-04T09:11:28.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 864,
+    "product_id": 22,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-04T09:44:08.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 865,
+    "product_id": 22,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-05T15:48:13.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 866,
+    "product_id": 22,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-06T14:14:33.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 867,
+    "product_id": 22,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-06T20:08:02.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 868,
+    "product_id": 22,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-06T10:54:27.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 869,
+    "product_id": 22,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-08T10:41:39.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 870,
+    "product_id": 22,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-08T11:37:35.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 871,
+    "product_id": 22,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-08T16:05:53.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 872,
+    "product_id": 22,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-09T20:17:42.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 873,
+    "product_id": 22,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-09T17:17:15.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 874,
+    "product_id": 22,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-11T12:46:38.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 875,
+    "product_id": 22,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-12T18:19:45.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 876,
+    "product_id": 22,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-12T13:06:53.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 877,
+    "product_id": 22,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-13T09:33:44.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 878,
+    "product_id": 22,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-13T18:19:04.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 879,
+    "product_id": 22,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-15T19:39:33.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 880,
+    "product_id": 22,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-15T11:29:37.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 881,
+    "product_id": 22,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-16T12:22:39.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 882,
+    "product_id": 22,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-16T18:05:39.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 883,
+    "product_id": 22,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-18T13:26:01.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 884,
+    "product_id": 22,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-18T13:52:18.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 885,
+    "product_id": 22,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-19T10:43:39.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 886,
+    "product_id": 22,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-21T20:58:43.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 887,
+    "product_id": 22,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-21T15:21:43.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 888,
+    "product_id": 22,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-22T10:14:11.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 889,
+    "product_id": 22,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-22T12:35:29.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 890,
+    "product_id": 22,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-22T13:30:37.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 891,
+    "product_id": 23,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-20T17:48:01.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 892,
+    "product_id": 23,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-20T20:20:44.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 893,
+    "product_id": 23,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-21T13:28:23.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 894,
+    "product_id": 23,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-22T10:59:53.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 895,
+    "product_id": 23,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-23T15:40:56.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 896,
+    "product_id": 23,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-23T18:37:58.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 897,
+    "product_id": 23,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-23T16:44:58.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 898,
+    "product_id": 23,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-25T16:48:00.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 899,
+    "product_id": 23,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-26T19:43:30.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 900,
+    "product_id": 23,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-26T16:47:03.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 901,
+    "product_id": 23,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-26T12:24:50.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 902,
+    "product_id": 23,
+    "quantity_sold": 3,
+    "sold_at": "2026-02-27T11:07:13.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 903,
+    "product_id": 23,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-01T13:24:13.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 904,
+    "product_id": 23,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-01T09:34:56.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 905,
+    "product_id": 23,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-02T11:10:21.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 906,
+    "product_id": 23,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-03T15:47:45.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 907,
+    "product_id": 23,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-03T09:31:19.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 908,
+    "product_id": 23,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-07T11:30:17.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 909,
+    "product_id": 23,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-07T19:49:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 910,
+    "product_id": 23,
+    "quantity_sold": 1,
+    "sold_at": "2026-03-09T18:01:43.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 911,
+    "product_id": 23,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-10T15:23:40.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 912,
+    "product_id": 23,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-11T11:22:05.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 913,
+    "product_id": 23,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-11T20:16:35.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 914,
+    "product_id": 23,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-12T20:26:08.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 915,
+    "product_id": 23,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-12T17:23:30.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 916,
+    "product_id": 23,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-19T16:59:44.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 917,
+    "product_id": 23,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-19T10:04:13.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 918,
+    "product_id": 23,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-20T19:13:11.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 919,
+    "product_id": 23,
+    "quantity_sold": 2,
+    "sold_at": "2026-03-20T16:58:00.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 920,
+    "product_id": 23,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-20T15:25:51.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 921,
+    "product_id": 23,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-21T18:10:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 922,
+    "product_id": 23,
+    "quantity_sold": 3,
+    "sold_at": "2026-03-21T14:46:08.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 923,
+    "product_id": 23,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-22T17:30:11.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 924,
+    "product_id": 24,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-21T20:45:27.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 925,
+    "product_id": 24,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-21T12:22:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 926,
+    "product_id": 24,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-21T16:23:54.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 927,
+    "product_id": 24,
+    "quantity_sold": 1,
+    "sold_at": "2026-02-23T11:08:26.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 928,
+    "product_id": 24,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-23T14:59:22.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 929,
+    "product_id": 24,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-24T20:05:09.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 930,
+    "product_id": 24,
+    "quantity_sold": 12,
+    "sold_at": "2026-02-24T09:58:46.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 931,
+    "product_id": 24,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-24T11:35:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 932,
+    "product_id": 24,
+    "quantity_sold": 5,
+    "sold_at": "2026-02-25T16:45:40.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 933,
+    "product_id": 24,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-25T13:44:36.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 934,
+    "product_id": 24,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-27T16:56:27.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 935,
+    "product_id": 24,
+    "quantity_sold": 11,
+    "sold_at": "2026-02-27T13:49:24.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 936,
+    "product_id": 24,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-27T17:53:02.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 937,
+    "product_id": 24,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-01T15:58:22.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 938,
+    "product_id": 24,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-01T16:51:11.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 939,
+    "product_id": 24,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-01T12:41:37.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 940,
+    "product_id": 24,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-02T10:14:21.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 941,
+    "product_id": 24,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-02T20:08:43.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 942,
+    "product_id": 24,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-03T15:24:49.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 943,
+    "product_id": 24,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-04T10:13:07.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 944,
+    "product_id": 24,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-04T10:58:14.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 945,
+    "product_id": 24,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-04T14:05:14.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 946,
+    "product_id": 24,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-05T19:14:42.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 947,
+    "product_id": 24,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-05T18:53:32.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 948,
+    "product_id": 24,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-07T19:00:43.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 949,
+    "product_id": 24,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-07T15:52:02.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 950,
+    "product_id": 24,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-07T09:28:54.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 951,
+    "product_id": 24,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-07T18:07:36.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 952,
+    "product_id": 24,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-08T09:44:45.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 953,
+    "product_id": 24,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-09T15:02:17.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 954,
+    "product_id": 24,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-09T15:54:33.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 955,
+    "product_id": 24,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-10T15:10:50.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 956,
+    "product_id": 24,
+    "quantity_sold": 14,
+    "sold_at": "2026-03-10T09:13:13.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 957,
+    "product_id": 24,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-11T11:19:56.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 958,
+    "product_id": 24,
+    "quantity_sold": 6,
+    "sold_at": "2026-03-11T17:22:56.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 959,
+    "product_id": 24,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-12T11:00:14.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 960,
+    "product_id": 24,
+    "quantity_sold": 4,
+    "sold_at": "2026-03-12T14:22:03.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 961,
+    "product_id": 24,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-12T12:55:15.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 962,
+    "product_id": 24,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-14T10:59:06.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 963,
+    "product_id": 24,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-15T11:26:43.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 964,
+    "product_id": 24,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-16T17:31:09.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 965,
+    "product_id": 24,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-16T10:14:22.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 966,
+    "product_id": 24,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-17T13:12:57.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 967,
+    "product_id": 24,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-18T20:03:49.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 968,
+    "product_id": 24,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-19T16:29:10.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 969,
+    "product_id": 24,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-19T09:09:29.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 970,
+    "product_id": 24,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-19T19:28:26.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 971,
+    "product_id": 24,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-20T12:07:32.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 972,
+    "product_id": 24,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-20T19:07:46.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 973,
+    "product_id": 24,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-20T09:59:37.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 974,
+    "product_id": 24,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-22T16:48:15.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 975,
+    "product_id": 24,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-22T11:51:44.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 976,
+    "product_id": 24,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-22T14:46:46.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 977,
+    "product_id": 25,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-20T14:34:54.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 978,
+    "product_id": 25,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-21T19:07:23.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 979,
+    "product_id": 25,
+    "quantity_sold": 13,
+    "sold_at": "2026-02-21T09:35:53.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 980,
+    "product_id": 25,
+    "quantity_sold": 4,
+    "sold_at": "2026-02-21T19:29:29.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 981,
+    "product_id": 25,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-22T17:27:24.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 982,
+    "product_id": 25,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-22T18:53:54.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 983,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-22T17:02:47.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 984,
+    "product_id": 25,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-27T17:31:18.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 985,
+    "product_id": 25,
+    "quantity_sold": 6,
+    "sold_at": "2026-02-27T11:05:18.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 986,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-27T09:06:45.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 987,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-02-27T17:49:55.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 988,
+    "product_id": 25,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-28T11:20:41.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 989,
+    "product_id": 25,
+    "quantity_sold": 10,
+    "sold_at": "2026-02-28T12:41:46.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 990,
+    "product_id": 25,
+    "quantity_sold": 9,
+    "sold_at": "2026-02-28T17:41:46.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 991,
+    "product_id": 25,
+    "quantity_sold": 7,
+    "sold_at": "2026-02-28T16:28:28.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 992,
+    "product_id": 25,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-02T13:41:26.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 993,
+    "product_id": 25,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-02T12:04:35.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 994,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-03T17:12:56.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 995,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-04T20:15:39.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 996,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-04T15:02:04.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 997,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-05T15:26:27.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 998,
+    "product_id": 25,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-05T20:53:36.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 999,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-05T11:38:36.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 1000,
+    "product_id": 25,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-07T10:23:42.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1001,
+    "product_id": 25,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-07T11:53:12.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 1002,
+    "product_id": 25,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-08T12:16:14.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 1003,
+    "product_id": 25,
+    "quantity_sold": 5,
+    "sold_at": "2026-03-08T15:05:04.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 1004,
+    "product_id": 25,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-08T14:31:16.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 1005,
+    "product_id": 25,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-09T14:36:51.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1006,
+    "product_id": 25,
+    "quantity_sold": 11,
+    "sold_at": "2026-03-10T09:50:23.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 1007,
+    "product_id": 25,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-10T14:57:28.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 1008,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-12T11:28:54.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 1009,
+    "product_id": 25,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-12T14:44:49.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1010,
+    "product_id": 25,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-13T11:39:03.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 1011,
+    "product_id": 25,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-13T12:45:34.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1012,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-14T14:31:04.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 1013,
+    "product_id": 25,
+    "quantity_sold": 7,
+    "sold_at": "2026-03-14T10:33:03.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1014,
+    "product_id": 25,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-15T18:07:09.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 1015,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-15T10:46:11.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 1016,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-15T11:26:09.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1017,
+    "product_id": 25,
+    "quantity_sold": 13,
+    "sold_at": "2026-03-16T15:59:18.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1018,
+    "product_id": 25,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-16T17:34:02.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1019,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-17T16:34:07.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1020,
+    "product_id": 25,
+    "quantity_sold": 15,
+    "sold_at": "2026-03-17T17:37:36.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1021,
+    "product_id": 25,
+    "quantity_sold": 8,
+    "sold_at": "2026-03-18T18:30:38.090557Z",
+    "channel": "store"
+  },
+  {
+    "sale_id": 1022,
+    "product_id": 25,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-18T15:29:13.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1023,
+    "product_id": 25,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-18T18:44:04.090557Z",
+    "channel": "marketplace"
+  },
+  {
+    "sale_id": 1024,
+    "product_id": 25,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-19T14:07:49.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1025,
+    "product_id": 25,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-19T15:45:20.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1026,
+    "product_id": 25,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-19T16:39:02.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1027,
+    "product_id": 25,
+    "quantity_sold": 10,
+    "sold_at": "2026-03-19T10:16:07.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1028,
+    "product_id": 25,
+    "quantity_sold": 12,
+    "sold_at": "2026-03-21T20:15:10.090557Z",
+    "channel": "webshop"
+  },
+  {
+    "sale_id": 1029,
+    "product_id": 25,
+    "quantity_sold": 9,
+    "sold_at": "2026-03-21T09:41:30.090557Z",
+    "channel": "store"
   }
 ]

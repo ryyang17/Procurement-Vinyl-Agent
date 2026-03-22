@@ -4,6 +4,51 @@ from agent.procurement_data import ProcurementDatabase
 from agent.spotify_integration import SpotifyClient
 
 
+def market_popularity_node(state: ProcurementState) -> Dict[str, Any]:
+    """
+    Node for market popularity analysis using Spotify.
+    Runs before the new-release check to enrich procurement decisions.
+    """
+    print("📈 MARKET POPULARITY ANALYSIS (Spotify)")
+    db = ProcurementDatabase()
+    spotify_client = SpotifyClient()
+
+    country = getattr(state, "country", "US")
+    market_limit = max(8, int(getattr(state, "limit", 5)) * 2)
+    market_popular_albums = spotify_client.get_market_popular_albums(country=country, limit=market_limit)
+
+    if not market_popular_albums:
+        print("Geen populaire albums gevonden voor deze markt.")
+        return {
+            "market_popular_albums": [],
+            "uncatalogued_popular_albums": [],
+            "market_popularity_alerts": [],
+        }
+
+    uncatalogued_popular_albums = []
+    for album in market_popular_albums:
+        try:
+            if not db.product_exists(album["id"]):
+                uncatalogued_popular_albums.append(album)
+        except AttributeError:
+            uncatalogued_popular_albums.append(album)
+
+    market_popularity_alerts = [
+        f"Markttrend: {a.get('title', 'Unknown')}"
+        for a in market_popular_albums[:3]
+    ]
+
+    print(
+        f"{len(market_popular_albums)} marktpopulaire albums geanalyseerd, "
+        f"{len(uncatalogued_popular_albums)} nog niet in catalogus."
+    )
+    return {
+        "market_popular_albums": market_popular_albums,
+        "uncatalogued_popular_albums": uncatalogued_popular_albums,
+        "market_popularity_alerts": market_popularity_alerts,
+    }
+
+
 def detect_new_releases_node(state: ProcurementState) -> Dict[str, Any]:
     """
     Node for detecting new vinyl releases using the Spotify client.
@@ -14,13 +59,48 @@ def detect_new_releases_node(state: ProcurementState) -> Dict[str, Any]:
     country = getattr(state, "country", "US")
     limit = getattr(state, "limit", 5)
     new_releases_raw = spotify_client.get_new_releases(country=country, limit=limit)
+    uncatalogued_popular_albums = getattr(state, "uncatalogued_popular_albums", [])
+
     if not new_releases_raw:
-        print("Geen nieuwe releases gevonden.")
-        return {"new_releases": [], "next_action": "end"}
+        # Keep market-trending albums as candidates even if Spotify new-release fetch is empty.
+        new_releases_raw = []
+
     new_releases = []
     for r in new_releases_raw:
         enriched = {**r}
         new_releases.append(enriched)
+
+    # Merge uncatalogued market-popular albums as additional candidates.
+    by_id = {r.get("id"): r for r in new_releases if r.get("id")}
+    for album in uncatalogued_popular_albums:
+        album_id = album.get("id")
+        if not album_id:
+            continue
+
+        if album_id in by_id:
+            by_id[album_id]["market_popularity_score"] = album.get("market_popularity_score")
+            by_id[album_id]["market_popularity_source"] = "spotify_market_popularity"
+        else:
+            by_id[album_id] = {
+                "id": album_id,
+                "title": album.get("title"),
+                "artist": album.get("artist"),
+                "genre": album.get("genre", "Unknown"),
+                "category": album.get("genre", "New Release") or "New Release",
+                "release_date": album.get("release_date"),
+                "total_tracks": album.get("total_tracks"),
+                "external_url": album.get("external_url"),
+                "artist_popularity": album.get("artist_popularity"),
+                "market_popularity_score": album.get("market_popularity_score"),
+                "market_popularity_source": "spotify_market_popularity",
+            }
+
+    new_releases = list(by_id.values())
+
+    if not new_releases:
+        print("Geen nieuwe releases gevonden.")
+        return {"new_releases": [], "next_action": "end"}
+
     unseen_releases = []
     for r in new_releases:
         try:
@@ -43,19 +123,82 @@ def create_new_release_orders_node(state: ProcurementState) -> Dict[str, Any]:
     db = ProcurementDatabase()
     new_releases = getattr(state, "new_releases", [])
     proposals = []
+    draft_orders = []
+
+    # Prevent new-release path from mixing with old supplier/new-release data.
+    if isinstance(state, dict):
+        state["new_releases"] = []
+        state["existing_new_releases"] = []
+        state["new_releases_needing_stock"] = []
+        state["purchase_order_proposals"] = []
+        state["market_popular_albums"] = []
+        state["uncatalogued_popular_albums"] = []
+        state["market_popularity_alerts"] = []
+        state.setdefault("data", {})
+        state["data"]["draft_orders"] = []
+    else:
+        state.clear_path_data("new_releases")
+
     for release in new_releases:
+        popularity_score = float(release.get("market_popularity_score", 0) or 0)
+        if popularity_score >= 85:
+            suggested_qty = 10
+        elif popularity_score >= 70:
+            suggested_qty = 8
+        else:
+            suggested_qty = 5
+
         proposal = {
             "product_id": release['id'],
             "product_name": release['title'],
-            "quantity": 5,
+            "quantity": suggested_qty,
+            "market_popularity_score": popularity_score,
             "status": "proposed"
         }
         proposals.append(proposal)
+
+        draft_orders.append({
+            "supplier_id": 1,
+            "supplier_name": "Spotify Market Suggestion",
+            "items": [{
+                "product_id": release['id'],
+                "product_name": release['title'],
+                "quantity": suggested_qty,
+                "unit_price": 0,
+            }],
+            "total_amount": 0,
+            "market_popularity_score": popularity_score,
+            "ai_recommendation": (
+                f"Inkoop gebaseerd op Spotify marktpopulariteit score {popularity_score}."
+                if popularity_score
+                else "Inkoop gebaseerd op nieuwe release detectie."
+            )
+        })
+
         try:
-            added_product = db.add_product({"id": release['id'], "name": release['title'], "category": "Vinyl", "supplier_id": 1, "artist": release.get('artist', 'Unknown'), "release_date": release.get('release_date')})
+            # Gebruik genre als category als die bestaat, anders 'Vinyl'
+            category = release.get('genre') if release.get('genre') and release.get('genre') != 'Unknown' else 'Vinyl'
+            added_product = db.add_product({
+                "id": release['id'],
+                "name": release['title'],
+                "category": category,
+                "supplier_id": 1,
+                "artist": release.get('artist', 'Unknown'),
+                "release_date": release.get('release_date')
+            })
             db.add_inventory({"product_id": added_product['product_id'], "quantity_in_stock": 0, "reorder_level": 5})
         except AttributeError:
             pass  # Fallback: skip als methodes niet bestaan
+
+    # Keep the order shape aligned with human approval node expectations.
+    if draft_orders:
+        if isinstance(state, dict):
+            state.setdefault("data", {})
+            state["data"]["draft_orders"] = draft_orders
+        else:
+            for order in draft_orders:
+                state.add_new_release_order(order)
+
     print(f"{len(proposals)} ordervoorstellen aangemaakt.")
     return {"purchase_order_proposals": proposals, "next_action": "human_approval"}
 

@@ -36,6 +36,8 @@ class ProcurementState(BaseModel):
     existing_new_releases: List[Dict[str, Any]] = []
     new_releases_needing_stock: List[Dict[str, Any]] = []
     purchase_order_proposals: List[Dict[str, Any]] = []
+    market_popular_albums: List[Dict[str, Any]] = []
+    uncatalogued_popular_albums: List[Dict[str, Any]] = []
     next_action: Optional[str] = None
 
     # Spotify API configuration
@@ -46,6 +48,7 @@ class ProcurementState(BaseModel):
     inventory_alerts: List[str] = []
     sales_velocity_alerts: List[str] = []
     new_release_alerts: List[str] = []
+    market_popularity_alerts: List[str] = []
     supplier_offers: List[Dict[str, Any]] = []
     draft_orders: List[Dict[str, Any]] = []
     approved_orders_list: List[Dict[str, Any]] = []
@@ -94,6 +97,9 @@ class ProcurementState(BaseModel):
             self.existing_new_releases = []
             self.new_releases_needing_stock = []
             self.purchase_order_proposals = []
+            self.market_popular_albums = []
+            self.uncatalogued_popular_albums = []
+            self.market_popularity_alerts = []
             # Remove new release orders
             current_orders = self.data.get("draft_orders", [])
             self.data["draft_orders"] = [o for o in current_orders if o.get("order_path") != "new_releases"]

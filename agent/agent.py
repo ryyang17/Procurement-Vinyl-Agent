@@ -12,9 +12,9 @@ from agent.utils.nodes.inventory_nodes import daily_inventory_check_node
 from agent.utils.nodes.order_nodes import create_purchase_order_node
 from agent.utils.nodes.supplier_nodes import find_suppliers_node
 from agent.utils.nodes.new_release_nodes import (
+    market_popularity_node,
     detect_new_releases_node,
-    create_new_release_orders_node,
-    check_existing_new_releases_node
+    create_new_release_orders_node
 )
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.sqlite import SqliteSaver
@@ -53,15 +53,29 @@ def _normalize_path_choice(path_choice: str | None) -> str | None:
     if path_choice is None:
         return None
 
+    normalized = str(path_choice).strip().lower().replace("-", "_").replace(" ", "_")
+
     aliases = {
         "path_1_suppliers": "path_1_suppliers",
         "find_suppliers": "path_1_suppliers",
         "suppliers": "path_1_suppliers",
+        "path1": "path_1_suppliers",
+        "pad_1": "path_1_suppliers",
+        "pad1": "path_1_suppliers",
+        "1": "path_1_suppliers",
         "path_2_new_releases": "path_2_new_releases",
         "check_existing_new_releases": "path_2_new_releases",
         "new_releases": "path_2_new_releases",
+        "path2": "path_2_new_releases",
+        "pad_2": "path_2_new_releases",
+        "pad2": "path_2_new_releases",
+        "2": "path_2_new_releases",
+        "detect_new_release": "path_2_new_releases",
+        "detect_new_releases": "path_2_new_releases",
+        "scan_for_new_releases": "path_2_new_releases",
+        "check_new_releases": "path_2_new_releases",
     }
-    return aliases.get(str(path_choice).strip(), None)
+    return aliases.get(normalized, None)
 
 # Bepaal routing na goedkeuring
 def route_after_approval(state: ProcurementState) -> str:
@@ -82,7 +96,6 @@ def route_after_approval(state: ProcurementState) -> str:
 
 def route_after_inventory(state: ProcurementState) -> str:
     path_choice = _normalize_path_choice(_state_get(state, "path_choice"))
-    awaiting_path_selection = _state_get(state, "awaiting_path_selection")
 
     # Keep state canonical to avoid drift between frontend and backend values.
     if path_choice is not None:
@@ -99,7 +112,7 @@ def route_after_inventory(state: ProcurementState) -> str:
     if path_choice == "path_1_suppliers":
         return "find_suppliers"
     elif path_choice == "path_2_new_releases":
-        return "check_existing_new_releases"
+        return "market_popularity"
 
     # Onbekende keuze: ga terug naar path selection node.
     return "await_path_selection"
@@ -113,29 +126,19 @@ def route_from_path_selection(state: ProcurementState) -> str:
     """
     path_choice = _normalize_path_choice(_state_get(state, "path_choice"))
     step = _state_get(state, "step")
+    awaiting_path_selection = bool(_state_get(state, "awaiting_path_selection"))
 
-    if step == "awaiting_human_input" and path_choice is None:
+    # Alleen de echte HITL-pauze mag END teruggeven.
+    # Bij hervatten met een (mogelijk nog niet herkende) keuze gaan we terug naar selectie.
+    if step == "awaiting_human_input" and path_choice is None and awaiting_path_selection:
         return "end"
 
     if path_choice == "path_1_suppliers":
         return "find_suppliers"
     elif path_choice == "path_2_new_releases":
-        return "check_existing_new_releases"
+        return "market_popularity"
 
     return "await_path_selection"
-
-
-def route_after_new_release_check(state: ProcurementState) -> str:
-    """Route after checking existing new releases."""
-    next_action = _state_get(state, "next_action")
-
-    if next_action == "detect_new_releases" or next_action == "scan_for_new_releases":
-        return "detect_new_releases"
-    elif next_action == "create_restock_orders":
-        # For now, route to create_new_release_orders as it handles both cases
-        return "create_new_release_orders"
-    else:
-        return "detect_new_releases"
 
 
 def route_after_new_release_detection(state: ProcurementState) -> str:
@@ -206,7 +209,7 @@ def create_procurement_workflow():
     workflow.add_node("process_approval", process_approval_node_workflow)
 
     # Pad 2: Nieuwe releases -> Detectie -> Order -> Goedkeuring
-    workflow.add_node("check_existing_new_releases", check_existing_new_releases_node)
+    workflow.add_node("market_popularity", market_popularity_node)
     workflow.add_node("detect_new_releases", detect_new_releases_node)
     workflow.add_node("create_new_release_orders", create_new_release_orders_node)
 
@@ -222,7 +225,7 @@ def create_procurement_workflow():
         {
             "await_path_selection": "await_path_selection",
             "find_suppliers": "find_suppliers",
-            "check_existing_new_releases": "check_existing_new_releases",
+            "market_popularity": "market_popularity",
         }
     )
 
@@ -233,19 +236,11 @@ def create_procurement_workflow():
         {
             "end": END,
             "find_suppliers": "find_suppliers",
-            "check_existing_new_releases": "check_existing_new_releases",
+            "market_popularity": "market_popularity",
         }
     )
 
-    # New release path routing
-    workflow.add_conditional_edges(
-        "check_existing_new_releases",
-        route_after_new_release_check,
-        {
-            "detect_new_releases": "detect_new_releases",
-            "create_new_release_orders": "create_new_release_orders",
-        }
-    )
+    workflow.add_edge("market_popularity", "detect_new_releases")
 
     workflow.add_conditional_edges(
         "detect_new_releases",

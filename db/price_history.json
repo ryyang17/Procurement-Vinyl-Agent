@@ -1,41 +1,3877 @@
 [
-  {"product_id": 1, "date": "2026-02-28", "price": 28.99},
-  {"product_id": 1, "date": "2026-03-01", "price": 29.99},
-  {"product_id": 1, "date": "2026-03-02", "price": 30.49},
-  {"product_id": 1, "date": "2026-03-03", "price": 29.79},
-  {"product_id": 1, "date": "2026-03-04", "price": 29.99},
-  {"product_id": 2, "date": "2026-02-28", "price": 33.99},
-  {"product_id": 2, "date": "2026-03-01", "price": 34.99},
-  {"product_id": 2, "date": "2026-03-02", "price": 34.49},
-  {"product_id": 2, "date": "2026-03-03", "price": 34.99},
-  {"product_id": 2, "date": "2026-03-04", "price": 34.99},
-  {"product_id": 3, "date": "2026-02-28", "price": 26.50},
-  {"product_id": 3, "date": "2026-03-01", "price": 27.50},
-  {"product_id": 3, "date": "2026-03-02", "price": 27.00},
-  {"product_id": 3, "date": "2026-03-03", "price": 27.80},
-  {"product_id": 3, "date": "2026-03-04", "price": 27.50},
-  {"product_id": 4, "date": "2026-03-01", "price": 31.00},
-  {"product_id": 4, "date": "2026-03-04", "price": 31.00},
-  {"product_id": 5, "date": "2026-03-01", "price": 28.00},
-  {"product_id": 5, "date": "2026-03-04", "price": 28.00},
-  {"product_id": 6, "date": "2026-03-01", "price": 32.00},
-  {"product_id": 6, "date": "2026-03-04", "price": 32.00},
-  {"product_id": 7, "date": "2026-03-01", "price": 30.50},
-  {"product_id": 7, "date": "2026-03-04", "price": 30.50},
-  {"product_id": 8, "date": "2026-03-01", "price": 29.50},
-  {"product_id": 8, "date": "2026-03-04", "price": 29.50},
-  {"product_id": 9, "date": "2026-03-01", "price": 35.00},
-  {"product_id": 9, "date": "2026-03-04", "price": 35.00},
-  {"product_id": 10, "date": "2026-03-01", "price": 36.00},
-  {"product_id": 10, "date": "2026-03-04", "price": 36.00},
-  {"product_id": 11, "date": "2026-03-04", "price": 33.50},
-  {"product_id": 12, "date": "2026-03-04", "price": 28.50},
-  {"product_id": 13, "date": "2026-03-04", "price": 31.00},
-  {"product_id": 14, "date": "2026-03-04", "price": 32.50},
-  {"product_id": 15, "date": "2026-03-04", "price": 29.00},
-  {"product_id": 16, "date": "2026-03-04", "price": 34.00},
-  {"product_id": 17, "date": "2026-03-04", "price": 33.00},
-  {"product_id": 18, "date": "2026-03-04", "price": 30.00},
-  {"product_id": 19, "date": "2026-03-04", "price": 28.50},
-  {"product_id": 20, "date": "2026-03-04", "price": 27.00}
+  {
+    "product_id": 1,
+    "date": "2026-02-20",
+    "price": 30.28
+  },
+  {
+    "product_id": 1,
+    "date": "2026-02-21",
+    "price": 28.18
+  },
+  {
+    "product_id": 1,
+    "date": "2026-02-22",
+    "price": 28.89
+  },
+  {
+    "product_id": 1,
+    "date": "2026-02-23",
+    "price": 29.62
+  },
+  {
+    "product_id": 1,
+    "date": "2026-02-24",
+    "price": 30.92
+  },
+  {
+    "product_id": 1,
+    "date": "2026-02-25",
+    "price": 32.0
+  },
+  {
+    "product_id": 1,
+    "date": "2026-02-26",
+    "price": 32.19
+  },
+  {
+    "product_id": 1,
+    "date": "2026-02-27",
+    "price": 32.83
+  },
+  {
+    "product_id": 1,
+    "date": "2026-02-28",
+    "price": 34.9
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-01",
+    "price": 35.09
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-02",
+    "price": 34.49
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-03",
+    "price": 32.16
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-04",
+    "price": 30.0
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-05",
+    "price": 28.95
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-06",
+    "price": 27.87
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-07",
+    "price": 28.18
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-08",
+    "price": 26.49
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-09",
+    "price": 25.95
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-10",
+    "price": 25.07
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-11",
+    "price": 24.81
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-12",
+    "price": 23.94
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-13",
+    "price": 25.29
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-14",
+    "price": 26.51
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-15",
+    "price": 27.09
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-16",
+    "price": 26.2
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-17",
+    "price": 26.22
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-18",
+    "price": 26.91
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-19",
+    "price": 28.23
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-20",
+    "price": 26.8
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-21",
+    "price": 28.12
+  },
+  {
+    "product_id": 1,
+    "date": "2026-03-22",
+    "price": 26.3
+  },
+  {
+    "product_id": 2,
+    "date": "2026-02-20",
+    "price": 37.2
+  },
+  {
+    "product_id": 2,
+    "date": "2026-02-21",
+    "price": 35.52
+  },
+  {
+    "product_id": 2,
+    "date": "2026-02-22",
+    "price": 37.63
+  },
+  {
+    "product_id": 2,
+    "date": "2026-02-23",
+    "price": 38.39
+  },
+  {
+    "product_id": 2,
+    "date": "2026-02-24",
+    "price": 40.15
+  },
+  {
+    "product_id": 2,
+    "date": "2026-02-25",
+    "price": 39.65
+  },
+  {
+    "product_id": 2,
+    "date": "2026-02-26",
+    "price": 39.93
+  },
+  {
+    "product_id": 2,
+    "date": "2026-02-27",
+    "price": 39.46
+  },
+  {
+    "product_id": 2,
+    "date": "2026-02-28",
+    "price": 41.36
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-01",
+    "price": 42.44
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-02",
+    "price": 45.29
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-03",
+    "price": 42.88
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-04",
+    "price": 43.05
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-05",
+    "price": 45.12
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-06",
+    "price": 43.24
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-07",
+    "price": 42.85
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-08",
+    "price": 40.51
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-09",
+    "price": 38.07
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-10",
+    "price": 37.75
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-11",
+    "price": 38.22
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-12",
+    "price": 36.89
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-13",
+    "price": 35.93
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-14",
+    "price": 38.05
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-15",
+    "price": 36.19
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-16",
+    "price": 35.27
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-17",
+    "price": 35.52
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-18",
+    "price": 37.05
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-19",
+    "price": 39.54
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-20",
+    "price": 41.1
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-21",
+    "price": 42.25
+  },
+  {
+    "product_id": 2,
+    "date": "2026-03-22",
+    "price": 40.12
+  },
+  {
+    "product_id": 3,
+    "date": "2026-02-20",
+    "price": 27.72
+  },
+  {
+    "product_id": 3,
+    "date": "2026-02-21",
+    "price": 29.59
+  },
+  {
+    "product_id": 3,
+    "date": "2026-02-22",
+    "price": 28.37
+  },
+  {
+    "product_id": 3,
+    "date": "2026-02-23",
+    "price": 27.24
+  },
+  {
+    "product_id": 3,
+    "date": "2026-02-24",
+    "price": 27.27
+  },
+  {
+    "product_id": 3,
+    "date": "2026-02-25",
+    "price": 25.99
+  },
+  {
+    "product_id": 3,
+    "date": "2026-02-26",
+    "price": 26.82
+  },
+  {
+    "product_id": 3,
+    "date": "2026-02-27",
+    "price": 25.86
+  },
+  {
+    "product_id": 3,
+    "date": "2026-02-28",
+    "price": 25.35
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-01",
+    "price": 25.05
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-02",
+    "price": 25.57
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-03",
+    "price": 24.78
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-04",
+    "price": 23.13
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-05",
+    "price": 22.62
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-06",
+    "price": 22.13
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-07",
+    "price": 23.25
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-08",
+    "price": 22.16
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-09",
+    "price": 20.67
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-10",
+    "price": 19.9
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-11",
+    "price": 18.62
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-12",
+    "price": 18.3
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-13",
+    "price": 17.05
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-14",
+    "price": 18.06
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-15",
+    "price": 16.94
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-16",
+    "price": 18.06
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-17",
+    "price": 19.29
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-18",
+    "price": 19.46
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-19",
+    "price": 19.19
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-20",
+    "price": 19.42
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-21",
+    "price": 20.7
+  },
+  {
+    "product_id": 3,
+    "date": "2026-03-22",
+    "price": 19.92
+  },
+  {
+    "product_id": 4,
+    "date": "2026-02-20",
+    "price": 29.5
+  },
+  {
+    "product_id": 4,
+    "date": "2026-02-21",
+    "price": 30.68
+  },
+  {
+    "product_id": 4,
+    "date": "2026-02-22",
+    "price": 30.63
+  },
+  {
+    "product_id": 4,
+    "date": "2026-02-23",
+    "price": 29.57
+  },
+  {
+    "product_id": 4,
+    "date": "2026-02-24",
+    "price": 31.21
+  },
+  {
+    "product_id": 4,
+    "date": "2026-02-25",
+    "price": 29.26
+  },
+  {
+    "product_id": 4,
+    "date": "2026-02-26",
+    "price": 29.8
+  },
+  {
+    "product_id": 4,
+    "date": "2026-02-27",
+    "price": 30.41
+  },
+  {
+    "product_id": 4,
+    "date": "2026-02-28",
+    "price": 31.48
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-01",
+    "price": 33.55
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-02",
+    "price": 34.77
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-03",
+    "price": 32.93
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-04",
+    "price": 32.99
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-05",
+    "price": 31.04
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-06",
+    "price": 28.95
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-07",
+    "price": 30.65
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-08",
+    "price": 29.33
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-09",
+    "price": 29.98
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-10",
+    "price": 28.5
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-11",
+    "price": 28.67
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-12",
+    "price": 28.61
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-13",
+    "price": 29.6
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-14",
+    "price": 30.32
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-15",
+    "price": 31.71
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-16",
+    "price": 30.66
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-17",
+    "price": 28.61
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-18",
+    "price": 27.78
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-19",
+    "price": 28.54
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-20",
+    "price": 27.54
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-21",
+    "price": 26.31
+  },
+  {
+    "product_id": 4,
+    "date": "2026-03-22",
+    "price": 27.76
+  },
+  {
+    "product_id": 5,
+    "date": "2026-02-20",
+    "price": 27.86
+  },
+  {
+    "product_id": 5,
+    "date": "2026-02-21",
+    "price": 26.84
+  },
+  {
+    "product_id": 5,
+    "date": "2026-02-22",
+    "price": 28.17
+  },
+  {
+    "product_id": 5,
+    "date": "2026-02-23",
+    "price": 28.27
+  },
+  {
+    "product_id": 5,
+    "date": "2026-02-24",
+    "price": 27.54
+  },
+  {
+    "product_id": 5,
+    "date": "2026-02-25",
+    "price": 25.98
+  },
+  {
+    "product_id": 5,
+    "date": "2026-02-26",
+    "price": 25.72
+  },
+  {
+    "product_id": 5,
+    "date": "2026-02-27",
+    "price": 23.99
+  },
+  {
+    "product_id": 5,
+    "date": "2026-02-28",
+    "price": 23.04
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-01",
+    "price": 21.64
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-02",
+    "price": 21.35
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-03",
+    "price": 20.54
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-04",
+    "price": 21.23
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-05",
+    "price": 21.11
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-06",
+    "price": 22.31
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-07",
+    "price": 22.12
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-08",
+    "price": 21.44
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-09",
+    "price": 22.9
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-10",
+    "price": 21.63
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-11",
+    "price": 21.84
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-12",
+    "price": 23.28
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-13",
+    "price": 22.21
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-14",
+    "price": 20.86
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-15",
+    "price": 20.13
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-16",
+    "price": 19.08
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-17",
+    "price": 19.42
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-18",
+    "price": 20.61
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-19",
+    "price": 20.03
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-20",
+    "price": 20.23
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-21",
+    "price": 20.54
+  },
+  {
+    "product_id": 5,
+    "date": "2026-03-22",
+    "price": 20.14
+  },
+  {
+    "product_id": 6,
+    "date": "2026-02-20",
+    "price": 30.47
+  },
+  {
+    "product_id": 6,
+    "date": "2026-02-21",
+    "price": 30.66
+  },
+  {
+    "product_id": 6,
+    "date": "2026-02-22",
+    "price": 30.65
+  },
+  {
+    "product_id": 6,
+    "date": "2026-02-23",
+    "price": 29.77
+  },
+  {
+    "product_id": 6,
+    "date": "2026-02-24",
+    "price": 31.56
+  },
+  {
+    "product_id": 6,
+    "date": "2026-02-25",
+    "price": 32.12
+  },
+  {
+    "product_id": 6,
+    "date": "2026-02-26",
+    "price": 33.34
+  },
+  {
+    "product_id": 6,
+    "date": "2026-02-27",
+    "price": 31.94
+  },
+  {
+    "product_id": 6,
+    "date": "2026-02-28",
+    "price": 32.57
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-01",
+    "price": 30.96
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-02",
+    "price": 30.42
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-03",
+    "price": 29.75
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-04",
+    "price": 29.81
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-05",
+    "price": 31.62
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-06",
+    "price": 32.82
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-07",
+    "price": 31.77
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-08",
+    "price": 33.69
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-09",
+    "price": 35.14
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-10",
+    "price": 33.76
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-11",
+    "price": 33.62
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-12",
+    "price": 35.28
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-13",
+    "price": 34.0
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-14",
+    "price": 35.96
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-15",
+    "price": 35.24
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-16",
+    "price": 37.21
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-17",
+    "price": 37.14
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-18",
+    "price": 37.05
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-19",
+    "price": 35.54
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-20",
+    "price": 36.92
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-21",
+    "price": 36.86
+  },
+  {
+    "product_id": 6,
+    "date": "2026-03-22",
+    "price": 35.36
+  },
+  {
+    "product_id": 7,
+    "date": "2026-02-20",
+    "price": 31.79
+  },
+  {
+    "product_id": 7,
+    "date": "2026-02-21",
+    "price": 32.65
+  },
+  {
+    "product_id": 7,
+    "date": "2026-02-22",
+    "price": 31.55
+  },
+  {
+    "product_id": 7,
+    "date": "2026-02-23",
+    "price": 30.54
+  },
+  {
+    "product_id": 7,
+    "date": "2026-02-24",
+    "price": 31.81
+  },
+  {
+    "product_id": 7,
+    "date": "2026-02-25",
+    "price": 32.48
+  },
+  {
+    "product_id": 7,
+    "date": "2026-02-26",
+    "price": 30.51
+  },
+  {
+    "product_id": 7,
+    "date": "2026-02-27",
+    "price": 32.32
+  },
+  {
+    "product_id": 7,
+    "date": "2026-02-28",
+    "price": 30.58
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-01",
+    "price": 30.09
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-02",
+    "price": 28.72
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-03",
+    "price": 27.08
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-04",
+    "price": 28.02
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-05",
+    "price": 26.09
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-06",
+    "price": 26.47
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-07",
+    "price": 26.81
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-08",
+    "price": 28.34
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-09",
+    "price": 29.71
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-10",
+    "price": 31.53
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-11",
+    "price": 31.44
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-12",
+    "price": 31.35
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-13",
+    "price": 31.53
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-14",
+    "price": 31.3
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-15",
+    "price": 31.12
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-16",
+    "price": 31.68
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-17",
+    "price": 33.44
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-18",
+    "price": 32.35
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-19",
+    "price": 30.38
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-20",
+    "price": 28.4
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-21",
+    "price": 28.79
+  },
+  {
+    "product_id": 7,
+    "date": "2026-03-22",
+    "price": 30.05
+  },
+  {
+    "product_id": 8,
+    "date": "2026-02-20",
+    "price": 28.11
+  },
+  {
+    "product_id": 8,
+    "date": "2026-02-21",
+    "price": 28.45
+  },
+  {
+    "product_id": 8,
+    "date": "2026-02-22",
+    "price": 28.84
+  },
+  {
+    "product_id": 8,
+    "date": "2026-02-23",
+    "price": 27.96
+  },
+  {
+    "product_id": 8,
+    "date": "2026-02-24",
+    "price": 28.82
+  },
+  {
+    "product_id": 8,
+    "date": "2026-02-25",
+    "price": 29.41
+  },
+  {
+    "product_id": 8,
+    "date": "2026-02-26",
+    "price": 27.43
+  },
+  {
+    "product_id": 8,
+    "date": "2026-02-27",
+    "price": 28.42
+  },
+  {
+    "product_id": 8,
+    "date": "2026-02-28",
+    "price": 29.7
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-01",
+    "price": 28.6
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-02",
+    "price": 29.23
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-03",
+    "price": 30.04
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-04",
+    "price": 28.99
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-05",
+    "price": 30.18
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-06",
+    "price": 29.06
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-07",
+    "price": 29.0
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-08",
+    "price": 29.41
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-09",
+    "price": 30.29
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-10",
+    "price": 32.09
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-11",
+    "price": 32.57
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-12",
+    "price": 31.11
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-13",
+    "price": 30.38
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-14",
+    "price": 30.69
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-15",
+    "price": 31.55
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-16",
+    "price": 29.37
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-17",
+    "price": 30.84
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-18",
+    "price": 31.67
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-19",
+    "price": 33.02
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-20",
+    "price": 31.87
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-21",
+    "price": 31.01
+  },
+  {
+    "product_id": 8,
+    "date": "2026-03-22",
+    "price": 30.95
+  },
+  {
+    "product_id": 9,
+    "date": "2026-02-20",
+    "price": 33.16
+  },
+  {
+    "product_id": 9,
+    "date": "2026-02-21",
+    "price": 33.03
+  },
+  {
+    "product_id": 9,
+    "date": "2026-02-22",
+    "price": 33.85
+  },
+  {
+    "product_id": 9,
+    "date": "2026-02-23",
+    "price": 34.25
+  },
+  {
+    "product_id": 9,
+    "date": "2026-02-24",
+    "price": 35.02
+  },
+  {
+    "product_id": 9,
+    "date": "2026-02-25",
+    "price": 34.62
+  },
+  {
+    "product_id": 9,
+    "date": "2026-02-26",
+    "price": 35.35
+  },
+  {
+    "product_id": 9,
+    "date": "2026-02-27",
+    "price": 35.48
+  },
+  {
+    "product_id": 9,
+    "date": "2026-02-28",
+    "price": 37.63
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-01",
+    "price": 38.02
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-02",
+    "price": 38.16
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-03",
+    "price": 40.05
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-04",
+    "price": 41.96
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-05",
+    "price": 40.93
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-06",
+    "price": 43.58
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-07",
+    "price": 43.81
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-08",
+    "price": 43.29
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-09",
+    "price": 42.25
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-10",
+    "price": 41.64
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-11",
+    "price": 44.44
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-12",
+    "price": 46.86
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-13",
+    "price": 44.28
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-14",
+    "price": 42.21
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-15",
+    "price": 41.38
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-16",
+    "price": 40.75
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-17",
+    "price": 39.75
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-18",
+    "price": 39.64
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-19",
+    "price": 39.82
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-20",
+    "price": 40.17
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-21",
+    "price": 39.92
+  },
+  {
+    "product_id": 9,
+    "date": "2026-03-22",
+    "price": 38.76
+  },
+  {
+    "product_id": 10,
+    "date": "2026-02-20",
+    "price": 34.48
+  },
+  {
+    "product_id": 10,
+    "date": "2026-02-21",
+    "price": 33.89
+  },
+  {
+    "product_id": 10,
+    "date": "2026-02-22",
+    "price": 33.28
+  },
+  {
+    "product_id": 10,
+    "date": "2026-02-23",
+    "price": 35.19
+  },
+  {
+    "product_id": 10,
+    "date": "2026-02-24",
+    "price": 33.58
+  },
+  {
+    "product_id": 10,
+    "date": "2026-02-25",
+    "price": 33.79
+  },
+  {
+    "product_id": 10,
+    "date": "2026-02-26",
+    "price": 31.99
+  },
+  {
+    "product_id": 10,
+    "date": "2026-02-27",
+    "price": 31.02
+  },
+  {
+    "product_id": 10,
+    "date": "2026-02-28",
+    "price": 31.79
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-01",
+    "price": 32.3
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-02",
+    "price": 33.89
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-03",
+    "price": 33.7
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-04",
+    "price": 33.12
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-05",
+    "price": 33.11
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-06",
+    "price": 31.49
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-07",
+    "price": 33.18
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-08",
+    "price": 34.94
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-09",
+    "price": 34.17
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-10",
+    "price": 36.19
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-11",
+    "price": 35.79
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-12",
+    "price": 36.95
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-13",
+    "price": 38.42
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-14",
+    "price": 36.04
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-15",
+    "price": 37.67
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-16",
+    "price": 39.72
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-17",
+    "price": 37.16
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-18",
+    "price": 36.16
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-19",
+    "price": 37.75
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-20",
+    "price": 35.99
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-21",
+    "price": 36.35
+  },
+  {
+    "product_id": 10,
+    "date": "2026-03-22",
+    "price": 38.74
+  },
+  {
+    "product_id": 11,
+    "date": "2026-02-20",
+    "price": 32.58
+  },
+  {
+    "product_id": 11,
+    "date": "2026-02-21",
+    "price": 33.58
+  },
+  {
+    "product_id": 11,
+    "date": "2026-02-22",
+    "price": 35.62
+  },
+  {
+    "product_id": 11,
+    "date": "2026-02-23",
+    "price": 36.76
+  },
+  {
+    "product_id": 11,
+    "date": "2026-02-24",
+    "price": 34.98
+  },
+  {
+    "product_id": 11,
+    "date": "2026-02-25",
+    "price": 36.1
+  },
+  {
+    "product_id": 11,
+    "date": "2026-02-26",
+    "price": 34.99
+  },
+  {
+    "product_id": 11,
+    "date": "2026-02-27",
+    "price": 35.3
+  },
+  {
+    "product_id": 11,
+    "date": "2026-02-28",
+    "price": 37.64
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-01",
+    "price": 36.77
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-02",
+    "price": 38.4
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-03",
+    "price": 37.4
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-04",
+    "price": 37.94
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-05",
+    "price": 35.83
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-06",
+    "price": 37.98
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-07",
+    "price": 36.28
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-08",
+    "price": 37.37
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-09",
+    "price": 35.95
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-10",
+    "price": 37.36
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-11",
+    "price": 37.77
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-12",
+    "price": 36.34
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-13",
+    "price": 37.33
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-14",
+    "price": 36.36
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-15",
+    "price": 37.35
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-16",
+    "price": 36.0
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-17",
+    "price": 37.99
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-18",
+    "price": 36.96
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-19",
+    "price": 36.01
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-20",
+    "price": 34.46
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-21",
+    "price": 34.37
+  },
+  {
+    "product_id": 11,
+    "date": "2026-03-22",
+    "price": 34.29
+  },
+  {
+    "product_id": 12,
+    "date": "2026-02-20",
+    "price": 28.96
+  },
+  {
+    "product_id": 12,
+    "date": "2026-02-21",
+    "price": 27.14
+  },
+  {
+    "product_id": 12,
+    "date": "2026-02-22",
+    "price": 25.75
+  },
+  {
+    "product_id": 12,
+    "date": "2026-02-23",
+    "price": 25.24
+  },
+  {
+    "product_id": 12,
+    "date": "2026-02-24",
+    "price": 24.8
+  },
+  {
+    "product_id": 12,
+    "date": "2026-02-25",
+    "price": 23.87
+  },
+  {
+    "product_id": 12,
+    "date": "2026-02-26",
+    "price": 23.2
+  },
+  {
+    "product_id": 12,
+    "date": "2026-02-27",
+    "price": 22.26
+  },
+  {
+    "product_id": 12,
+    "date": "2026-02-28",
+    "price": 23.1
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-01",
+    "price": 22.31
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-02",
+    "price": 22.36
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-03",
+    "price": 22.53
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-04",
+    "price": 22.78
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-05",
+    "price": 22.26
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-06",
+    "price": 23.07
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-07",
+    "price": 21.48
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-08",
+    "price": 21.68
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-09",
+    "price": 21.02
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-10",
+    "price": 20.73
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-11",
+    "price": 19.3
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-12",
+    "price": 20.04
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-13",
+    "price": 21.0
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-14",
+    "price": 19.99
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-15",
+    "price": 19.25
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-16",
+    "price": 19.15
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-17",
+    "price": 20.21
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-18",
+    "price": 21.4
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-19",
+    "price": 21.76
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-20",
+    "price": 22.25
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-21",
+    "price": 21.5
+  },
+  {
+    "product_id": 12,
+    "date": "2026-03-22",
+    "price": 20.01
+  },
+  {
+    "product_id": 13,
+    "date": "2026-02-20",
+    "price": 33.12
+  },
+  {
+    "product_id": 13,
+    "date": "2026-02-21",
+    "price": 33.55
+  },
+  {
+    "product_id": 13,
+    "date": "2026-02-22",
+    "price": 33.54
+  },
+  {
+    "product_id": 13,
+    "date": "2026-02-23",
+    "price": 34.09
+  },
+  {
+    "product_id": 13,
+    "date": "2026-02-24",
+    "price": 34.57
+  },
+  {
+    "product_id": 13,
+    "date": "2026-02-25",
+    "price": 32.94
+  },
+  {
+    "product_id": 13,
+    "date": "2026-02-26",
+    "price": 32.02
+  },
+  {
+    "product_id": 13,
+    "date": "2026-02-27",
+    "price": 31.71
+  },
+  {
+    "product_id": 13,
+    "date": "2026-02-28",
+    "price": 31.29
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-01",
+    "price": 31.36
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-02",
+    "price": 29.76
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-03",
+    "price": 31.55
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-04",
+    "price": 30.04
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-05",
+    "price": 29.91
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-06",
+    "price": 28.45
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-07",
+    "price": 27.11
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-08",
+    "price": 26.62
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-09",
+    "price": 27.59
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-10",
+    "price": 26.77
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-11",
+    "price": 26.17
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-12",
+    "price": 24.49
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-13",
+    "price": 24.01
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-14",
+    "price": 23.42
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-15",
+    "price": 24.39
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-16",
+    "price": 26.04
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-17",
+    "price": 25.19
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-18",
+    "price": 24.17
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-19",
+    "price": 23.65
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-20",
+    "price": 24.29
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-21",
+    "price": 23.17
+  },
+  {
+    "product_id": 13,
+    "date": "2026-03-22",
+    "price": 22.99
+  },
+  {
+    "product_id": 14,
+    "date": "2026-02-20",
+    "price": 33.39
+  },
+  {
+    "product_id": 14,
+    "date": "2026-02-21",
+    "price": 33.56
+  },
+  {
+    "product_id": 14,
+    "date": "2026-02-22",
+    "price": 32.81
+  },
+  {
+    "product_id": 14,
+    "date": "2026-02-23",
+    "price": 31.22
+  },
+  {
+    "product_id": 14,
+    "date": "2026-02-24",
+    "price": 30.51
+  },
+  {
+    "product_id": 14,
+    "date": "2026-02-25",
+    "price": 31.91
+  },
+  {
+    "product_id": 14,
+    "date": "2026-02-26",
+    "price": 32.35
+  },
+  {
+    "product_id": 14,
+    "date": "2026-02-27",
+    "price": 31.15
+  },
+  {
+    "product_id": 14,
+    "date": "2026-02-28",
+    "price": 31.46
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-01",
+    "price": 32.26
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-02",
+    "price": 33.65
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-03",
+    "price": 33.75
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-04",
+    "price": 32.83
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-05",
+    "price": 32.96
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-06",
+    "price": 31.26
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-07",
+    "price": 32.15
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-08",
+    "price": 31.12
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-09",
+    "price": 32.06
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-10",
+    "price": 31.15
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-11",
+    "price": 29.28
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-12",
+    "price": 29.25
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-13",
+    "price": 29.87
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-14",
+    "price": 28.05
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-15",
+    "price": 28.58
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-16",
+    "price": 27.78
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-17",
+    "price": 26.42
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-18",
+    "price": 27.22
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-19",
+    "price": 28.59
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-20",
+    "price": 28.33
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-21",
+    "price": 29.39
+  },
+  {
+    "product_id": 14,
+    "date": "2026-03-22",
+    "price": 28.28
+  },
+  {
+    "product_id": 15,
+    "date": "2026-02-20",
+    "price": 28.66
+  },
+  {
+    "product_id": 15,
+    "date": "2026-02-21",
+    "price": 30.48
+  },
+  {
+    "product_id": 15,
+    "date": "2026-02-22",
+    "price": 30.47
+  },
+  {
+    "product_id": 15,
+    "date": "2026-02-23",
+    "price": 31.74
+  },
+  {
+    "product_id": 15,
+    "date": "2026-02-24",
+    "price": 32.06
+  },
+  {
+    "product_id": 15,
+    "date": "2026-02-25",
+    "price": 31.54
+  },
+  {
+    "product_id": 15,
+    "date": "2026-02-26",
+    "price": 31.95
+  },
+  {
+    "product_id": 15,
+    "date": "2026-02-27",
+    "price": 33.35
+  },
+  {
+    "product_id": 15,
+    "date": "2026-02-28",
+    "price": 32.66
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-01",
+    "price": 32.82
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-02",
+    "price": 32.81
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-03",
+    "price": 34.8
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-04",
+    "price": 36.34
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-05",
+    "price": 38.69
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-06",
+    "price": 41.2
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-07",
+    "price": 41.81
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-08",
+    "price": 39.58
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-09",
+    "price": 40.18
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-10",
+    "price": 42.94
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-11",
+    "price": 44.78
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-12",
+    "price": 44.56
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-13",
+    "price": 44.5
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-14",
+    "price": 42.69
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-15",
+    "price": 42.78
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-16",
+    "price": 43.25
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-17",
+    "price": 41.6
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-18",
+    "price": 42.05
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-19",
+    "price": 40.9
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-20",
+    "price": 40.8
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-21",
+    "price": 40.89
+  },
+  {
+    "product_id": 15,
+    "date": "2026-03-22",
+    "price": 40.79
+  },
+  {
+    "product_id": 16,
+    "date": "2026-02-20",
+    "price": 34.42
+  },
+  {
+    "product_id": 16,
+    "date": "2026-02-21",
+    "price": 32.14
+  },
+  {
+    "product_id": 16,
+    "date": "2026-02-22",
+    "price": 33.26
+  },
+  {
+    "product_id": 16,
+    "date": "2026-02-23",
+    "price": 33.13
+  },
+  {
+    "product_id": 16,
+    "date": "2026-02-24",
+    "price": 32.31
+  },
+  {
+    "product_id": 16,
+    "date": "2026-02-25",
+    "price": 34.26
+  },
+  {
+    "product_id": 16,
+    "date": "2026-02-26",
+    "price": 33.49
+  },
+  {
+    "product_id": 16,
+    "date": "2026-02-27",
+    "price": 34.84
+  },
+  {
+    "product_id": 16,
+    "date": "2026-02-28",
+    "price": 34.9
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-01",
+    "price": 33.81
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-02",
+    "price": 35.86
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-03",
+    "price": 38.34
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-04",
+    "price": 39.97
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-05",
+    "price": 39.07
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-06",
+    "price": 40.31
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-07",
+    "price": 39.5
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-08",
+    "price": 38.84
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-09",
+    "price": 36.7
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-10",
+    "price": 34.24
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-11",
+    "price": 36.48
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-12",
+    "price": 35.53
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-13",
+    "price": 36.8
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-14",
+    "price": 35.46
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-15",
+    "price": 36.14
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-16",
+    "price": 38.45
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-17",
+    "price": 37.01
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-18",
+    "price": 36.54
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-19",
+    "price": 37.39
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-20",
+    "price": 35.2
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-21",
+    "price": 37.59
+  },
+  {
+    "product_id": 16,
+    "date": "2026-03-22",
+    "price": 38.74
+  },
+  {
+    "product_id": 17,
+    "date": "2026-02-20",
+    "price": 34.96
+  },
+  {
+    "product_id": 17,
+    "date": "2026-02-21",
+    "price": 36.02
+  },
+  {
+    "product_id": 17,
+    "date": "2026-02-22",
+    "price": 34.75
+  },
+  {
+    "product_id": 17,
+    "date": "2026-02-23",
+    "price": 36.33
+  },
+  {
+    "product_id": 17,
+    "date": "2026-02-24",
+    "price": 35.78
+  },
+  {
+    "product_id": 17,
+    "date": "2026-02-25",
+    "price": 36.82
+  },
+  {
+    "product_id": 17,
+    "date": "2026-02-26",
+    "price": 36.71
+  },
+  {
+    "product_id": 17,
+    "date": "2026-02-27",
+    "price": 34.35
+  },
+  {
+    "product_id": 17,
+    "date": "2026-02-28",
+    "price": 36.27
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-01",
+    "price": 35.27
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-02",
+    "price": 36.05
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-03",
+    "price": 38.04
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-04",
+    "price": 39.62
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-05",
+    "price": 38.15
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-06",
+    "price": 40.15
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-07",
+    "price": 41.23
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-08",
+    "price": 41.73
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-09",
+    "price": 43.9
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-10",
+    "price": 41.29
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-11",
+    "price": 38.76
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-12",
+    "price": 37.23
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-13",
+    "price": 39.57
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-14",
+    "price": 42.23
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-15",
+    "price": 43.41
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-16",
+    "price": 40.67
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-17",
+    "price": 42.18
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-18",
+    "price": 44.54
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-19",
+    "price": 47.51
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-20",
+    "price": 46.12
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-21",
+    "price": 43.7
+  },
+  {
+    "product_id": 17,
+    "date": "2026-03-22",
+    "price": 41.19
+  },
+  {
+    "product_id": 18,
+    "date": "2026-02-20",
+    "price": 30.49
+  },
+  {
+    "product_id": 18,
+    "date": "2026-02-21",
+    "price": 28.39
+  },
+  {
+    "product_id": 18,
+    "date": "2026-02-22",
+    "price": 28.39
+  },
+  {
+    "product_id": 18,
+    "date": "2026-02-23",
+    "price": 30.33
+  },
+  {
+    "product_id": 18,
+    "date": "2026-02-24",
+    "price": 32.24
+  },
+  {
+    "product_id": 18,
+    "date": "2026-02-25",
+    "price": 31.82
+  },
+  {
+    "product_id": 18,
+    "date": "2026-02-26",
+    "price": 33.1
+  },
+  {
+    "product_id": 18,
+    "date": "2026-02-27",
+    "price": 34.12
+  },
+  {
+    "product_id": 18,
+    "date": "2026-02-28",
+    "price": 32.02
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-01",
+    "price": 32.54
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-02",
+    "price": 33.25
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-03",
+    "price": 31.91
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-04",
+    "price": 30.4
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-05",
+    "price": 28.92
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-06",
+    "price": 30.38
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-07",
+    "price": 30.38
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-08",
+    "price": 31.59
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-09",
+    "price": 31.71
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-10",
+    "price": 31.15
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-11",
+    "price": 31.74
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-12",
+    "price": 33.95
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-13",
+    "price": 33.04
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-14",
+    "price": 32.19
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-15",
+    "price": 32.91
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-16",
+    "price": 33.7
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-17",
+    "price": 34.64
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-18",
+    "price": 34.35
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-19",
+    "price": 32.03
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-20",
+    "price": 30.5
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-21",
+    "price": 30.24
+  },
+  {
+    "product_id": 18,
+    "date": "2026-03-22",
+    "price": 31.94
+  },
+  {
+    "product_id": 19,
+    "date": "2026-02-20",
+    "price": 29.12
+  },
+  {
+    "product_id": 19,
+    "date": "2026-02-21",
+    "price": 29.95
+  },
+  {
+    "product_id": 19,
+    "date": "2026-02-22",
+    "price": 29.07
+  },
+  {
+    "product_id": 19,
+    "date": "2026-02-23",
+    "price": 30.34
+  },
+  {
+    "product_id": 19,
+    "date": "2026-02-24",
+    "price": 31.69
+  },
+  {
+    "product_id": 19,
+    "date": "2026-02-25",
+    "price": 32.89
+  },
+  {
+    "product_id": 19,
+    "date": "2026-02-26",
+    "price": 33.43
+  },
+  {
+    "product_id": 19,
+    "date": "2026-02-27",
+    "price": 32.02
+  },
+  {
+    "product_id": 19,
+    "date": "2026-02-28",
+    "price": 30.58
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-01",
+    "price": 28.94
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-02",
+    "price": 28.59
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-03",
+    "price": 28.19
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-04",
+    "price": 29.31
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-05",
+    "price": 27.37
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-06",
+    "price": 28.58
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-07",
+    "price": 28.52
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-08",
+    "price": 27.58
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-09",
+    "price": 26.47
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-10",
+    "price": 27.54
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-11",
+    "price": 27.69
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-12",
+    "price": 26.28
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-13",
+    "price": 27.95
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-14",
+    "price": 27.92
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-15",
+    "price": 27.81
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-16",
+    "price": 27.64
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-17",
+    "price": 26.9
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-18",
+    "price": 27.54
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-19",
+    "price": 27.2
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-20",
+    "price": 27.34
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-21",
+    "price": 26.02
+  },
+  {
+    "product_id": 19,
+    "date": "2026-03-22",
+    "price": 25.04
+  },
+  {
+    "product_id": 20,
+    "date": "2026-02-20",
+    "price": 25.29
+  },
+  {
+    "product_id": 20,
+    "date": "2026-02-21",
+    "price": 25.2
+  },
+  {
+    "product_id": 20,
+    "date": "2026-02-22",
+    "price": 24.93
+  },
+  {
+    "product_id": 20,
+    "date": "2026-02-23",
+    "price": 26.09
+  },
+  {
+    "product_id": 20,
+    "date": "2026-02-24",
+    "price": 27.6
+  },
+  {
+    "product_id": 20,
+    "date": "2026-02-25",
+    "price": 28.91
+  },
+  {
+    "product_id": 20,
+    "date": "2026-02-26",
+    "price": 27.17
+  },
+  {
+    "product_id": 20,
+    "date": "2026-02-27",
+    "price": 28.19
+  },
+  {
+    "product_id": 20,
+    "date": "2026-02-28",
+    "price": 28.23
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-01",
+    "price": 29.7
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-02",
+    "price": 29.88
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-03",
+    "price": 29.34
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-04",
+    "price": 30.92
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-05",
+    "price": 30.58
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-06",
+    "price": 28.92
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-07",
+    "price": 28.93
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-08",
+    "price": 29.94
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-09",
+    "price": 28.81
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-10",
+    "price": 28.29
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-11",
+    "price": 29.51
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-12",
+    "price": 28.34
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-13",
+    "price": 30.03
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-14",
+    "price": 28.43
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-15",
+    "price": 29.49
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-16",
+    "price": 31.2
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-17",
+    "price": 30.8
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-18",
+    "price": 29.43
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-19",
+    "price": 28.73
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-20",
+    "price": 29.07
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-21",
+    "price": 29.83
+  },
+  {
+    "product_id": 20,
+    "date": "2026-03-22",
+    "price": 30.95
+  },
+  {
+    "product_id": 21,
+    "date": "2026-02-20",
+    "price": 28.93
+  },
+  {
+    "product_id": 21,
+    "date": "2026-02-21",
+    "price": 27.65
+  },
+  {
+    "product_id": 21,
+    "date": "2026-02-22",
+    "price": 27.2
+  },
+  {
+    "product_id": 21,
+    "date": "2026-02-23",
+    "price": 25.47
+  },
+  {
+    "product_id": 21,
+    "date": "2026-02-24",
+    "price": 26.68
+  },
+  {
+    "product_id": 21,
+    "date": "2026-02-25",
+    "price": 25.31
+  },
+  {
+    "product_id": 21,
+    "date": "2026-02-26",
+    "price": 25.48
+  },
+  {
+    "product_id": 21,
+    "date": "2026-02-27",
+    "price": 26.2
+  },
+  {
+    "product_id": 21,
+    "date": "2026-02-28",
+    "price": 24.67
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-01",
+    "price": 24.74
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-02",
+    "price": 26.28
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-03",
+    "price": 26.44
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-04",
+    "price": 25.06
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-05",
+    "price": 25.07
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-06",
+    "price": 23.51
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-07",
+    "price": 23.29
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-08",
+    "price": 22.32
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-09",
+    "price": 22.99
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-10",
+    "price": 23.21
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-11",
+    "price": 21.93
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-12",
+    "price": 21.67
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-13",
+    "price": 22.74
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-14",
+    "price": 21.44
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-15",
+    "price": 21.71
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-16",
+    "price": 21.38
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-17",
+    "price": 20.35
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-18",
+    "price": 20.46
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-19",
+    "price": 19.27
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-20",
+    "price": 18.95
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-21",
+    "price": 19.59
+  },
+  {
+    "product_id": 21,
+    "date": "2026-03-22",
+    "price": 19.85
+  },
+  {
+    "product_id": 22,
+    "date": "2026-02-20",
+    "price": 31.65
+  },
+  {
+    "product_id": 22,
+    "date": "2026-02-21",
+    "price": 30.65
+  },
+  {
+    "product_id": 22,
+    "date": "2026-02-22",
+    "price": 29.69
+  },
+  {
+    "product_id": 22,
+    "date": "2026-02-23",
+    "price": 29.51
+  },
+  {
+    "product_id": 22,
+    "date": "2026-02-24",
+    "price": 29.1
+  },
+  {
+    "product_id": 22,
+    "date": "2026-02-25",
+    "price": 28.46
+  },
+  {
+    "product_id": 22,
+    "date": "2026-02-26",
+    "price": 27.59
+  },
+  {
+    "product_id": 22,
+    "date": "2026-02-27",
+    "price": 27.77
+  },
+  {
+    "product_id": 22,
+    "date": "2026-02-28",
+    "price": 25.97
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-01",
+    "price": 26.16
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-02",
+    "price": 27.3
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-03",
+    "price": 28.78
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-04",
+    "price": 29.6
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-05",
+    "price": 29.15
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-06",
+    "price": 30.58
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-07",
+    "price": 31.75
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-08",
+    "price": 29.74
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-09",
+    "price": 27.81
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-10",
+    "price": 27.2
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-11",
+    "price": 25.5
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-12",
+    "price": 25.88
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-13",
+    "price": 25.99
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-14",
+    "price": 26.26
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-15",
+    "price": 27.14
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-16",
+    "price": 26.81
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-17",
+    "price": 28.2
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-18",
+    "price": 29.29
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-19",
+    "price": 29.92
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-20",
+    "price": 28.9
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-21",
+    "price": 27.48
+  },
+  {
+    "product_id": 22,
+    "date": "2026-03-22",
+    "price": 27.27
+  },
+  {
+    "product_id": 23,
+    "date": "2026-02-20",
+    "price": 28.51
+  },
+  {
+    "product_id": 23,
+    "date": "2026-02-21",
+    "price": 27.22
+  },
+  {
+    "product_id": 23,
+    "date": "2026-02-22",
+    "price": 25.91
+  },
+  {
+    "product_id": 23,
+    "date": "2026-02-23",
+    "price": 26.56
+  },
+  {
+    "product_id": 23,
+    "date": "2026-02-24",
+    "price": 25.42
+  },
+  {
+    "product_id": 23,
+    "date": "2026-02-25",
+    "price": 25.2
+  },
+  {
+    "product_id": 23,
+    "date": "2026-02-26",
+    "price": 25.63
+  },
+  {
+    "product_id": 23,
+    "date": "2026-02-27",
+    "price": 27.04
+  },
+  {
+    "product_id": 23,
+    "date": "2026-02-28",
+    "price": 26.44
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-01",
+    "price": 26.51
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-02",
+    "price": 26.94
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-03",
+    "price": 25.49
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-04",
+    "price": 26.98
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-05",
+    "price": 25.2
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-06",
+    "price": 26.82
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-07",
+    "price": 27.27
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-08",
+    "price": 26.7
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-09",
+    "price": 25.4
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-10",
+    "price": 24.11
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-11",
+    "price": 24.12
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-12",
+    "price": 24.29
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-13",
+    "price": 23.61
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-14",
+    "price": 22.78
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-15",
+    "price": 23.9
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-16",
+    "price": 25.22
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-17",
+    "price": 26.23
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-18",
+    "price": 26.84
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-19",
+    "price": 27.47
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-20",
+    "price": 27.78
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-21",
+    "price": 26.25
+  },
+  {
+    "product_id": 23,
+    "date": "2026-03-22",
+    "price": 25.69
+  },
+  {
+    "product_id": 24,
+    "date": "2026-02-20",
+    "price": 29.39
+  },
+  {
+    "product_id": 24,
+    "date": "2026-02-21",
+    "price": 29.71
+  },
+  {
+    "product_id": 24,
+    "date": "2026-02-22",
+    "price": 28.64
+  },
+  {
+    "product_id": 24,
+    "date": "2026-02-23",
+    "price": 27.55
+  },
+  {
+    "product_id": 24,
+    "date": "2026-02-24",
+    "price": 26.49
+  },
+  {
+    "product_id": 24,
+    "date": "2026-02-25",
+    "price": 27.87
+  },
+  {
+    "product_id": 24,
+    "date": "2026-02-26",
+    "price": 29.65
+  },
+  {
+    "product_id": 24,
+    "date": "2026-02-27",
+    "price": 27.85
+  },
+  {
+    "product_id": 24,
+    "date": "2026-02-28",
+    "price": 27.28
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-01",
+    "price": 28.16
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-02",
+    "price": 28.06
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-03",
+    "price": 26.23
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-04",
+    "price": 26.34
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-05",
+    "price": 27.58
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-06",
+    "price": 26.63
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-07",
+    "price": 25.6
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-08",
+    "price": 24.2
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-09",
+    "price": 24.83
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-10",
+    "price": 25.61
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-11",
+    "price": 25.86
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-12",
+    "price": 24.54
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-13",
+    "price": 23.22
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-14",
+    "price": 22.02
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-15",
+    "price": 21.67
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-16",
+    "price": 21.34
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-17",
+    "price": 22.28
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-18",
+    "price": 20.84
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-19",
+    "price": 22.15
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-20",
+    "price": 23.08
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-21",
+    "price": 23.22
+  },
+  {
+    "product_id": 24,
+    "date": "2026-03-22",
+    "price": 24.64
+  },
+  {
+    "product_id": 25,
+    "date": "2026-02-20",
+    "price": 31.11
+  },
+  {
+    "product_id": 25,
+    "date": "2026-02-21",
+    "price": 33.01
+  },
+  {
+    "product_id": 25,
+    "date": "2026-02-22",
+    "price": 34.7
+  },
+  {
+    "product_id": 25,
+    "date": "2026-02-23",
+    "price": 35.43
+  },
+  {
+    "product_id": 25,
+    "date": "2026-02-24",
+    "price": 37.79
+  },
+  {
+    "product_id": 25,
+    "date": "2026-02-25",
+    "price": 39.24
+  },
+  {
+    "product_id": 25,
+    "date": "2026-02-26",
+    "price": 37.96
+  },
+  {
+    "product_id": 25,
+    "date": "2026-02-27",
+    "price": 35.69
+  },
+  {
+    "product_id": 25,
+    "date": "2026-02-28",
+    "price": 35.74
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-01",
+    "price": 36.42
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-02",
+    "price": 38.84
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-03",
+    "price": 37.79
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-04",
+    "price": 37.11
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-05",
+    "price": 38.21
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-06",
+    "price": 36.59
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-07",
+    "price": 34.46
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-08",
+    "price": 32.41
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-09",
+    "price": 34.51
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-10",
+    "price": 34.83
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-11",
+    "price": 34.18
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-12",
+    "price": 34.52
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-13",
+    "price": 36.47
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-14",
+    "price": 38.53
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-15",
+    "price": 36.01
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-16",
+    "price": 37.92
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-17",
+    "price": 40.27
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-18",
+    "price": 38.97
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-19",
+    "price": 40.7
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-20",
+    "price": 43.19
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-21",
+    "price": 45.92
+  },
+  {
+    "product_id": 25,
+    "date": "2026-03-22",
+    "price": 48.03
+  }
 ]

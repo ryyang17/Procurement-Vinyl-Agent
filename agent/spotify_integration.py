@@ -1,5 +1,6 @@
 import os
 import time
+from datetime import datetime, timezone
 import requests
 
 
@@ -61,7 +62,9 @@ class SpotifyClient:
             for album in albums:
                 artists = album.get("artists", [])
                 primary_artist = artists[0] if artists else {}
-                artist_genres = self._get_artist_genres(primary_artist.get("id"), token) if primary_artist.get("id") else []
+                artist_profile = self._get_artist_profile(primary_artist.get("id"), token) if primary_artist.get("id") else {}
+                artist_genres = artist_profile.get("genres", [])
+                artist_popularity = artist_profile.get("popularity")
 
                 releases.append(
                     {
@@ -70,6 +73,7 @@ class SpotifyClient:
                         "artist": ", ".join(a.get("name", "") for a in artists),
                         "genre": ", ".join(artist_genres) if artist_genres else "Unknown",
                         "category": ", ".join(artist_genres) if artist_genres else "New Release",
+                        "artist_popularity": artist_popularity,
                         "release_date": album.get("release_date"),
                         "total_tracks": album.get("total_tracks"),
                         "external_url": album.get("external_urls", {}).get("spotify")
@@ -82,17 +86,109 @@ class SpotifyClient:
                 print(f"Response: {e.response.text}")
             return []
 
-    def _get_artist_genres(self, artist_id: str, token: str):
-        if not artist_id:
+    def get_market_popular_albums(self, country="US", limit=10):
+        """
+        Fetch popular recent albums for a market and rank them by a combined score.
+        Combined score = artist popularity (0-100) + recency bonus (0-20).
+        """
+        token = self._get_access_token()
+        url = "https://api.spotify.com/v1/search"
+        headers = {"Authorization": f"Bearer {token}"}
+
+        # Pull a wider candidate set first, then rank locally.
+        candidate_limit = min(max(limit * 3, 20), 50)
+        params = {
+            "q": "tag:new",
+            "type": "album",
+            "market": country,
+            "limit": candidate_limit,
+        }
+
+        try:
+            response = requests.get(url, headers=headers, params=params, timeout=20)
+            response.raise_for_status()
+
+            albums = response.json().get("albums", {}).get("items", [])
+            ranked = []
+
+            for album in albums:
+                artists = album.get("artists", [])
+                primary_artist = artists[0] if artists else {}
+                artist_profile = self._get_artist_profile(primary_artist.get("id"), token) if primary_artist.get("id") else {}
+                artist_popularity = artist_profile.get("popularity")
+                if artist_popularity is None:
+                    artist_popularity = 0
+
+                release_date = album.get("release_date")
+                recency_bonus = self._calculate_recency_bonus(release_date)
+                market_popularity_score = round(float(artist_popularity) + recency_bonus, 2)
+
+                ranked.append(
+                    {
+                        "id": album.get("id"),
+                        "title": album.get("name"),
+                        "artist": ", ".join(a.get("name", "") for a in artists),
+                        "genre": ", ".join(artist_profile.get("genres", [])) or "Unknown",
+                        "release_date": release_date,
+                        "artist_popularity": artist_popularity,
+                        "market_popularity_score": market_popularity_score,
+                        "external_url": album.get("external_urls", {}).get("spotify"),
+                    }
+                )
+
+            ranked.sort(key=lambda x: x.get("market_popularity_score", 0), reverse=True)
+            return ranked[:limit]
+        except Exception as e:
+            print(f"Error fetching market popularity data from Spotify: {e}")
+            if hasattr(e, 'response') and e.response is not None:
+                print(f"Response: {e.response.text}")
             return []
+
+    def _calculate_recency_bonus(self, release_date: str | None) -> float:
+        """More recent releases receive a stronger market-priority boost."""
+        if not release_date:
+            return 0.0
+
+        parsed = None
+        # Spotify can return YYYY, YYYY-MM or YYYY-MM-DD.
+        for date_format in ("%Y-%m-%d", "%Y-%m", "%Y"):
+            try:
+                parsed = datetime.strptime(release_date, date_format)
+                break
+            except ValueError:
+                continue
+
+        if parsed is None:
+            return 0.0
+
+        age_days = max(0, (datetime.now(timezone.utc).replace(tzinfo=None) - parsed).days)
+        if age_days <= 14:
+            return 20.0
+        if age_days <= 30:
+            return 12.0
+        if age_days <= 60:
+            return 6.0
+        return 2.0
+
+    def _get_artist_profile(self, artist_id: str, token: str):
+        if not artist_id:
+            return {"genres": [], "popularity": None}
 
         url = f"{self.base_url}/artists/{artist_id}"
         headers = {"Authorization": f"Bearer {token}"}
         try:
             response = requests.get(url, headers=headers, timeout=20)
             response.raise_for_status()
-            return response.json().get("genres", [])[:3]
+            body = response.json()
+            return {
+                "genres": body.get("genres", [])[:3],
+                "popularity": body.get("popularity"),
+            }
         except Exception:
-            return []
+            return {"genres": [], "popularity": None}
+
+    def _get_artist_genres(self, artist_id: str, token: str):
+        profile = self._get_artist_profile(artist_id, token)
+        return profile.get("genres", [])
 
 
