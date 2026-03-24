@@ -1,31 +1,40 @@
 .vinyl-layout {
 	min-height: 100vh;
-	display: flex;
-	flex-direction: row;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) clamp(360px, 34vw, 460px);
 	gap: 0;
-	padding: 1rem;
+	padding: 0;
+	overflow: hidden;
 }
 
 .vinyl-main {
 	display: grid;
 	gap: 1rem;
 	align-content: start;
+	padding: 1rem;
+	min-width: 0;
+	overflow-y: auto;
 }
 
 .vinyl-chat-panel {
-	width: min(420px, 100%);
-	margin-left: 0.9rem;
+	width: 100%;
+	min-width: 0;
 	display: flex;
+	align-self: stretch;
+	position: sticky;
+	top: 0;
+	height: 100vh;
 }
 
 .vinyl-chat-shell {
 	width: 100%;
-	height: calc(100vh - 2rem);
-	max-height: calc(100vh - 2rem);
-	border: 1px solid var(--border);
-	border-radius: 14px;
+	height: 100vh;
+	max-height: 100vh;
+	border: 0;
+	border-left: 1px solid var(--border);
+	border-radius: 0;
 	overflow: hidden;
-	box-shadow: var(--shadow);
+	box-shadow: none;
 	background: var(--surface);
 }
 
@@ -271,18 +280,29 @@ input[type="number"] {
 
 @media (max-width: 1180px) {
 	.vinyl-layout {
-		grid-template-columns: 1fr;
+		display: flex;
 		flex-direction: column;
+		padding: 1rem;
+		overflow: visible;
+	}
+
+	.vinyl-main {
+		overflow: visible;
+		padding: 0;
 	}
 
 	.vinyl-chat-panel {
 		width: 100%;
-		margin-left: 0;
+		position: static;
+		height: auto;
 	}
 
 	.vinyl-chat-shell {
 		height: 70vh;
 		max-height: 70vh;
+		border: 1px solid var(--border);
+		border-radius: 14px;
+		box-shadow: var(--shadow);
 	}
 }
 
