@@ -2,6 +2,7 @@ from agent.utils.state import ProcurementState
 from agent.procurement_data import ProcurementDatabase
 from agent.utils.memory import log_decision, update_supplier_performance_on_rejection
 from datetime import datetime, timezone
+from langgraph.types import interrupt
 
 db = ProcurementDatabase()
 
@@ -24,7 +25,7 @@ def human_approval_node(state: ProcurementState) -> ProcurementState:
         state.step = "processing_approval"
         return state
 
-    # The workflow will pause here and return control to the user
+    # Pause execution and wait for an explicit resume command from the frontend.
     state.awaiting_human_approval = True
     state.message = f"{len(draft_orders)} bestellingen wachten op goedkeuring."
 
@@ -35,6 +36,42 @@ def human_approval_node(state: ProcurementState) -> ProcurementState:
     # Reset approval fields for next interaction
     state.approval_order_indices = []
     state.rejection_reasons_by_index = {}
+
+    decision = interrupt({
+        'kind': 'approval_decision',
+        'thread_id': getattr(state, 'thread_id', None),
+        'draft_orders_count': len(draft_orders),
+        'message': state.message,
+    })
+
+    if isinstance(decision, dict):
+        approved_indices = decision.get('approval_order_indices') or decision.get('approved_indices') or []
+        rejection_reasons = decision.get('rejection_reasons_by_index') or {}
+        approved_by = decision.get('approved_by') or 'manager'
+        approval_decision = decision.get('approval_decision') or decision.get('decision')
+    else:
+        approved_indices = []
+        rejection_reasons = {}
+        approved_by = 'manager'
+        approval_decision = 'rejected'
+
+    if not isinstance(approved_indices, list):
+        approved_indices = []
+    if not isinstance(rejection_reasons, dict):
+        rejection_reasons = {}
+
+    state.awaiting_human_approval = False
+    state.approval_order_indices = [int(idx) for idx in approved_indices if isinstance(idx, int) or (isinstance(idx, str) and idx.isdigit())]
+    state.rejection_reasons_by_index = {
+        int(idx): str(reason)
+        for idx, reason in rejection_reasons.items()
+        if (isinstance(idx, int) or (isinstance(idx, str) and idx.isdigit()))
+    }
+    state.approved_by = str(approved_by)
+    if approval_decision is not None:
+        state.approval_decision = str(approval_decision)
+    state.step = 'processing_approval'
+    state.status = 'in_progress'
 
     return state
 

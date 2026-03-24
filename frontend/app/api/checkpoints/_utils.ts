@@ -135,6 +135,11 @@ export async function fetchPendingCheckpoints(limit: number) {
   const items = threads
     .map((thread) => {
       const threadObj = asObject(thread);
+      const threadId = String(threadObj.thread_id ?? "").trim();
+      if (!threadId) {
+        return null;
+      }
+
       const state = asObject(threadObj.values);
       if (!isPending(state)) {
         return null;
@@ -142,7 +147,7 @@ export async function fetchPendingCheckpoints(limit: number) {
 
       const draftOrders = extractDraftOrders(state);
       return {
-        thread_id: threadObj.thread_id,
+        thread_id: threadId,
         step: state.step,
         status: state.status,
         message: state.message,
@@ -192,13 +197,16 @@ export async function submitCheckpointDecision(threadId: string, payload: unknow
     },
     body: JSON.stringify({
       assistant_id: "procurement_agent",
-      input: {
-        thread_id: threadId,
-        approval_order_indices: normalized.approvedIndices,
-        rejection_reasons_by_index: normalized.rejectionReasonsByIndex,
-        awaiting_human_approval: false,
-        approved_by: normalized.approvedBy,
-        approval_decision: normalized.decision || (normalized.approvedIndices.length > 0 ? "approved" : "rejected"),
+      command: {
+        resume: {
+          thread_id: threadId,
+          approval_order_indices: normalized.approvedIndices,
+          approved_indices: normalized.approvedIndices,
+          rejection_reasons_by_index: normalized.rejectionReasonsByIndex,
+          approved_by: normalized.approvedBy,
+          approval_decision: normalized.decision || (normalized.approvedIndices.length > 0 ? "approved" : "rejected"),
+          decision: normalized.decision || (normalized.approvedIndices.length > 0 ? "approved" : "rejected"),
+        },
       },
     }),
   });

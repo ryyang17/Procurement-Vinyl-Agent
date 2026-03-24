@@ -318,5 +318,175 @@
     "release_date": "2026-03-13",
     "product_id": 34,
     "created_at": "2026-03-22T14:25:22.011342"
+  },
+  {
+    "id": "3ItfNq0cMkUzfHVuPdQhY5",
+    "name": "You Are The Reason (Wedding Version)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Calum Scott, Book Lovers",
+    "release_date": "2026-03-23",
+    "product_id": 35,
+    "created_at": "2026-03-23T09:49:30.937096"
+  },
+  {
+    "id": "479QUz4xPJ8Tk8tV2KXDb9",
+    "name": "YOU LIKE IT I LOVE IT",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "TWS, 24kGoldn",
+    "release_date": "2026-03-23",
+    "product_id": 36,
+    "created_at": "2026-03-23T11:52:08.874440"
+  },
+  {
+    "id": "7z5ZIN7o44Tk8EUkm7AVar",
+    "name": "Training Day",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "LNGSHOT",
+    "release_date": "2026-03-23",
+    "product_id": 37,
+    "created_at": "2026-03-23T11:52:08.881268"
+  },
+  {
+    "id": "4gFCVcXjMYv2wqM4avihhc",
+    "name": "Pooparikka Neeyum (House Mix)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Shankar Mahadevan, Stan & Sam",
+    "release_date": "2026-03-23",
+    "product_id": 38,
+    "created_at": "2026-03-23T14:21:01.686405"
+  },
+  {
+    "id": "24AbLFfl1W4OKqilnCkNjC",
+    "name": "מפת העולם (לייב)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "פאר טסי",
+    "release_date": "2026-03-22",
+    "product_id": 39,
+    "created_at": "2026-03-23T14:21:01.688353"
+  },
+  {
+    "id": "410AYDxc3fOhVpSxav6iPs",
+    "name": "ציון",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "ששון איפרם שאולוב",
+    "release_date": "2026-03-24",
+    "product_id": 40,
+    "created_at": "2026-03-24T15:02:18.324489"
+  },
+  {
+    "id": "2905N4EhwgiH7v1pk515tO",
+    "name": "Tere Liye Mashup",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Atif Aslam, Shreya Ghoshal, Aditya Rikhari",
+    "release_date": "2026-03-24",
+    "product_id": 41,
+    "created_at": "2026-03-24T15:02:18.333940"
+  },
+  {
+    "id": "1jpy7rOJ6TEJ7JSVEuDhX9",
+    "name": "PERFIL #148 VIDA CARA",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Pineapple StormTv, Junior Lord, Paiva Prod, Douglas Moda",
+    "release_date": "2026-03-24",
+    "product_id": 42,
+    "created_at": "2026-03-24T15:02:18.340476"
+  },
+  {
+    "id": "5G1YkT6qpRLfKp8LBvDPKm",
+    "name": "Una Nube",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Vandali",
+    "release_date": "2026-03-23",
+    "product_id": 43,
+    "created_at": "2026-03-24T15:02:18.349518"
+  },
+  {
+    "id": "4PcYh5aEOdEBsVvl39Epbd",
+    "name": "שיר לממ\"ד",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "אודיה",
+    "release_date": "2026-03-24",
+    "product_id": 44,
+    "created_at": "2026-03-24T15:02:18.356473"
+  },
+  {
+    "id": "1XXrrz8CljC9244T7Z1wnM",
+    "name": "Yenge Enathu Kavithai (Afro DnB)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "K. S. Chithra, Srinivas, Stan & Sam",
+    "release_date": "2026-03-24",
+    "product_id": 45,
+    "created_at": "2026-03-24T15:02:18.363589"
+  },
+  {
+    "id": "7a4jaPDUORkJUUXCU1X43o",
+    "name": "Привіт. Hello",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Jerry Heil",
+    "release_date": "2026-03-24",
+    "product_id": 46,
+    "created_at": "2026-03-24T15:02:18.368509"
+  },
+  {
+    "id": "2koMBFfA2b3woVBqUjcbl1",
+    "name": "Explodir A Bolha",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "MC Hariel, DJ Glenner",
+    "release_date": "2026-03-24",
+    "product_id": 47,
+    "created_at": "2026-03-24T15:02:18.374339"
+  },
+  {
+    "id": "7Bp3208iKxfbL1AY4aoRmg",
+    "name": "Idi Prema (From \"Deewana\")",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Karthik, Eswar Chand, Chaitanya Pingali",
+    "release_date": "2026-03-24",
+    "product_id": 48,
+    "created_at": "2026-03-24T15:02:18.378970"
+  },
+  {
+    "id": "2wG0RcVPVGADlWuU5Z4TLH",
+    "name": "SST",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "OG Buda, 163ONMYNECK",
+    "release_date": "2026-03-24",
+    "product_id": 49,
+    "created_at": "2026-03-24T15:02:18.385696"
+  },
+  {
+    "id": "28EAohhyd6yKykpuSjpGqH",
+    "name": "В першу чергу",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Максим Бородін",
+    "release_date": "2026-03-24",
+    "product_id": 50,
+    "created_at": "2026-03-24T15:02:18.392105"
+  },
+  {
+    "id": "2Qxg8QUPhvaKsHTWfxOyfx",
+    "name": "2 Dada 3",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Masoom Sharma, Ashu Twinkle",
+    "release_date": "2026-03-24",
+    "product_id": 51,
+    "created_at": "2026-03-24T15:02:18.397643"
   }
 ]

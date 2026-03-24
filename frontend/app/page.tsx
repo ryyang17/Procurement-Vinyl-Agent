@@ -6,7 +6,6 @@ import {
   CopilotSidebar,
   UseAgentUpdate,
   useAgent,
-  useConfigureSuggestions,
 } from "@copilotkit/react-core/v2";
 
 import "@copilotkit/react-core/v2/styles.css";
@@ -21,206 +20,65 @@ import {
   SalesVelocityForecast,
   formatCurrency,
 } from "./agent";
+import ApprovalPanel from "./components/ApprovalPanel";
 
 const AGENT_ID = "procurement_agent";
 
-type DashboardAgent = {
-  setState: (state: ProcurementAgentState) => void;
-  state?: ProcurementAgentState;
+type SharedStateFocus = "inventory" | "suppliers" | "approvals" | "workflow";
+
+type ProposalHistoryItem = PendingCheckpointItem & {
+  resolved_decision: "approved" | "rejected";
+  resolved_at: string;
+  approved_indices?: number[];
+  rejection_reasons_by_index?: Record<number, string>;
 };
 
-/**
- * Component voor goedkeuringspaneel: user keurt orders goed/af
- */
-function ApprovalPanel({ state, agent }: { state: ProcurementAgentState; agent: DashboardAgent }) {
-  const [localApprovals, setLocalApprovals] = useState<Record<number, boolean>>({});
-  const [localRejectionReasons, setLocalRejectionReasons] = useState<Record<number, string>>({});
+type CheckpointDecisionState = {
+  approvalsByIndex: Record<number, boolean>;
+  rejectionReasonsByIndex: Record<number, string>;
+};
 
-  const draftOrders = state.draft_orders || [];
+function toFriendlyLabel(value?: string, maxLength = 24): string {
+  if (!value) return "-";
+  const normalized = value
+    .replace(/_/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
-  const getOrderTotal = (order: ProcurementDraftOrder) => {
-    if (typeof order.total_amount === "number") {
-      return order.total_amount;
-    }
-    return (order.items || []).reduce(
-      (acc, item) => acc + (item.quantity ?? 0) * (item.unit_price ?? 0),
-      0
-    );
+  const titled = normalized.replace(/\b\w/g, (char) => char.toUpperCase());
+  if (titled.length <= maxLength) return titled;
+  return `${titled.slice(0, maxLength - 1)}...`;
+}
+
+function formatRelativeTime(value?: string): string {
+  if (!value) return "-";
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return "-";
+
+  const deltaMs = Date.now() - parsed.getTime();
+  const deltaMin = Math.round(deltaMs / 60000);
+  if (deltaMin < 1) return "zojuist";
+  if (deltaMin < 60) return `${deltaMin} min geleden`;
+  const deltaHours = Math.round(deltaMin / 60);
+  if (deltaHours < 24) return `${deltaHours} uur geleden`;
+  const deltaDays = Math.round(deltaHours / 24);
+  return `${deltaDays} dag(en) geleden`;
+}
+
+function normalizeCheckpointState(payload: CheckpointStateResponse): ProcurementAgentState {
+  const rawState = payload?.state;
+  const stateObject = rawState && typeof rawState === "object" ? rawState : {};
+  const mergedDraftOrders = Array.isArray(stateObject.draft_orders)
+    ? stateObject.draft_orders
+    : Array.isArray(payload.draft_orders)
+      ? payload.draft_orders
+      : [];
+
+  return {
+    ...INITIAL_AGENT_STATE,
+    ...stateObject,
+    draft_orders: mergedDraftOrders,
   };
-
-  const getOrderType = (order: ProcurementDraftOrder) => {
-    const source = String(order.source_type || order.order_path || "").toLowerCase();
-    if (source.includes("new_release") || source.includes("new_releases")) {
-      return "New Release";
-    }
-    return "Reorder";
-  };
-
-  const handleToggleApproval = (index: number) => {
-    setLocalApprovals((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
-    // ...existing code...
-    if (localApprovals[index]) {
-      setLocalRejectionReasons((prev) => {
-        const newReasons = { ...prev };
-        delete newReasons[index];
-        return newReasons;
-      });
-    }
-  };
-
-  const handleRejectionReasonChange = (index: number, reason: string) => {
-    setLocalRejectionReasons((prev) => ({
-      ...prev,
-      [index]: reason,
-    }));
-  };
-
-  const handleSubmitApproval = () => {
-    const approvedIndices = Object.entries(localApprovals)
-      .filter(([, approved]) => approved)
-      .map(([idx]) => parseInt(idx));
-
-    agent.setState({
-      ...state,
-      approval_order_indices: approvedIndices,
-      rejection_reasons_by_index: localRejectionReasons,
-      awaiting_human_approval: false,
-      approved_by: "manager",
-    });
-  };
-
-  // ...existing code...
-  if (draftOrders.length === 0) {
-    return (
-      <section className="panel" style={{ backgroundColor: "#f0fff0", borderColor: "#5cb85c", border: "2px solid #5cb85c" }}>
-        <h2>✅ Geen Orders Nodig</h2>
-        <p style={{ fontSize: "1.1rem", color: "#5cb85c" }}>
-          Na de analyse zijn er geen inkooporders nodig. Alles is in orde!
-        </p>
-        <button
-          onClick={() => {
-            agent.setState({
-              ...state,
-              awaiting_human_approval: false,
-              approval_order_indices: [],
-              rejection_reasons_by_index: {},
-              step: "complete",
-              status: "ok"
-            });
-          }}
-          style={{
-            marginTop: "1rem",
-            padding: "0.8rem 1.5rem",
-            backgroundColor: "#5cb85c",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "1rem",
-            fontWeight: "bold",
-          }}
-        >
-          Terug naar Dashboard
-        </button>
-      </section>
-    );
-  }
-
-  return (
-    <section className="panel" style={{ backgroundColor: "#fff8f0", borderColor: "#ff8800", border: "2px solid #ff8800" }}>
-      <h2>✅ Goedkeuring Gecombineerde Bestellingen</h2>
-      <p>{draftOrders.length} bestellingen (new releases + reorders) wachten op goedkeuring:</p>
-
-      <div style={{ marginTop: "1rem" }}>
-        {draftOrders.map((order: ProcurementDraftOrder, idx) => (
-          <div
-            key={`approval-${idx}`}
-            style={{
-              marginBottom: "1rem",
-              padding: "1rem",
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              backgroundColor: "white",
-              transition: "box-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <input
-                type="checkbox"
-                checked={localApprovals[idx] ?? false}
-                onChange={() => handleToggleApproval(idx)}
-                style={{ width: "20px", height: "20px", cursor: "pointer" }}
-              />
-              <div style={{ flex: 1 }}>
-                <strong>{order.supplier_name || "Leverancier " + (idx + 1)}</strong>
-                <div style={{ fontSize: "0.9rem", color: "#666" }}>
-                  Type: {getOrderType(order)} | Items: {(order.items || []).length}
-                </div>
-                <ul className="list" style={{ marginTop: "0.45rem" }}>
-                  {(order.items || []).map((item, itemIdx) => (
-                    <li key={`approval-${idx}-item-${itemIdx}`}>
-                      {item.product_name || item.product_id || "Onbekend product"} - {item.quantity ?? 0} stuks @ {formatCurrency(item.unit_price)}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div style={{ textAlign: "right", fontWeight: "bold" }}>
-                {formatCurrency(getOrderTotal(order))}
-              </div>
-            </div>
-
-            {!localApprovals[idx] && (
-              <div style={{ marginTop: "0.5rem" }}>
-                <label style={{ display: "block", fontSize: "0.9rem", marginBottom: "0.5rem" }}>
-                  Reden van afwijzing (optioneel):
-                </label>
-                <textarea
-                  value={localRejectionReasons[idx] ?? ""}
-                  onChange={(e) => handleRejectionReasonChange(idx, e.target.value)}
-                  placeholder="Voer reden van afwijzing in..."
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    borderRadius: "4px",
-                    border: "1px solid #ccc",
-                    fontFamily: "inherit",
-                    minHeight: "60px",
-                  }}
-                />
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      <button
-        onClick={handleSubmitApproval}
-        style={{
-          marginTop: "1rem",
-          padding: "1rem 2rem",
-          backgroundColor: "#ff8800",
-          color: "white",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer",
-          fontSize: "1rem",
-          fontWeight: "bold",
-          width: "100%",
-        }}
-      >
-        Goedkeuringen Indienen
-      </button>
-    </section>
-  );
 }
 
 function Dashboard() {
@@ -229,33 +87,17 @@ function Dashboard() {
     updates: [UseAgentUpdate.OnStateChanged, UseAgentUpdate.OnRunStatusChanged],
   });
 
-  useConfigureSuggestions({
-    suggestions: [
-      {
-        title: "Controleer voorraadtekorten",
-        message: "Voer een dagelijkse voorraadcontrole uit en toon tekorten.",
-      },
-      {
-        title: "Vergelijk leveranciers",
-        message: "Vergelijk leveranciers op prijs, levertijd en betrouwbaarheid.",
-      },
-      {
-        title: "Maak conceptbestelling",
-        message: "Maak een concept inkooporder voor urgente tekorten.",
-      },
-      {
-        title: "Vraag goedkeuring",
-        message: "Bereid human approval voor met duidelijke motivatie.",
-      },
-    ],
-    available: "always",
-  });
-
   const state = (agent.state as ProcurementAgentState) || INITIAL_AGENT_STATE;
   const [pendingCheckpoints, setPendingCheckpoints] = useState<PendingCheckpointItem[]>([]);
   const [pendingLoading, setPendingLoading] = useState(false);
   const [pendingError, setPendingError] = useState<string | null>(null);
   const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
+  const [checkpointLoadId, setCheckpointLoadId] = useState<string | null>(null);
+  const [checkpointDecisionSubmittingId, setCheckpointDecisionSubmittingId] = useState<string | null>(null);
+  const [checkpointNotice, setCheckpointNotice] = useState<string | null>(null);
+  const [lastSharedSync, setLastSharedSync] = useState<string>("Nog niet gesynchroniseerd");
+  const [proposalHistory, setProposalHistory] = useState<ProposalHistoryItem[]>([]);
+  const [checkpointDecisions, setCheckpointDecisions] = useState<Record<string, CheckpointDecisionState>>({});
 
   useEffect(() => {
     if (!agent.state) {
@@ -278,7 +120,34 @@ function Dashboard() {
         throw new Error(message);
       }
 
-      setPendingCheckpoints((payload as PendingCheckpointResponse).items || []);
+      const normalizedItems = ((payload as PendingCheckpointResponse).items || []).filter(
+        (item) => Boolean(String(item.thread_id || "").trim())
+      );
+      setPendingCheckpoints(normalizedItems);
+
+      setCheckpointDecisions((prev) => {
+        const next: Record<string, CheckpointDecisionState> = {};
+
+        for (const item of normalizedItems) {
+          const existing = prev[item.thread_id];
+          if (existing) {
+            next[item.thread_id] = existing;
+            continue;
+          }
+
+          const approvalsByIndex: Record<number, boolean> = {};
+          for (let idx = 0; idx < item.draft_orders_count; idx += 1) {
+            approvalsByIndex[idx] = true;
+          }
+
+          next[item.thread_id] = {
+            approvalsByIndex,
+            rejectionReasonsByIndex: {},
+          };
+        }
+
+        return next;
+      });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       setPendingError(message);
@@ -288,9 +157,18 @@ function Dashboard() {
   };
 
   const loadCheckpointIntoDashboard = async (threadId: string) => {
+    const normalizedThreadId = String(threadId || "").trim();
+
     try {
+      if (!normalizedThreadId) {
+        throw new Error("Checkpoint heeft geen geldige thread-id en kan niet geladen worden.");
+      }
+
       setPendingError(null);
-      const response = await fetch(`/api/checkpoints/${encodeURIComponent(threadId)}`, {
+      setCheckpointNotice(null);
+      setCheckpointLoadId(normalizedThreadId);
+
+      const response = await fetch(`/api/checkpoints/${encodeURIComponent(normalizedThreadId)}`, {
         method: "GET",
         cache: "no-store",
       });
@@ -301,12 +179,26 @@ function Dashboard() {
         throw new Error(message);
       }
 
-      const statePayload = (payload as CheckpointStateResponse).state;
-      agent.setState(statePayload);
-      setActiveThreadId(threadId);
+      const checkpointPayload = payload as CheckpointStateResponse;
+      const rawState = checkpointPayload.state && typeof checkpointPayload.state === "object"
+        ? checkpointPayload.state
+        : null;
+      const hasRawState = Boolean(rawState && Object.keys(rawState).length > 0);
+      const hasDraftOrders = Array.isArray(checkpointPayload.draft_orders) && checkpointPayload.draft_orders.length > 0;
+      if (!hasRawState && !hasDraftOrders) {
+        throw new Error("Checkpoint bevat geen laadbare state.");
+      }
+
+      const normalizedState = normalizeCheckpointState(checkpointPayload);
+
+      agent.setState(normalizedState);
+      setActiveThreadId(normalizedThreadId);
+      setCheckpointNotice(`Checkpoint geladen: ${normalizedThreadId}`);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       setPendingError(message);
+    } finally {
+      setCheckpointLoadId(null);
     }
   };
 
@@ -319,7 +211,7 @@ function Dashboard() {
 
       const rejectionReasonsByIndex = approveAll
         ? {}
-        : Object.fromEntries(allIndices.map((idx) => [idx, "Afgewezen via frontend checkpointpanel"])) ;
+        : Object.fromEntries(allIndices.map((idx) => [idx, "Afgewezen via frontend checkpointpanel"]));
 
       const response = await fetch(`/api/checkpoints/${encodeURIComponent(threadId)}/decision`, {
         method: "POST",
@@ -343,11 +235,191 @@ function Dashboard() {
       const statePayload = (payload as CheckpointStateResponse).state;
       agent.setState(statePayload);
       setActiveThreadId(threadId);
+
+      if (checkpoint) {
+        setProposalHistory((prev) => [
+          {
+            ...checkpoint,
+            resolved_decision: approveAll ? "approved" : "rejected",
+            resolved_at: new Date().toISOString(),
+            approved_indices: approveAll ? allIndices : [],
+            rejection_reasons_by_index: rejectionReasonsByIndex,
+          },
+          ...prev.filter((item) => item.thread_id !== threadId),
+        ]);
+      }
+
+      setPendingCheckpoints((prev) => prev.filter((item) => item.thread_id !== threadId));
       await fetchPendingCheckpoints();
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       setPendingError(message);
     }
+  };
+
+  const toggleCheckpointOrderApproval = (threadId: string, orderIndex: number, approved: boolean) => {
+    setCheckpointDecisions((prev) => {
+      const current = prev[threadId] || { approvalsByIndex: {}, rejectionReasonsByIndex: {} };
+      const nextReasons = { ...current.rejectionReasonsByIndex };
+
+      if (approved) {
+        delete nextReasons[orderIndex];
+      }
+
+      return {
+        ...prev,
+        [threadId]: {
+          approvalsByIndex: {
+            ...current.approvalsByIndex,
+            [orderIndex]: approved,
+          },
+          rejectionReasonsByIndex: nextReasons,
+        },
+      };
+    });
+  };
+
+  const setCheckpointRejectionReason = (threadId: string, orderIndex: number, reason: string) => {
+    setCheckpointDecisions((prev) => {
+      const current = prev[threadId] || { approvalsByIndex: {}, rejectionReasonsByIndex: {} };
+      return {
+        ...prev,
+        [threadId]: {
+          approvalsByIndex: {
+            ...current.approvalsByIndex,
+          },
+          rejectionReasonsByIndex: {
+            ...current.rejectionReasonsByIndex,
+            [orderIndex]: reason,
+          },
+        },
+      };
+    });
+  };
+
+  const submitCheckpointDetailedDecision = async (threadId: string) => {
+    try {
+      setPendingError(null);
+      setCheckpointNotice(null);
+      setCheckpointDecisionSubmittingId(threadId);
+
+      const checkpoint = pendingCheckpoints.find((item) => item.thread_id === threadId);
+      if (!checkpoint) {
+        throw new Error("Checkpoint niet gevonden.");
+      }
+
+      const localDecision = checkpointDecisions[threadId];
+      const approvedIndices = Array.from({ length: checkpoint.draft_orders_count }, (_, idx) => idx)
+        .filter((idx) => localDecision?.approvalsByIndex[idx] ?? true);
+
+      const rejectionReasonsByIndex = Object.fromEntries(
+        Object.entries(localDecision?.rejectionReasonsByIndex || {})
+          .filter(([idx]) => !approvedIndices.includes(Number(idx)))
+      );
+
+      const response = await fetch(`/api/checkpoints/${encodeURIComponent(threadId)}/decision`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          approved_indices: approvedIndices,
+          rejection_reasons_by_index: rejectionReasonsByIndex,
+          approved_by: "frontend_manager",
+          decision: approvedIndices.length > 0 ? "approved" : "rejected",
+        }),
+      });
+
+      const payload = (await response.json()) as CheckpointStateResponse | { error?: string };
+      if (!response.ok) {
+        const message = "error" in payload ? payload.error || "Onbekende fout" : "Onbekende fout";
+        throw new Error(message);
+      }
+
+      const resolvedDecision: "approved" | "rejected" = approvedIndices.length > 0 ? "approved" : "rejected";
+
+      setProposalHistory((prev) => [
+        {
+          ...checkpoint,
+          resolved_decision: resolvedDecision,
+          resolved_at: new Date().toISOString(),
+          approved_indices: approvedIndices,
+          rejection_reasons_by_index: rejectionReasonsByIndex,
+        },
+        ...prev.filter((item) => item.thread_id !== threadId),
+      ]);
+
+      setCheckpointDecisions((prev) => {
+        const next = { ...prev };
+        delete next[threadId];
+        return next;
+      });
+
+      setPendingCheckpoints((prev) => prev.filter((item) => item.thread_id !== threadId));
+
+      const statePayload = (payload as CheckpointStateResponse).state;
+      agent.setState(statePayload);
+      setActiveThreadId(threadId);
+      setCheckpointNotice(
+        `Checkpoint ${threadId} verwerkt: ${approvedIndices.length} album(s) goedgekeurd. Workflow vervolgd voor plaatsing en afronding.`
+      );
+
+      await fetchPendingCheckpoints();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      setPendingError(message);
+    } finally {
+      setCheckpointDecisionSubmittingId(null);
+    }
+  };
+
+  const submitActiveThreadDecision = async (
+    approvedIndices: number[],
+    rejectionReasonsByIndex: Record<number, string>
+  ) => {
+    if (!activeThreadId) {
+      throw new Error("Geen actieve checkpoint-thread geladen.");
+    }
+
+    const response = await fetch(`/api/checkpoints/${encodeURIComponent(activeThreadId)}/decision`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        approved_indices: approvedIndices,
+        rejection_reasons_by_index: rejectionReasonsByIndex,
+        approved_by: "frontend_manager",
+        decision: approvedIndices.length > 0 ? "approved" : "rejected",
+      }),
+    });
+
+    const payload = (await response.json()) as CheckpointStateResponse | { error?: string };
+    if (!response.ok) {
+      const message = "error" in payload ? payload.error || "Onbekende fout" : "Onbekende fout";
+      throw new Error(message);
+    }
+
+    const checkpoint = pendingCheckpoints.find((item) => item.thread_id === activeThreadId);
+    if (checkpoint) {
+      setProposalHistory((prev) => [
+        {
+          ...checkpoint,
+          resolved_decision: approvedIndices.length > 0 ? "approved" : "rejected",
+          resolved_at: new Date().toISOString(),
+          approved_indices: approvedIndices,
+          rejection_reasons_by_index: rejectionReasonsByIndex,
+        },
+        ...prev.filter((item) => item.thread_id !== activeThreadId),
+      ]);
+    }
+
+    setPendingCheckpoints((prev) => prev.filter((item) => item.thread_id !== activeThreadId));
+    setCheckpointNotice(`Beslissing verwerkt voor thread: ${activeThreadId}`);
+
+    const statePayload = (payload as CheckpointStateResponse).state;
+    agent.setState(statePayload);
+    await fetchPendingCheckpoints();
   };
 
   useEffect(() => {
@@ -386,6 +458,30 @@ function Dashboard() {
     return { reorder, newRelease };
   }, [state.draft_orders]);
 
+  const syncSharedState = (focus: SharedStateFocus) => {
+    const sharedSnapshot = {
+      focus,
+      synced_at: new Date().toISOString(),
+      kpis,
+      pending_checkpoints: pendingCheckpoints.length,
+      active_thread: activeThreadId,
+      inventory_alerts_preview: (state.inventory_alerts || []).slice(0, 5),
+      sales_velocity_alerts_preview: (state.sales_velocity_alerts || []).slice(0, 5),
+      draft_order_summary: draftOrderTypeSummary,
+    };
+
+    agent.setState({
+      ...state,
+      data: {
+        ...(state.data || {}),
+        shared_ui_context: sharedSnapshot,
+      },
+      summary: `UI context gesynchroniseerd voor focus: ${focus}`,
+    });
+
+    setLastSharedSync(`Gesynchroniseerd: ${new Date().toLocaleTimeString("nl-NL")}`);
+  };
+
   return (
     <div className="vinyl-layout">
       <div className="vinyl-main">
@@ -413,267 +509,428 @@ function Dashboard() {
           </div>
         </section>
 
-        <section className="panel" style={{ border: "2px solid #0c7a6a", backgroundColor: "#f3fffc" }}>
-          <h2>Openstaande Checkpoints</h2>
-          <p style={{ marginBottom: "1rem" }}>
-            Herstel hier openstaande workflow-threads en neem direct een beslissing.
-          </p>
+        <section className="panel panel-checkpoints">
+          <details open>
+            <summary className="panel-summary">
+              <span>Openstaande Checkpoints</span>
+              <span className="summary-chip">{pendingCheckpoints.length} actief</span>
+            </summary>
 
-          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
-            <button
-              onClick={fetchPendingCheckpoints}
-              style={{
-                padding: "0.5rem 1rem",
-                border: "1px solid #0c7a6a",
-                borderRadius: "6px",
-                background: "white",
-                cursor: "pointer",
-              }}
-            >
-              Vernieuwen
-            </button>
-            {pendingLoading && <span>Bezig met laden...</span>}
-          </div>
+            <p style={{ marginBottom: "1rem" }}>
+              Compact overzicht. Klik per checkpoint voor details en acties.
+            </p>
 
-          {pendingError && (
-            <div style={{ color: "#b42318", marginBottom: "1rem" }}>
-              Fout bij ophalen/verwerken checkpoints: {pendingError}
+            <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", alignItems: "center", flexWrap: "wrap" }}>
+              <button className="btn btn-soft" onClick={fetchPendingCheckpoints}>
+                Vernieuwen
+              </button>
+              {pendingLoading && <span>Bezig met laden...</span>}
+              <span className="summary-chip">Actieve thread: {activeThreadId ? "geladen" : "geen"}</span>
             </div>
-          )}
 
-          {pendingCheckpoints.length === 0 ? (
-            <p>Geen openstaande checkpoints gevonden.</p>
-          ) : (
-            <div style={{ display: "grid", gap: "0.8rem" }}>
-              {pendingCheckpoints.map((item) => (
-                <div
-                  key={item.thread_id}
-                  style={{
-                    border: "1px solid #cde9e3",
-                    borderRadius: "8px",
-                    padding: "0.8rem",
-                    backgroundColor: activeThreadId === item.thread_id ? "#e8fff9" : "white",
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
-                    <div>
-                      <strong>Thread:</strong> {item.thread_id}
-                    </div>
-                    <div>
-                      <strong>Status:</strong> {item.status || "-"} / {item.step || "-"}
-                    </div>
-                    <div>
-                      <strong>Orders:</strong> {item.draft_orders_count}
-                    </div>
-                  </div>
-                  <div style={{ marginTop: "0.5rem", color: "#444" }}>{item.message || "-"}</div>
+            {pendingError && (
+              <div style={{ color: "#b42318", marginBottom: "1rem" }}>
+                Fout bij ophalen/verwerken checkpoints: {pendingError}
+              </div>
+            )}
 
-                  <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.7rem", flexWrap: "wrap" }}>
-                    <button
-                      onClick={() => loadCheckpointIntoDashboard(item.thread_id)}
-                      style={{
-                        padding: "0.45rem 0.8rem",
-                        borderRadius: "6px",
-                        border: "1px solid #2563eb",
-                        backgroundColor: "#2563eb",
-                        color: "white",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Laden in dashboard
-                    </button>
-                    <button
-                      onClick={() => submitCheckpointDecision(item.thread_id, true)}
-                      style={{
-                        padding: "0.45rem 0.8rem",
-                        borderRadius: "6px",
-                        border: "1px solid #15803d",
-                        backgroundColor: "#15803d",
-                        color: "white",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Alles goedkeuren
-                    </button>
-                    <button
-                      onClick={() => submitCheckpointDecision(item.thread_id, false)}
-                      style={{
-                        padding: "0.45rem 0.8rem",
-                        borderRadius: "6px",
-                        border: "1px solid #b42318",
-                        backgroundColor: "#b42318",
-                        color: "white",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Alles afwijzen
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+            {checkpointNotice && (
+              <div style={{ color: "#027a48", marginBottom: "1rem" }}>
+                {checkpointNotice}
+              </div>
+            )}
+
+            {pendingCheckpoints.length === 0 ? (
+              <p>Geen openstaande checkpoints gevonden.</p>
+            ) : (
+              <div style={{ display: "grid", gap: "0.8rem" }}>
+                {pendingCheckpoints.map((item, idx) => (
+                  <details
+                    key={item.thread_id}
+                    className="checkpoint-card"
+                    open={activeThreadId === item.thread_id}
+                  >
+                    <summary className="checkpoint-summary">
+                      <span className="checkpoint-title">Checkpoint {idx + 1}</span>
+                      <span className="checkpoint-meta">
+                        <span className="summary-chip summary-chip-green">{toFriendlyLabel(item.status, 18)}</span>
+                        <span className="summary-chip">{toFriendlyLabel(item.step, 20)}</span>
+                        <span className="summary-chip summary-chip-blue">{item.draft_orders_count} orders</span>
+                        <span className="summary-chip">{formatRelativeTime(item.updated_at || item.approval_requested_at)}</span>
+                      </span>
+                    </summary>
+
+                    <div className="checkpoint-body">
+                      <div style={{ color: "#475467", fontSize: "0.9rem" }}>
+                        Technisch ID: {item.thread_id}
+                      </div>
+                      <div style={{ marginTop: "0.45rem", color: "#1f2937" }}>{item.message || "Geen extra bericht"}</div>
+
+                      <div style={{ marginTop: "0.65rem", color: "#344054", fontSize: "0.92rem" }}>
+                        Kies per album goedkeuren of afwijzen. Na indienen gaat de thread direct door met bestellen en afronden.
+                      </div>
+
+                      {(item.draft_orders || []).length > 0 && (
+                        <div style={{ marginTop: "0.7rem", display: "grid", gap: "0.5rem" }}>
+                          {(item.draft_orders || []).map((order, orderIdx) => (
+                            <div
+                              key={`checkpoint-${item.thread_id}-order-${orderIdx}`}
+                              style={{ border: "1px solid #e4e7ec", borderRadius: "8px", padding: "0.6rem", backgroundColor: "#fcfcfd" }}
+                            >
+                              <strong>{order.supplier_name || `Leverancier ${orderIdx + 1}`}</strong>
+                              <div style={{ marginTop: "0.5rem", display: "flex", gap: "0.7rem", alignItems: "center", flexWrap: "wrap" }}>
+                                <label style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontWeight: 500 }}>
+                                  <input
+                                    type="radio"
+                                    name={`decision-${item.thread_id}-${orderIdx}`}
+                                    checked={(checkpointDecisions[item.thread_id]?.approvalsByIndex[orderIdx] ?? true) === true}
+                                    onChange={() => toggleCheckpointOrderApproval(item.thread_id, orderIdx, true)}
+                                  />
+                                  Goedkeuren
+                                </label>
+                                <label style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontWeight: 500 }}>
+                                  <input
+                                    type="radio"
+                                    name={`decision-${item.thread_id}-${orderIdx}`}
+                                    checked={(checkpointDecisions[item.thread_id]?.approvalsByIndex[orderIdx] ?? true) === false}
+                                    onChange={() => toggleCheckpointOrderApproval(item.thread_id, orderIdx, false)}
+                                  />
+                                  Afwijzen
+                                </label>
+                              </div>
+                              {typeof order.ai_recommendation === "string" && order.ai_recommendation.trim() && (
+                                <div style={{ marginTop: "0.35rem", color: "#344054", fontSize: "0.9rem" }}>
+                                  Reden voorstel: {order.ai_recommendation}
+                                </div>
+                              )}
+                              <ul className="list" style={{ marginTop: "0.45rem" }}>
+                                {(order.items || []).map((draftItem, itemIdx) => (
+                                  <li key={`checkpoint-${item.thread_id}-order-${orderIdx}-item-${itemIdx}`}>
+                                    {draftItem.product_name || draftItem.product_id || "Onbekend album"} - {draftItem.quantity ?? 0} stuks
+                                  </li>
+                                ))}
+                              </ul>
+
+                              {(checkpointDecisions[item.thread_id]?.approvalsByIndex[orderIdx] ?? true) === false && (
+                                <div style={{ marginTop: "0.6rem" }}>
+                                  <label style={{ display: "block", fontSize: "0.9rem", marginBottom: "0.4rem" }}>
+                                    Reden afwijzing (optioneel)
+                                  </label>
+                                  <textarea
+                                    value={checkpointDecisions[item.thread_id]?.rejectionReasonsByIndex[orderIdx] ?? ""}
+                                    onChange={(e) => setCheckpointRejectionReason(item.thread_id, orderIdx, e.target.value)}
+                                    placeholder="Bijv. te duur of te lange levertijd"
+                                    style={{
+                                      width: "100%",
+                                      padding: "0.5rem",
+                                      borderRadius: "6px",
+                                      border: "1px solid #d0d5dd",
+                                      fontFamily: "inherit",
+                                      minHeight: "56px",
+                                    }}
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.8rem", flexWrap: "wrap" }}>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => loadCheckpointIntoDashboard(item.thread_id)}
+                          disabled={checkpointLoadId === item.thread_id}
+                        >
+                          {checkpointLoadId === item.thread_id ? "Laden..." : "Laden in dashboard"}
+                        </button>
+                        <button className="btn btn-success" onClick={() => submitCheckpointDecision(item.thread_id, true)}>
+                          Alles goedkeuren
+                        </button>
+                        <button className="btn btn-danger" onClick={() => submitCheckpointDecision(item.thread_id, false)}>
+                          Alles afwijzen
+                        </button>
+                        <button
+                          className="btn btn-soft"
+                          onClick={() => submitCheckpointDetailedDecision(item.thread_id)}
+                          disabled={checkpointDecisionSubmittingId === item.thread_id}
+                        >
+                          {checkpointDecisionSubmittingId === item.thread_id
+                            ? "Beslissing verwerken..."
+                            : "Per album indienen en workflow afronden"}
+                        </button>
+                      </div>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            )}
+          </details>
         </section>
 
         {/* Show ApprovalPanel if awaiting_human_approval is true AND there are draft orders (including reorder-only) */}
         {state.awaiting_human_approval && Array.isArray(state.draft_orders) && state.draft_orders.length > 0 && (
-          <ApprovalPanel state={state} agent={agent} />
+          <ApprovalPanel
+            state={state}
+            agent={agent}
+            onSubmitCheckpointDecision={activeThreadId ? submitActiveThreadDecision : undefined}
+          />
         )}
 
-        <section className="panel" style={{ border: "2px solid #2e7d32", backgroundColor: "#f1fbf2" }}>
-          <h2>Samengevoegde Workflow</h2>
-          <p style={{ marginBottom: "0.6rem" }}>
-            Deze run gaat automatisch door: marktonderzoek → new releases → suppliers → create orders → human approval.
-          </p>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-            <span style={{ backgroundColor: "#d1fae5", borderRadius: "999px", padding: "0.35rem 0.7rem", fontWeight: 600 }}>
-              New release orders: {draftOrderTypeSummary.newRelease}
-            </span>
-            <span style={{ backgroundColor: "#dbeafe", borderRadius: "999px", padding: "0.35rem 0.7rem", fontWeight: 600 }}>
-              Reorder orders: {draftOrderTypeSummary.reorder}
-            </span>
-          </div>
-        </section>
-
-        <section className="panel">
-          <h2>Workflow Status</h2>
-          <div className="status-row">
-            <div>
-              <label>Stap</label>
-              <p>{state.step || "-"}</p>
+        <section className="panel panel-workflow">
+          <details open>
+            <summary className="panel-summary">
+              <span>Samengevoegde Workflow</span>
+            </summary>
+            <p style={{ marginBottom: "0.6rem" }}>
+              Deze run gaat automatisch door: marktonderzoek naar new releases, daarna suppliers, create orders en human approval.
+            </p>
+            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+              <span className="summary-chip summary-chip-green">New release orders: {draftOrderTypeSummary.newRelease}</span>
+              <span className="summary-chip summary-chip-blue">Reorder orders: {draftOrderTypeSummary.reorder}</span>
             </div>
-            <div>
-              <label>Volgende Actie</label>
-              <p>{state.next_action || "-"}</p>
+          </details>
+        </section>
+
+        <section className="panel panel-shared-state">
+          <details open>
+            <summary className="panel-summary">
+              <span>Shared State Snelkoppelingen</span>
+              <span className="summary-chip">{lastSharedSync}</span>
+            </summary>
+            <p style={{ marginBottom: "0.8rem" }}>
+              Houd app en agent synchroon. De agent leest deze UI-context direct uit state.data.shared_ui_context.
+            </p>
+            <div style={{ display: "flex", gap: "0.55rem", flexWrap: "wrap" }}>
+              <button className="btn btn-primary" onClick={() => syncSharedState("inventory")}>Sync Voorraad</button>
+              <button className="btn btn-success" onClick={() => syncSharedState("suppliers")}>Sync Leveranciers</button>
+              <button className="btn btn-soft" onClick={() => syncSharedState("approvals")}>Sync Approvals</button>
+              <button className="btn btn-danger" onClick={() => syncSharedState("workflow")}>Sync Workflow</button>
             </div>
-            <div>
-              <label>Approval</label>
-              <p>{state.approval_decision || "-"}</p>
-            </div>
-          </div>
-          <div className="summary-box">
-            {state.summary || "Nog geen samenvatting beschikbaar."}
-          </div>
+          </details>
         </section>
 
         <section className="panel">
-          <h2>Voorraad Meldingen</h2>
-          <ul className="list">
-            {(state.inventory_alerts || []).length === 0 && <li>Geen meldingen</li>}
-            {(state.inventory_alerts || []).map((alert, idx) => (
-              <li key={`${alert}-${idx}`}>{alert}</li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="panel">
-          <h2>Sales Velocity Forecasts</h2>
-          <ul className="list" style={{ marginBottom: "0.8rem" }}>
-            {(state.sales_velocity_alerts || []).length === 0 && <li>Geen urgente velocity alerts</li>}
-            {(state.sales_velocity_alerts || []).map((alert, idx) => (
-              <li key={`velocity-alert-${idx}`}>{alert}</li>
-            ))}
-          </ul>
-
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Velocity / dag</th>
-                  <th>Stockout datum</th>
-                  <th>Reorder basis</th>
-                </tr>
-              </thead>
-              <tbody>
-                {salesVelocityForecasts.length === 0 && (
-                  <tr>
-                    <td colSpan={4}>Nog geen sales velocity data</td>
-                  </tr>
-                )}
-                {salesVelocityForecasts.map((forecast: SalesVelocityForecast, idx: number) => (
-                  <tr key={`velocity-${forecast.product_id ?? idx}`}>
-                    <td>{forecast.product_name || forecast.product_id || "-"}</td>
-                    <td>
-                      {typeof forecast.velocity_per_day === "number"
-                        ? forecast.velocity_per_day.toFixed(2)
-                        : "-"}
-                    </td>
-                    <td>{forecast.predicted_stockout_date || "-"}</td>
-                    <td>{forecast.reorder_basis || "-"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section className="panel">
-          <h2>Supplier Offers</h2>
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Supplier</th>
-                  <th>Product</th>
-                  <th>Prijs</th>
-                  <th>Levertijd</th>
-                  <th>Betrouwbaarheid</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(state.supplier_offers || []).length === 0 && (
-                  <tr>
-                    <td colSpan={5}>Nog geen offers</td>
-                  </tr>
-                )}
-                {(state.supplier_offers || []).map((offer, idx) => (
-                  <tr key={`offer-${idx}`}>
-                    <td>{offer.supplier_name || offer.supplier_id || "-"}</td>
-                    <td>{offer.notes || "-"}</td>
-                    <td>{formatCurrency(offer.unit_price)}</td>
-                    <td>
-                      {typeof offer.lead_time_days === "number"
-                        ? `${offer.lead_time_days} d`
-                        : "-"}
-                    </td>
-                    <td>
-                      {typeof offer.reliability_score === "number"
-                        ? offer.reliability_score.toFixed(2)
-                        : "-"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section className="panel">
-          <h2>Draft Orders</h2>
-          {(state.draft_orders || []).length === 0 && <p>Geen conceptorders</p>}
-          <div style={{ display: "grid", gap: "0.8rem" }}>
-            {(state.draft_orders || []).map((order: ProcurementDraftOrder, idx) => (
-              <div key={`draft-${idx}`} style={{ border: "1px solid #e5e7eb", borderRadius: "8px", padding: "0.8rem" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", gap: "0.8rem", flexWrap: "wrap" }}>
-                  <strong>{order.supplier_name || `Leverancier ${idx + 1}`}</strong>
-                  <span style={{ fontWeight: 600 }}>
-                    {String(order.source_type || order.order_path || "").toLowerCase().includes("new_release") ? "New Release" : "Reorder"}
-                  </span>
-                  <span>{formatCurrency(typeof order.total_amount === "number" ? order.total_amount : (order.items || []).reduce((acc, item) => acc + (item.quantity ?? 0) * (item.unit_price ?? 0), 0))}</span>
-                </div>
-
-                <ul className="list" style={{ marginTop: "0.45rem" }}>
-                  {(order.items || []).length === 0 && <li>Geen items</li>}
-                  {(order.items || []).map((item, itemIdx) => (
-                    <li key={`draft-${idx}-item-${itemIdx}`}>
-                      {item.product_name || item.product_id || "Onbekend product"} - {item.quantity ?? 0} stuks @ {formatCurrency(item.unit_price)}
-                    </li>
-                  ))}
-                </ul>
+          <details>
+            <summary className="panel-summary">
+              <span>Workflow Status</span>
+            </summary>
+            <div className="status-row">
+              <div>
+                <label>Stap</label>
+                <p>{state.step || "-"}</p>
               </div>
-            ))}
-          </div>
+              <div>
+                <label>Volgende Actie</label>
+                <p>{state.next_action || "-"}</p>
+              </div>
+              <div>
+                <label>Approval</label>
+                <p>{state.approval_decision || "-"}</p>
+              </div>
+            </div>
+            <div className="summary-box">
+              {state.summary || "Nog geen samenvatting beschikbaar."}
+            </div>
+          </details>
+        </section>
+
+        <section className="panel">
+          <details>
+            <summary className="panel-summary">
+              <span>Voorraad Meldingen</span>
+              <span className="summary-chip">{(state.inventory_alerts || []).length}</span>
+            </summary>
+            <ul className="list">
+              {(state.inventory_alerts || []).length === 0 && <li>Geen meldingen</li>}
+              {(state.inventory_alerts || []).map((alert, idx) => (
+                <li key={`${alert}-${idx}`}>{alert}</li>
+              ))}
+            </ul>
+          </details>
+        </section>
+
+        <section className="panel">
+          <details>
+            <summary className="panel-summary">
+              <span>Sales Velocity Forecasts</span>
+              <span className="summary-chip">{salesVelocityForecasts.length}</span>
+            </summary>
+            <ul className="list" style={{ marginBottom: "0.8rem" }}>
+              {(state.sales_velocity_alerts || []).length === 0 && <li>Geen urgente velocity alerts</li>}
+              {(state.sales_velocity_alerts || []).map((alert, idx) => (
+                <li key={`velocity-alert-${idx}`}>{alert}</li>
+              ))}
+            </ul>
+
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Velocity / dag</th>
+                    <th>Stockout datum</th>
+                    <th>Reorder basis</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {salesVelocityForecasts.length === 0 && (
+                    <tr>
+                      <td colSpan={4}>Nog geen sales velocity data</td>
+                    </tr>
+                  )}
+                  {salesVelocityForecasts.map((forecast: SalesVelocityForecast, idx: number) => (
+                    <tr key={`velocity-${forecast.product_id ?? idx}`}>
+                      <td>{forecast.product_name || forecast.product_id || "-"}</td>
+                      <td>
+                        {typeof forecast.velocity_per_day === "number"
+                          ? forecast.velocity_per_day.toFixed(2)
+                          : "-"}
+                      </td>
+                      <td>{forecast.predicted_stockout_date || "-"}</td>
+                      <td>{forecast.reorder_basis || "-"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </section>
+
+        <section className="panel">
+          <details>
+            <summary className="panel-summary">
+              <span>Supplier Offers</span>
+              <span className="summary-chip">{(state.supplier_offers || []).length}</span>
+            </summary>
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Supplier</th>
+                    <th>Product</th>
+                    <th>Prijs</th>
+                    <th>Levertijd</th>
+                    <th>Betrouwbaarheid</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(state.supplier_offers || []).length === 0 && (
+                    <tr>
+                      <td colSpan={5}>Nog geen offers</td>
+                    </tr>
+                  )}
+                  {(state.supplier_offers || []).map((offer, idx) => (
+                    <tr key={`offer-${idx}`}>
+                      <td>{offer.supplier_name || offer.supplier_id || "-"}</td>
+                      <td>{offer.notes || "-"}</td>
+                      <td>{formatCurrency(offer.unit_price)}</td>
+                      <td>
+                        {typeof offer.lead_time_days === "number"
+                          ? `${offer.lead_time_days} d`
+                          : "-"}
+                      </td>
+                      <td>
+                        {typeof offer.reliability_score === "number"
+                          ? offer.reliability_score.toFixed(2)
+                          : "-"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </section>
+
+        <section className="panel">
+          <details>
+            <summary className="panel-summary">
+              <span>Inkoopvoorstel History</span>
+              <span className="summary-chip">{proposalHistory.length + (state.draft_orders || []).length}</span>
+            </summary>
+
+            {proposalHistory.length === 0 && (state.draft_orders || []).length === 0 && <p>Nog geen voorstellen in history</p>}
+
+            {proposalHistory.length > 0 && (
+              <div style={{ display: "grid", gap: "0.8rem", marginBottom: "1rem" }}>
+                {proposalHistory.map((entry, idx) => (
+                  <details key={`history-thread-${entry.thread_id}-${idx}`} className="draft-card">
+                    <summary className="checkpoint-summary">
+                      <span className="checkpoint-title">Thread {entry.thread_id}</span>
+                      <span className="checkpoint-meta">
+                        <span className={`summary-chip ${entry.resolved_decision === "approved" ? "summary-chip-green" : "summary-chip"}`}>
+                          {entry.resolved_decision === "approved" ? "Goedgekeurd" : "Afgewezen"}
+                        </span>
+                        <span className="summary-chip summary-chip-blue">{entry.draft_orders_count} orders</span>
+                        <span className="summary-chip">{formatRelativeTime(entry.resolved_at)}</span>
+                      </span>
+                    </summary>
+
+                    <div style={{ display: "grid", gap: "0.55rem", marginTop: "0.45rem" }}>
+                      {(entry.draft_orders || []).length === 0 && <p>Geen orderdetails beschikbaar</p>}
+                      {(entry.draft_orders || []).map((order, orderIdx) => (
+                        <div key={`history-order-${entry.thread_id}-${orderIdx}`} style={{ border: "1px solid #e4e7ec", borderRadius: "8px", padding: "0.6rem" }}>
+                          <strong>{order.supplier_name || `Leverancier ${orderIdx + 1}`}</strong>
+                          {typeof order.ai_recommendation === "string" && order.ai_recommendation.trim() && (
+                            <div style={{ marginTop: "0.35rem", color: "#344054", fontSize: "0.9rem" }}>
+                              Reden voorstel: {order.ai_recommendation}
+                            </div>
+                          )}
+                          {entry.rejection_reasons_by_index && typeof entry.rejection_reasons_by_index[orderIdx] === "string" && (
+                            <div style={{ marginTop: "0.35rem", color: "#b42318", fontSize: "0.9rem" }}>
+                              Reden afwijzing: {entry.rejection_reasons_by_index[orderIdx]}
+                            </div>
+                          )}
+                          <ul className="list" style={{ marginTop: "0.45rem" }}>
+                            {(order.items || []).length === 0 && <li>Geen items</li>}
+                            {(order.items || []).map((item, itemIdx) => (
+                              <li key={`history-order-${entry.thread_id}-${orderIdx}-item-${itemIdx}`}>
+                                {item.product_name || item.product_id || "Onbekend product"} - {item.quantity ?? 0} stuks @ {formatCurrency(item.unit_price)}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            )}
+
+            <div style={{ display: "grid", gap: "0.8rem" }}>
+              {(state.draft_orders || []).map((order: ProcurementDraftOrder, idx) => (
+                <details key={`draft-${idx}`} className="draft-card">
+                  <summary className="checkpoint-summary">
+                    <span className="checkpoint-title">Actief voorstel: {order.supplier_name || `Leverancier ${idx + 1}`}</span>
+                    <span className="checkpoint-meta">
+                      <span className="summary-chip">
+                        {String(order.source_type || order.order_path || "").toLowerCase().includes("new_release") ? "New Release" : "Reorder"}
+                      </span>
+                      <span className="summary-chip summary-chip-blue">
+                        {formatCurrency(typeof order.total_amount === "number" ? order.total_amount : (order.items || []).reduce((acc, item) => acc + (item.quantity ?? 0) * (item.unit_price ?? 0), 0))}
+                      </span>
+                    </span>
+                  </summary>
+
+                  {order.ai_recommendation && (
+                    <div style={{ marginTop: "0.45rem", color: "#344054", fontSize: "0.92rem" }}>
+                      Reden voorstel: {order.ai_recommendation}
+                    </div>
+                  )}
+
+                  <ul className="list" style={{ marginTop: "0.45rem" }}>
+                    {(order.items || []).length === 0 && <li>Geen items</li>}
+                    {(order.items || []).map((item, itemIdx) => (
+                      <li key={`draft-${idx}-item-${itemIdx}`}>
+                        {item.product_name || item.product_id || "Onbekend product"} - {item.quantity ?? 0} stuks @ {formatCurrency(item.unit_price)}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ))}
+            </div>
+          </details>
         </section>
       </div>
 
