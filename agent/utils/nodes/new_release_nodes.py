@@ -4,7 +4,9 @@ from agent.procurement_data import ProcurementDatabase
 from agent.spotify_integration import SpotifyClient
 
 
-MAX_REORDER_PROPOSALS = 15
+TOTAL_PROPOSAL_CAP = 15
+RESERVED_NEW_RELEASE_SLOTS = 5
+MAX_REORDER_PROPOSALS = TOTAL_PROPOSAL_CAP
 
 
 def _state_get(state: ProcurementState, key: str, default):
@@ -17,7 +19,7 @@ def _remaining_global_slots(state: ProcurementState) -> int:
     data = _state_get(state, "data", {}) or {}
     low_stock_reorders = data.get("reorder_proposals", [])
     used_slots = len(low_stock_reorders)
-    return max(0, MAX_REORDER_PROPOSALS - used_slots)
+    return max(0, TOTAL_PROPOSAL_CAP - used_slots)
 
 
 def market_popularity_node(state: ProcurementState) -> Dict[str, Any]:

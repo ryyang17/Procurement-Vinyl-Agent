@@ -1,8 +1,11 @@
 from agent.utils.state import ProcurementState, ReorderProposal
 from agent.procurement_data import ProcurementDatabase
+from datetime import datetime, timedelta
 
 
-MAX_REORDER_PROPOSALS = 15
+TOTAL_PROPOSAL_CAP = 15
+RESERVED_NEW_RELEASE_SLOTS = 5
+MAX_REORDER_PROPOSALS = max(1, TOTAL_PROPOSAL_CAP - RESERVED_NEW_RELEASE_SLOTS)
 
 
 def _normalize_path_choice(path_choice: str | None) -> str | None:
@@ -89,14 +92,48 @@ def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
                     'category': prod.get('category', 'Unknown'),
                     'source_type': 'inventory_low_stock',
                     'reorder_basis': 'sales_velocity' if str(product_id) in dynamic_levels else 'static_threshold',
+                    'created_at': prod.get('created_at'),
                 })
                 seen_product_ids.add(product_id)
 
     # Keep only the most urgent low-stock proposals when many products are below threshold.
     if len(proposals) > MAX_REORDER_PROPOSALS:
+        recency_cutoff = datetime.now() - timedelta(days=7)
+
+        def _is_recent_release(item: dict) -> int:
+            created_at = item.get('created_at')
+            if not created_at:
+                return 0
+            try:
+                created = datetime.fromisoformat(str(created_at).replace('Z', '+00:00')).replace(tzinfo=None)
+            except (ValueError, TypeError):
+                return 0
+            return 1 if created >= recency_cutoff else 0
+
+        def _created_at_ts(item: dict) -> float:
+            created_at = item.get('created_at')
+            if not created_at:
+                return 0.0
+            try:
+                return datetime.fromisoformat(str(created_at).replace('Z', '+00:00')).replace(tzinfo=None).timestamp()
+            except (ValueError, TypeError):
+                return 0.0
+
+        def _ranking_key(pair):
+            proposal, proposal_dict = pair
+            min_threshold = max(1, int(proposal.min_threshold or 0))
+            shortage_ratio = max(0.0, (proposal.min_threshold - proposal.current_qty) / min_threshold)
+            return (
+                _is_recent_release(proposal_dict),
+                1 if proposal.current_qty <= 0 else 0,
+                _created_at_ts(proposal_dict),
+                shortage_ratio,
+                proposal.reorder_qty,
+            )
+
         ranked_pairs = sorted(
             zip(proposals, proposal_dicts),
-            key=lambda pair: pair[0].reorder_qty,
+            key=_ranking_key,
             reverse=True,
         )
         ranked_pairs = ranked_pairs[:MAX_REORDER_PROPOSALS]
@@ -113,7 +150,10 @@ def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
             for i, p in enumerate(proposals)
         ]
 
-        state.message = f"Voorstel: bestel bij voor {len(proposals)} producten met lage voorraad (max {MAX_REORDER_PROPOSALS})."
+        state.message = (
+            f"Voorstel: bestel bij voor {len(proposals)} producten met lage voorraad "
+            f"(max {MAX_REORDER_PROPOSALS} reorder, totaalcap {TOTAL_PROPOSAL_CAP})."
+        )
         state.status = 'proposed'
     else:
         state.data['reorder_proposals'] = []
