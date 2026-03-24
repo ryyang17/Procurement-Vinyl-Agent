@@ -69,19 +69,23 @@ function isPending(state: LooseObject) {
     return false;
   }
 
-  const step = String(state.step || "").toLowerCase();
-  const status = String(state.status || "").toLowerCase();
-
-  if (step !== "awaiting_human_input") {
-    return false;
-  }
-
-  // Keep only approval-like states for this panel.
+  // Explicit human approval flag should always be treated as pending.
   if (Boolean(state.awaiting_human_approval)) {
     return true;
   }
 
-  return status === "proposed" || status === "awaiting_approval";
+  const step = String(state.step || "").toLowerCase();
+  const status = String(state.status || "").toLowerCase();
+
+  if (step !== "awaiting_human_input" && step !== "human_approval") {
+    return false;
+  }
+
+  return (
+    status === "proposed" ||
+    status === "awaiting_approval" ||
+    status === "awaiting_path_selection"
+  );
 }
 
 function normalizeDecisionPayload(payload: unknown) {

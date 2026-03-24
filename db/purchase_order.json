@@ -1148,5 +1148,86 @@
     "status": "approved",
     "total_amount": 266.2,
     "approved_by": "manager"
+  },
+  {
+    "purchase_order_id": 124,
+    "supplier_id": 7,
+    "order_date": "2026-03-24T20:43:39.111377",
+    "expected_delivery_date": "2026-03-31T20:43:39.111368",
+    "status": "approved",
+    "total_amount": 74582.2,
+    "approved_by": "frontend_manager"
+  },
+  {
+    "purchase_order_id": 125,
+    "supplier_id": 2,
+    "order_date": "2026-03-24T20:43:39.133808",
+    "expected_delivery_date": "2026-03-31T20:43:39.133797",
+    "status": "approved",
+    "total_amount": 27953.28,
+    "approved_by": "frontend_manager"
+  },
+  {
+    "purchase_order_id": 126,
+    "supplier_id": 3,
+    "order_date": "2026-03-24T20:43:39.144588",
+    "expected_delivery_date": "2026-03-31T20:43:39.144580",
+    "status": "approved",
+    "total_amount": 15417.84,
+    "approved_by": "frontend_manager"
+  },
+  {
+    "purchase_order_id": 127,
+    "supplier_id": 12,
+    "order_date": "2026-03-24T20:43:39.155486",
+    "expected_delivery_date": "2026-03-31T20:43:39.155475",
+    "status": "approved",
+    "total_amount": 12019.08,
+    "approved_by": "frontend_manager"
+  },
+  {
+    "purchase_order_id": 128,
+    "supplier_id": 13,
+    "order_date": "2026-03-24T20:43:39.166724",
+    "expected_delivery_date": "2026-03-31T20:43:39.166714",
+    "status": "approved",
+    "total_amount": 9250.71,
+    "approved_by": "frontend_manager"
+  },
+  {
+    "purchase_order_id": 129,
+    "supplier_id": 15,
+    "order_date": "2026-03-24T20:43:39.177384",
+    "expected_delivery_date": "2026-03-31T20:43:39.177377",
+    "status": "approved",
+    "total_amount": 8905.98,
+    "approved_by": "frontend_manager"
+  },
+  {
+    "purchase_order_id": 130,
+    "supplier_id": 10,
+    "order_date": "2026-03-24T20:43:39.188137",
+    "expected_delivery_date": "2026-03-31T20:43:39.188127",
+    "status": "approved",
+    "total_amount": 6923.999999999999,
+    "approved_by": "frontend_manager"
+  },
+  {
+    "purchase_order_id": 131,
+    "supplier_id": 19,
+    "order_date": "2026-03-24T20:43:39.198955",
+    "expected_delivery_date": "2026-03-31T20:43:39.198942",
+    "status": "approved",
+    "total_amount": 4731.099999999999,
+    "approved_by": "frontend_manager"
+  },
+  {
+    "purchase_order_id": 132,
+    "supplier_id": 9,
+    "order_date": "2026-03-24T20:43:39.210366",
+    "expected_delivery_date": "2026-03-31T20:43:39.210353",
+    "status": "approved",
+    "total_amount": 4507.58,
+    "approved_by": "frontend_manager"
   }
 ]

@@ -6,9 +6,11 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from agent.agent import create_procurement_workflow, get_checkpointer
+from agent.procurement_data import ProcurementDatabase
 
 app = FastAPI(title="Procurement Vinyl Agent API")
 workflow = create_procurement_workflow()
+db = ProcurementDatabase()
 
 
 class ApprovalDecisionRequest(BaseModel):
@@ -79,6 +81,78 @@ def _is_pending_approval(state: Dict[str, Any]) -> bool:
 @app.get("/health")
 async def health() -> Dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/dashboard/bootstrap")
+async def get_dashboard_bootstrap():
+    try:
+        sales_velocity_forecasts = list(db.get_sales_velocity_by_product(window_days=30).values())
+        order_history = db.get_order_history(limit=50)
+        suppliers = db.get_suppliers()
+        supplier_performance = db.get_supplier_performance()
+
+        supplier_name_by_id = {
+            int(s.get("supplier_id")): s.get("name", "Unknown")
+            for s in suppliers
+            if isinstance(s.get("supplier_id"), int)
+        }
+
+        supplier_offers = []
+        for perf in supplier_performance:
+            supplier_id = perf.get("supplier_id")
+            if not isinstance(supplier_id, int):
+                continue
+
+            reliability_raw = perf.get("reliability_score")
+            reliability_score = float(reliability_raw) * 10 if isinstance(reliability_raw, (int, float)) else None
+
+            late_deliveries = perf.get("late_deliveries")
+            total_orders = perf.get("total_orders")
+            notes = f"Late deliveries: {late_deliveries or 0}, Total orders: {total_orders or 0}"
+            if perf.get("temporarily_unavailable"):
+                notes += " (Temporarily unavailable)"
+            if isinstance(perf.get("last_rejection_reason"), str) and perf.get("last_rejection_reason"):
+                notes += f". Last rejection: {perf.get('last_rejection_reason')}"
+
+            supplier_offers.append(
+                {
+                    "supplier_id": supplier_id,
+                    "supplier_name": supplier_name_by_id.get(supplier_id, f"Supplier {supplier_id}"),
+                    "unit_price": None,
+                    "lead_time_days": None,
+                    "reliability_score": round(reliability_score, 2) if isinstance(reliability_score, float) else None,
+                    "notes": notes,
+                }
+            )
+
+        supplier_offers = sorted(
+            supplier_offers,
+            key=lambda item: item.get("reliability_score") if isinstance(item.get("reliability_score"), (int, float)) else -1,
+            reverse=True,
+        )
+
+        approved_or_delivered_orders = [
+            order for order in order_history
+            if str(order.get("status", "")).lower() in {"approved", "delivered", "orders_placed"}
+        ]
+
+        return JSONResponse(
+            content={
+                "sales_velocity_forecasts": sales_velocity_forecasts,
+                "approved_orders": approved_or_delivered_orders,
+                "supplier_offers": supplier_offers,
+                "count": {
+                    "sales_velocity_forecasts": len(sales_velocity_forecasts),
+                    "approved_orders": len(approved_or_delivered_orders),
+                    "supplier_offers": len(supplier_offers),
+                },
+            }
+        )
+    except Exception as exc:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"{type(exc).__name__}: {exc}"},
+        )
 
 
 @app.post("/predict")

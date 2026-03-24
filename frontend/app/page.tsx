@@ -3,8 +3,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
   CopilotKit,
-  CopilotSidebar,
+  CopilotChat,
   UseAgentUpdate,
+  useConfigureSuggestions,
   useAgent,
 } from "@copilotkit/react-core/v2";
 
@@ -17,6 +18,7 @@ import {
   PendingCheckpointResponse,
   ProcurementDraftOrder,
   ProcurementAgentState,
+  SupplierOffer,
   SalesVelocityForecast,
   formatCurrency,
 } from "./agent";
@@ -31,6 +33,24 @@ type ProposalHistoryItem = PendingCheckpointItem & {
   resolved_at: string;
   approved_indices?: number[];
   rejection_reasons_by_index?: Record<number, string>;
+};
+
+type ApprovedOrderSummary = {
+  order_id?: number;
+  supplier_id?: number;
+  supplier_name?: string;
+  status?: string;
+  order_date?: string;
+  expected_delivery_date?: string;
+  delivery_date?: string;
+  total_amount?: number;
+  approved_by?: string;
+};
+
+type DashboardBootstrapResponse = {
+  sales_velocity_forecasts?: SalesVelocityForecast[];
+  approved_orders?: ApprovedOrderSummary[];
+  supplier_offers?: SupplierOffer[];
 };
 
 function toFriendlyLabel(value?: string, maxLength = 24): string {
@@ -60,22 +80,6 @@ function formatRelativeTime(value?: string): string {
   return `${deltaDays} dag(en) geleden`;
 }
 
-function normalizeCheckpointState(payload: CheckpointStateResponse): ProcurementAgentState {
-  const rawState = payload?.state;
-  const stateObject = rawState && typeof rawState === "object" ? rawState : {};
-  const mergedDraftOrders = Array.isArray(stateObject.draft_orders)
-    ? stateObject.draft_orders
-    : Array.isArray(payload.draft_orders)
-      ? payload.draft_orders
-      : [];
-
-  return {
-    ...INITIAL_AGENT_STATE,
-    ...stateObject,
-    draft_orders: mergedDraftOrders,
-  };
-}
-
 function Dashboard() {
   const { agent } = useAgent({
     agentId: AGENT_ID,
@@ -86,11 +90,14 @@ function Dashboard() {
   const [pendingCheckpoints, setPendingCheckpoints] = useState<PendingCheckpointItem[]>([]);
   const [pendingLoading, setPendingLoading] = useState(false);
   const [pendingError, setPendingError] = useState<string | null>(null);
-  const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
-  const [checkpointLoadId, setCheckpointLoadId] = useState<string | null>(null);
+  const [activeThreadId] = useState<string | null>(null);
+  const [checkpointLoadId] = useState<string | null>(null);
   const [checkpointNotice, setCheckpointNotice] = useState<string | null>(null);
   const [proposalHistory, setProposalHistory] = useState<ProposalHistoryItem[]>([]);
   const [activeCheckpointItem, setActiveCheckpointItem] = useState<PendingCheckpointItem | null>(null);
+  const [bootstrapSalesVelocityForecasts, setBootstrapSalesVelocityForecasts] = useState<SalesVelocityForecast[]>([]);
+  const [bootstrapApprovedOrders, setBootstrapApprovedOrders] = useState<ApprovedOrderSummary[]>([]);
+  const [bootstrapSupplierOffers, setBootstrapSupplierOffers] = useState<SupplierOffer[]>([]);
 
   useEffect(() => {
     if (!agent.state) {
@@ -125,51 +132,37 @@ function Dashboard() {
     }
   };
 
-  const loadCheckpointIntoDashboard = async (threadId: string) => {
-    const normalizedThreadId = String(threadId || "").trim();
-
+  const fetchDashboardBootstrap = async () => {
     try {
-      if (!normalizedThreadId) {
-        throw new Error("Checkpoint heeft geen geldige thread-id en kan niet geladen worden.");
-      }
-
-      setPendingError(null);
-      setCheckpointNotice(null);
-      setCheckpointLoadId(normalizedThreadId);
-
-      const response = await fetch(`/api/checkpoints/${encodeURIComponent(normalizedThreadId)}`, {
+      const response = await fetch("/api/dashboard/bootstrap", {
         method: "GET",
         cache: "no-store",
       });
-      const payload = (await response.json()) as CheckpointStateResponse | { error?: string };
 
+      const payload = (await response.json()) as DashboardBootstrapResponse | { error?: string };
       if (!response.ok) {
-        const message = "error" in payload ? payload.error || "Onbekende fout" : "Onbekende fout";
-        throw new Error(message);
+        return;
       }
 
-      const checkpointPayload = payload as CheckpointStateResponse;
-      const rawState = checkpointPayload.state && typeof checkpointPayload.state === "object"
-        ? checkpointPayload.state
-        : null;
-      const hasRawState = Boolean(rawState && Object.keys(rawState).length > 0);
-      const hasDraftOrders = Array.isArray(checkpointPayload.draft_orders) && checkpointPayload.draft_orders.length > 0;
-      if (!hasRawState && !hasDraftOrders) {
-        throw new Error("Checkpoint bevat geen laadbare state.");
-      }
+      setBootstrapSalesVelocityForecasts(
+        Array.isArray((payload as DashboardBootstrapResponse).sales_velocity_forecasts)
+          ? (payload as DashboardBootstrapResponse).sales_velocity_forecasts || []
+          : []
+      );
 
-      const normalizedState = normalizeCheckpointState(checkpointPayload);
-      const selected = pendingCheckpoints.find((item) => item.thread_id === normalizedThreadId) || null;
+      setBootstrapApprovedOrders(
+        Array.isArray((payload as DashboardBootstrapResponse).approved_orders)
+          ? (payload as DashboardBootstrapResponse).approved_orders || []
+          : []
+      );
 
-      agent.setState(normalizedState);
-      setActiveThreadId(normalizedThreadId);
-      setActiveCheckpointItem(selected);
-      setCheckpointNotice(`Checkpoint geladen: ${normalizedThreadId}`);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      setPendingError(message);
-    } finally {
-      setCheckpointLoadId(null);
+      setBootstrapSupplierOffers(
+        Array.isArray((payload as DashboardBootstrapResponse).supplier_offers)
+          ? (payload as DashboardBootstrapResponse).supplier_offers || []
+          : []
+      );
+    } catch {
+      // Keep startup bootstrap best-effort; main dashboard should still render.
     }
   };
 
@@ -228,6 +221,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
+    fetchDashboardBootstrap();
     fetchPendingCheckpoints();
     const interval = setInterval(fetchPendingCheckpoints, 15000);
     return () => clearInterval(interval);
@@ -243,8 +237,51 @@ function Dashboard() {
 
   const salesVelocityForecasts = useMemo(() => {
     const forecasts = state.data?.sales_velocity_forecasts;
-    return Array.isArray(forecasts) ? forecasts : [];
-  }, [state.data]);
+    if (Array.isArray(forecasts) && forecasts.length > 0) {
+      return forecasts;
+    }
+    return bootstrapSalesVelocityForecasts;
+  }, [state.data, bootstrapSalesVelocityForecasts]);
+
+  const supplierOffers = useMemo(() => {
+    const offers = state.supplier_offers;
+    if (Array.isArray(offers) && offers.length > 0) {
+      return offers;
+    }
+    return bootstrapSupplierOffers;
+  }, [state.supplier_offers, bootstrapSupplierOffers]);
+
+  const visiblePendingCheckpoints = useMemo(() => {
+    return [...pendingCheckpoints]
+      .sort((a, b) => {
+        const aTs = new Date(a.updated_at || a.approval_requested_at || 0).getTime();
+        const bTs = new Date(b.updated_at || b.approval_requested_at || 0).getTime();
+        return bTs - aTs;
+      })
+      .slice(0, 5);
+  }, [pendingCheckpoints]);
+
+  useConfigureSuggestions({
+    available: "always",
+    suggestions: [
+      {
+        title: "Start workflow",
+        message: "Start de workflow en laad de eerstvolgende open checkpoint.",
+      },
+      {
+        title: "Check voorraad",
+        message: "Geef een kort overzicht van de huidige voorraadmeldingen en risico's.",
+      },
+      {
+        title: "Sales status",
+        message: "Vat de sales velocity alerts samen en geef een korte prioriteit.",
+      },
+      {
+        title: "Supplier advies",
+        message: "Welke leverancier-opties zijn nu het meest kansrijk en waarom?",
+      },
+    ],
+  });
 
 
   return (
@@ -261,7 +298,7 @@ function Dashboard() {
             <strong>{kpis.alerts}</strong>
           </div>
           <div className="kpi-card">
-            <span>Supplier Offers</span>
+            <span>Leveranciersaanbiedingen</span>
             <strong>{kpis.offers}</strong>
           </div>
           <div className="kpi-card">
@@ -278,11 +315,11 @@ function Dashboard() {
           <details open>
             <summary className="panel-summary">
               <span>Openstaande Checkpoints</span>
-              <span className="summary-chip">{pendingCheckpoints.length} actief</span>
+
             </summary>
 
             <p style={{ marginBottom: "1rem" }}>
-              Compact overzicht. Klik per checkpoint voor details en acties.
+              Klik per checkpoint voor details en acties.
             </p>
 
             <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", alignItems: "center", flexWrap: "wrap" }}>
@@ -290,7 +327,7 @@ function Dashboard() {
                 Vernieuwen
               </button>
               {pendingLoading && <span>Bezig met laden...</span>}
-              <span className="summary-chip">Actieve thread: {activeThreadId ? "geladen" : "geen"}</span>
+
             </div>
 
             {pendingError && (
@@ -305,11 +342,11 @@ function Dashboard() {
               </div>
             )}
 
-            {pendingCheckpoints.length === 0 ? (
+            {visiblePendingCheckpoints.length === 0 ? (
               <p>Geen openstaande checkpoints gevonden.</p>
             ) : (
               <div style={{ display: "grid", gap: "0.8rem" }}>
-                {pendingCheckpoints.map((item, idx) => (
+                {visiblePendingCheckpoints.map((item, idx) => (
                   <details
                     key={item.thread_id}
                     className="checkpoint-card"
@@ -348,8 +385,10 @@ function Dashboard() {
           </details>
         </section>
 
-        {/* Show ApprovalPanel if awaiting_human_approval is true AND there are draft orders (including reorder-only) */}
-        {state.awaiting_human_approval && Array.isArray(state.draft_orders) && state.draft_orders.length > 0 && (
+        {/* Show Draft Orders panel from create_purchase_order onward */}
+        {(state.awaiting_human_approval || state.step === "create_purchase_order" || state.step === "human_approval")
+          && Array.isArray(state.draft_orders)
+          && state.draft_orders.length > 0 && (
           <ApprovalPanel
             state={state}
             agent={agent}
@@ -376,9 +415,7 @@ function Dashboard() {
                 <p>{state.approval_decision || "-"}</p>
               </div>
             </div>
-            <div className="summary-box">
-              {state.summary || "Nog geen samenvatting beschikbaar."}
-            </div>
+
           </details>
         </section>
 
@@ -400,11 +437,11 @@ function Dashboard() {
         <section className="panel">
           <details>
             <summary className="panel-summary">
-              <span>Sales Velocity Forecasts</span>
+              <span>Sales </span>
               <span className="summary-chip">{salesVelocityForecasts.length}</span>
             </summary>
             <ul className="list" style={{ marginBottom: "0.8rem" }}>
-              {(state.sales_velocity_alerts || []).length === 0 && <li>Geen urgente velocity alerts</li>}
+              {(state.sales_velocity_alerts || []).length === 0 && <li>Geen dringende meldingen</li>}
               {(state.sales_velocity_alerts || []).map((alert, idx) => (
                 <li key={`velocity-alert-${idx}`}>{alert}</li>
               ))}
@@ -415,7 +452,7 @@ function Dashboard() {
                 <thead>
                   <tr>
                     <th>Product</th>
-                    <th>Velocity / dag</th>
+                    <th>Verkoop / dag</th>
                     <th>Stockout datum</th>
                     <th>Reorder basis</th>
                   </tr>
@@ -423,7 +460,7 @@ function Dashboard() {
                 <tbody>
                   {salesVelocityForecasts.length === 0 && (
                     <tr>
-                      <td colSpan={4}>Nog geen sales velocity data</td>
+                      <td colSpan={4}>Nog geen sales data</td>
                     </tr>
                   )}
                   {salesVelocityForecasts.map((forecast: SalesVelocityForecast, idx: number) => (
@@ -447,31 +484,29 @@ function Dashboard() {
         <section className="panel">
           <details>
             <summary className="panel-summary">
-              <span>Supplier Offers</span>
-              <span className="summary-chip">{(state.supplier_offers || []).length}</span>
+              <span className="checkpoint-title">Leveranciers</span>
+              <span className="summary-chip summary-chip-blue">{supplierOffers.length}</span>
             </summary>
             <div className="table-wrap">
               <table>
                 <thead>
                   <tr>
                     <th>Supplier</th>
-                    <th>Product</th>
-                    <th>Prijs</th>
+                    <th>Notities</th>
                     <th>Levertijd</th>
                     <th>Betrouwbaarheid</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {(state.supplier_offers || []).length === 0 && (
+                  {supplierOffers.length === 0 && (
                     <tr>
-                      <td colSpan={5}>Nog geen offers</td>
+                      <td colSpan={4}>Nog geen offers</td>
                     </tr>
                   )}
-                  {(state.supplier_offers || []).map((offer, idx) => (
+                  {supplierOffers.map((offer, idx) => (
                     <tr key={`offer-${idx}`}>
                       <td>{offer.supplier_name || offer.supplier_id || "-"}</td>
                       <td>{offer.notes || "-"}</td>
-                      <td>{formatCurrency(offer.unit_price)}</td>
                       <td>
                         {typeof offer.lead_time_days === "number"
                           ? `${offer.lead_time_days} d`
@@ -493,11 +528,36 @@ function Dashboard() {
         <section className="panel">
           <details>
             <summary className="panel-summary">
-              <span>Inkoopvoorstel History</span>
-              <span className="summary-chip">{proposalHistory.length + (state.draft_orders || []).length}</span>
+              <span>Goedgekeurde bestellingen</span>
+              <span className="summary-chip">
+                {proposalHistory.length + (state.draft_orders || []).length + bootstrapApprovedOrders.length}
+              </span>
             </summary>
 
-            {proposalHistory.length === 0 && (state.draft_orders || []).length === 0 && <p>Nog geen voorstellen in history</p>}
+            {proposalHistory.length === 0 && (state.draft_orders || []).length === 0 && bootstrapApprovedOrders.length === 0 && <p>Nog geen voorstellen in history</p>}
+
+            {bootstrapApprovedOrders.length > 0 && (
+              <div style={{ display: "grid", gap: "0.8rem", marginBottom: "1rem" }}>
+                {bootstrapApprovedOrders.map((order, idx) => (
+                  <details key={`bootstrap-approved-${order.order_id ?? idx}`} className="draft-card">
+                    <summary className="checkpoint-summary">
+                      <span className="checkpoint-title">
+                        Bestelling #{order.order_id ?? "-"} - {order.supplier_name || "Onbekende leverancier"}
+                      </span>
+                      <span className="checkpoint-meta">
+                        <span className="summary-chip summary-chip-green">{toFriendlyLabel(order.status, 18)}</span>
+                        <span className="summary-chip summary-chip-blue">{formatCurrency(order.total_amount)}</span>
+                        <span className="summary-chip">{formatRelativeTime(order.order_date)}</span>
+                      </span>
+                    </summary>
+
+                    <div style={{ marginTop: "0.45rem", color: "#344054", fontSize: "0.92rem" }}>
+                      Goedgekeurd door: {order.approved_by || "-"}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            )}
 
             {proposalHistory.length > 0 && (
               <div style={{ display: "grid", gap: "0.8rem", marginBottom: "1rem" }}>
@@ -581,11 +641,16 @@ function Dashboard() {
         </section>
       </div>
 
-      <CopilotSidebar
-        agentId={AGENT_ID}
-        defaultOpen={true}
-        labels={{ modalHeaderTitle: "Vinyl Inkoop Assistent" }}
-      />
+      <aside className="vinyl-chat-panel">
+        <CopilotChat
+          agentId={AGENT_ID}
+          className="vinyl-chat-shell"
+          labels={{
+            chatInputPlaceholder: "Typ je vraag of kies een suggestie...",
+            welcomeMessageText: "Vinyl Inkoop Assistent",
+          }}
+        />
+      </aside>
     </div>
   );
 }
