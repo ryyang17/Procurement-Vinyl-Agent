@@ -331,30 +331,7 @@ function Dashboard() {
                       </div>
                       <div style={{ marginTop: "0.45rem", color: "#1f2937" }}>{item.message || "Geen extra bericht"}</div>
 
-                      {(item.draft_orders || []).length > 0 && (
-                        <div style={{ marginTop: "0.7rem", display: "grid", gap: "0.5rem" }}>
-                          {(item.draft_orders || []).map((order, orderIdx) => (
-                            <div
-                              key={`checkpoint-${item.thread_id}-order-${orderIdx}`}
-                              style={{ border: "1px solid #e4e7ec", borderRadius: "8px", padding: "0.6rem", backgroundColor: "#fcfcfd" }}
-                            >
-                              <strong>{order.supplier_name || `Leverancier ${orderIdx + 1}`}</strong>
-                              {typeof order.ai_recommendation === "string" && order.ai_recommendation.trim() && (
-                                <div style={{ marginTop: "0.35rem", color: "#344054", fontSize: "0.9rem" }}>
-                                  Reden voorstel: {order.ai_recommendation}
-                                </div>
-                              )}
-                              <ul className="list" style={{ marginTop: "0.45rem" }}>
-                                {(order.items || []).map((draftItem, itemIdx) => (
-                                  <li key={`checkpoint-${item.thread_id}-order-${orderIdx}-item-${itemIdx}`}>
-                                    {draftItem.product_name || draftItem.product_id || "Onbekend album"} - {draftItem.quantity ?? 0} stuks
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                      {/* Voorstel duplicatie verwijderd, alleen goedkeuring vereist-formulier blijft */}
 
                       <CheckpointActionPanel
                         checkpoint={item}
@@ -379,10 +356,6 @@ function Dashboard() {
             onSubmitCheckpointDecision={activeThreadId ? submitActiveThreadDecision : undefined}
           />
         )}
-
-        {/* Samengevoegde workflow paneel verwijderd */}
-
-        {/* Shared state snelkoppelingen paneel verwijderd */}
 
         <section className="panel">
           <details>

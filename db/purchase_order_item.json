@@ -1321,5 +1321,33 @@
     "product_id": 37,
     "quantity": 10,
     "unit_price": 26.78
+  },
+  {
+    "purchase_order_item_id": 190,
+    "purchase_order_id": 120,
+    "product_id": 21,
+    "quantity": 28,
+    "unit_price": 25.5
+  },
+  {
+    "purchase_order_item_id": 191,
+    "purchase_order_id": 121,
+    "product_id": 23,
+    "quantity": 10,
+    "unit_price": 28.47
+  },
+  {
+    "purchase_order_item_id": 192,
+    "purchase_order_id": 122,
+    "product_id": 24,
+    "quantity": 10,
+    "unit_price": 32.82
+  },
+  {
+    "purchase_order_item_id": 193,
+    "purchase_order_id": 123,
+    "product_id": 25,
+    "quantity": 10,
+    "unit_price": 26.62
   }
 ]
