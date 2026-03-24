@@ -312,7 +312,7 @@ function Dashboard() {
         </section>
 
         <section className="panel panel-checkpoints">
-          <details open>
+          <details>
             <summary className="panel-summary">
               <span>Openstaande Checkpoints</span>
 
@@ -395,29 +395,6 @@ function Dashboard() {
             onSubmitCheckpointDecision={activeThreadId ? submitActiveThreadDecision : undefined}
           />
         )}
-
-        <section className="panel">
-          <details>
-            <summary className="panel-summary">
-              <span>Workflow Status</span>
-            </summary>
-            <div className="status-row">
-              <div>
-                <label>Stap</label>
-                <p>{state.step || "-"}</p>
-              </div>
-              <div>
-                <label>Volgende Actie</label>
-                <p>{state.next_action || "-"}</p>
-              </div>
-              <div>
-                <label>Approval</label>
-                <p>{state.approval_decision || "-"}</p>
-              </div>
-            </div>
-
-          </details>
-        </section>
 
         <section className="panel">
           <details>
