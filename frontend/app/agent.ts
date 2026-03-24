@@ -76,7 +76,7 @@ export interface CheckpointDraftOrder {
   supplier_name?: string;
   total_amount?: number;
   items?: DraftOrderItem[];
-  [key: string]: unknown;
+  ai_recommendation?: string;
 }
 
 export interface PendingCheckpointItem {

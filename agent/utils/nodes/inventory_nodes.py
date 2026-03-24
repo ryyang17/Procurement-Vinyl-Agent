@@ -2,6 +2,9 @@ from agent.utils.state import ProcurementState, ReorderProposal
 from agent.procurement_data import ProcurementDatabase
 
 
+MAX_REORDER_PROPOSALS = 15
+
+
 def _normalize_path_choice(path_choice: str | None) -> str | None:
     if path_choice is None:
         return None
@@ -89,6 +92,17 @@ def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
                 })
                 seen_product_ids.add(product_id)
 
+    # Keep only the most urgent low-stock proposals when many products are below threshold.
+    if len(proposals) > MAX_REORDER_PROPOSALS:
+        ranked_pairs = sorted(
+            zip(proposals, proposal_dicts),
+            key=lambda pair: pair[0].reorder_qty,
+            reverse=True,
+        )
+        ranked_pairs = ranked_pairs[:MAX_REORDER_PROPOSALS]
+        proposals = [pair[0] for pair in ranked_pairs]
+        proposal_dicts = [pair[1] for pair in ranked_pairs]
+
     # Update state with findings
     if proposals:
         state.data['reorder_proposals'] = proposal_dicts
@@ -99,7 +113,7 @@ def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
             for i, p in enumerate(proposals)
         ]
 
-        state.message = f"Voorstel: bestel bij voor {len(proposals)} producten met lage voorraad."
+        state.message = f"Voorstel: bestel bij voor {len(proposals)} producten met lage voorraad (max {MAX_REORDER_PROPOSALS})."
         state.status = 'proposed'
     else:
         state.data['reorder_proposals'] = []

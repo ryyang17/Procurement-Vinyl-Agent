@@ -4,6 +4,22 @@ from agent.procurement_data import ProcurementDatabase
 from agent.spotify_integration import SpotifyClient
 
 
+MAX_REORDER_PROPOSALS = 15
+
+
+def _state_get(state: ProcurementState, key: str, default):
+    if isinstance(state, dict):
+        return state.get(key, default)
+    return getattr(state, key, default)
+
+
+def _remaining_global_slots(state: ProcurementState) -> int:
+    data = _state_get(state, "data", {}) or {}
+    low_stock_reorders = data.get("reorder_proposals", [])
+    used_slots = len(low_stock_reorders)
+    return max(0, MAX_REORDER_PROPOSALS - used_slots)
+
+
 def market_popularity_node(state: ProcurementState) -> Dict[str, Any]:
     """
     Node for market popularity analysis using Spotify.
@@ -13,8 +29,17 @@ def market_popularity_node(state: ProcurementState) -> Dict[str, Any]:
     db = ProcurementDatabase()
     spotify_client = SpotifyClient()
 
+    remaining_slots = _remaining_global_slots(state)
+    if remaining_slots == 0:
+        print("Globale limiet bereikt via lage-voorraad voorstellen; market popularity wordt overgeslagen.")
+        return {
+            "market_popular_albums": [],
+            "uncatalogued_popular_albums": [],
+            "market_popularity_alerts": [],
+        }
+
     country = getattr(state, "country", "US")
-    market_limit = max(8, int(getattr(state, "limit", 5)) * 2)
+    market_limit = min(remaining_slots, max(8, int(getattr(state, "limit", 5)) * 2))
     market_popular_albums = spotify_client.get_market_popular_albums(country=country, limit=market_limit)
 
     if not market_popular_albums:
@@ -56,8 +81,13 @@ def detect_new_releases_node(state: ProcurementState) -> Dict[str, Any]:
     print("🎵 NEW RELEASE DETECTION (Spotify)")
     db = ProcurementDatabase()
     spotify_client = SpotifyClient()
+    remaining_slots = _remaining_global_slots(state)
+    if remaining_slots == 0:
+        print("Globale limiet bereikt via lage-voorraad voorstellen; geen nieuwe releases toevoegen.")
+        return {"new_releases": [], "next_action": "find_suppliers"}
+
     country = getattr(state, "country", "US")
-    limit = getattr(state, "limit", 5)
+    limit = min(remaining_slots, getattr(state, "limit", 5))
     new_releases_raw = spotify_client.get_new_releases(country=country, limit=limit)
     uncatalogued_popular_albums = getattr(state, "uncatalogued_popular_albums", [])
 
@@ -96,6 +126,14 @@ def detect_new_releases_node(state: ProcurementState) -> Dict[str, Any]:
             }
 
     new_releases = list(by_id.values())
+
+    # Keep testing runs predictable by capping candidates.
+    if len(new_releases) > remaining_slots:
+        new_releases = sorted(
+            new_releases,
+            key=lambda r: float(r.get("market_popularity_score", 0) or 0),
+            reverse=True,
+        )[:remaining_slots]
 
     if not new_releases:
         print("Geen nieuwe releases gevonden.")
@@ -139,7 +177,10 @@ def create_new_release_orders_node(state: ProcurementState) -> Dict[str, Any]:
     else:
         state.clear_path_data("new_releases")
 
-    for release in new_releases:
+    remaining_slots = _remaining_global_slots(state)
+    limited_new_releases = new_releases[:remaining_slots]
+
+    for release in limited_new_releases:
         popularity_score = float(release.get("market_popularity_score", 0) or 0)
         if popularity_score >= 85:
             suggested_qty = 10
@@ -199,7 +240,7 @@ def create_new_release_orders_node(state: ProcurementState) -> Dict[str, Any]:
             for order in draft_orders:
                 state.add_new_release_order(order)
 
-    print(f"{len(proposals)} ordervoorstellen aangemaakt.")
+    print(f"{len(proposals)} ordervoorstellen aangemaakt (max {MAX_REORDER_PROPOSALS}).")
     return {"purchase_order_proposals": proposals, "next_action": "human_approval"}
 
 

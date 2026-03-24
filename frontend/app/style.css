@@ -1,8 +1,8 @@
 .vinyl-layout {
 	min-height: 100vh;
-	display: grid;
-	grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
-	gap: 1rem;
+	display: flex;
+	flex-direction: row;
+	gap: 0;
 	padding: 1rem;
 }
 
@@ -12,16 +12,7 @@
 	align-content: start;
 }
 
-.vinyl-chat {
-	position: sticky;
-	top: 1rem;
-	height: calc(100vh - 2rem);
-	border: 1px solid var(--border);
-	border-radius: 16px;
-	overflow: hidden;
-	background: var(--surface);
-	box-shadow: var(--shadow);
-}
+
 
 .vinyl-header {
 	background: linear-gradient(115deg, #164e63 0%, #0f766e 45%, #0f766e 100%);
@@ -264,11 +255,6 @@ input[type="number"] {
 @media (max-width: 1180px) {
 	.vinyl-layout {
 		grid-template-columns: 1fr;
-	}
-
-	.vinyl-chat {
-		position: static;
-		height: 70vh;
 	}
 }
 

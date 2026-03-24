@@ -376,5 +376,12 @@
     "reorder_level": 5,
     "inventory_id": 54,
     "last_updated": "2026-03-24T15:02:18.399720"
+  },
+  {
+    "product_id": 52,
+    "quantity_in_stock": 0,
+    "reorder_level": 5,
+    "inventory_id": 55,
+    "last_updated": "2026-03-24T17:25:12.223273"
   }
 ]
