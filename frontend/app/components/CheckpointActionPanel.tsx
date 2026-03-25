@@ -27,36 +27,15 @@ export default function CheckpointActionPanel({
 
   const draftOrders = checkpoint.draft_orders || [];
 
-  const extractReadableRecommendation = (raw: unknown): { supplier?: string; reason: string } | null => {
+  const parseAiRecommendation = (raw: unknown): { supplier?: string; reason: string } | null => {
     if (!raw) return null;
-
-    const source = String(raw)
-      .replace(/\\u0027/g, "'")
-      .replace(/\\n/g, "\n")
-      .replace(/\u20ac/g, "EUR");
-
-    // Try to extract only the human-readable `text` value from serialized payloads.
-    const textMatch = source.match(/['\"]text['\"]\s*:\s*['\"]([\s\S]*?)['\"]\s*,\s*['\"]index['\"]/i);
-    const textCandidate = textMatch?.[1] || source;
-
-    // Remove frequent signature/noise tail if present.
-    const withoutSignature = textCandidate
-      .replace(/['\"]signature['\"]\s*:\s*['\"][\s\S]*/i, "")
-      .replace(/\s*\{\s*['\"]extras['\"][\s\S]*/i, "")
-      .trim();
-
-    const supplierMatch = withoutSignature.match(/LEVERANCIER\s*:\s*([^\n]+)/i);
-    const reasonMatch = withoutSignature.match(/REDEN\s*:\s*([\s\S]*)/i);
+    
+    const text = String(raw);
+    const supplierMatch = text.match(/LEVERANCIER\s*:\s*([^\n]+)/i);
+    const reasonMatch = text.match(/REDEN\s*:\s*([\s\S]*)/i);
 
     const supplier = supplierMatch?.[1]?.trim();
-    const reason = (reasonMatch?.[1] || withoutSignature)
-      .replace(/LEVERANCIER\s*:\s*[^\n]+/gi, "")
-      .replace(/REDEN\s*:/gi, "")
-      .replace(/â¬/g, "EUR")
-      .replace(/Ã«/g, "ë")
-      .replace(/Ã©/g, "é")
-      .replace(/\s+/g, " ")
-      .trim();
+    const reason = (reasonMatch?.[1] || text).trim();
 
     if (!reason) return null;
     return { supplier, reason };
@@ -69,18 +48,22 @@ export default function CheckpointActionPanel({
     checkpoint.message?.toLowerCase().includes("bestellingen");
   
   const handleToggleApproval = (index: number) => {
-    setLocalApprovals((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
+    setLocalApprovals((prev) => {
+      const nextApproved = !prev[index];
 
-    if (localApprovals[index]) {
-      setLocalRejectionReasons((prev) => {
-        const nextReasons = { ...prev };
-        delete nextReasons[index];
-        return nextReasons;
-      });
-    }
+      if (nextApproved) {
+        setLocalRejectionReasons((prevReasons) => {
+          const nextReasons = { ...prevReasons };
+          delete nextReasons[index];
+          return nextReasons;
+        });
+      }
+
+      return {
+        ...prev,
+        [index]: nextApproved,
+      };
+    });
   };
 
   const handleRejectionReasonChange = (index: number, reason: string) => {
@@ -108,8 +91,13 @@ export default function CheckpointActionPanel({
     }
   };
 
-  const allApproved =
-    draftOrders.length > 0 && draftOrders.every((_order, idx) => Boolean(localApprovals[idx]));
+  const allOrdersHaveDecision =
+    draftOrders.length > 0 &&
+    draftOrders.every((_order, idx) => {
+      const isApproved = Boolean(localApprovals[idx]);
+      const hasRejectionReason = Boolean((localRejectionReasons[idx] || "").trim());
+      return isApproved || hasRejectionReason;
+    });
 
   // Approval Checkpoint: toont per-product accepteren/afwijzen UI
   if (isApprovalCheckpoint) {
@@ -147,7 +135,7 @@ export default function CheckpointActionPanel({
             {draftOrders.map((order, idx) => {
               const isApproved = localApprovals[idx] || false;
               const hasRejectionReason = Boolean(localRejectionReasons[idx]);
-              const recommendation = extractReadableRecommendation(order.ai_recommendation);
+              const recommendation = parseAiRecommendation(order.ai_recommendation);
               const displaySupplier = recommendation?.supplier || order.supplier_name || `Leverancier ${idx + 1}`;
               return (
                 <div
@@ -252,7 +240,7 @@ export default function CheckpointActionPanel({
         )}
         <button
           type="submit"
-          disabled={submitting || isLoading || (draftOrders.length > 0 && !allApproved)}
+          disabled={submitting || isLoading || (draftOrders.length > 0 && !allOrdersHaveDecision)}
           style={{
             padding: "0.8rem 1.5rem",
             backgroundColor: "#ff8800",
@@ -271,9 +259,9 @@ export default function CheckpointActionPanel({
               : "📋 Plaatsen Bestelling"}
         </button>
 
-        {draftOrders.length > 0 && !allApproved && (
+        {draftOrders.length > 0 && !allOrdersHaveDecision && (
           <div style={{ color: "#b42318", fontSize: "0.9rem" }}>
-            Validatie: je moet eerst alle checkboxes goedkeuren voordat je de bestelling kunt plaatsen.
+            Validatie: geef voor elke bestelling een keuze (goedgekeurd of afwijsreden) voordat je kunt doorgaan.
           </div>
         )}
       </form>

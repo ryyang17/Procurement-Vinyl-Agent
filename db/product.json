@@ -498,5 +498,45 @@
     "release_date": "2026-03-24",
     "product_id": 52,
     "created_at": "2026-03-24T17:25:12.213246"
+  },
+  {
+    "id": "2cjgbdukgBhR1oCImmK1pc",
+    "name": "poem",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "overtonight",
+    "release_date": "2026-03-25",
+    "product_id": 53,
+    "created_at": "2026-03-25T10:55:38.780405"
+  },
+  {
+    "id": "1eFhDlDMHLFOTxefjgLNLt",
+    "name": "COBRONA",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "CARABIN3, Los Money Makers, SVNTI",
+    "release_date": "2026-03-25",
+    "product_id": 54,
+    "created_at": "2026-03-25T10:55:38.795702"
+  },
+  {
+    "id": "1PawA1kXPiDO3BHKow7VzH",
+    "name": "VOGUE",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Guru Randhawa, Gill Machhrai, Rony Ajnali, Dilmaan",
+    "release_date": "2026-03-25",
+    "product_id": 55,
+    "created_at": "2026-03-25T10:55:38.802924"
+  },
+  {
+    "id": "3L0dW8SkMpReBLaTkkznnK",
+    "name": "One of These Nights",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Eagles",
+    "release_date": "2026-03-25",
+    "product_id": 56,
+    "created_at": "2026-03-25T11:14:11.279554"
   }
 ]

@@ -2,12 +2,61 @@ from agent.utils.state import ProcurementState
 from agent.procurement_data import ProcurementDatabase
 from agent.utils.memory import get_last_rejection_reason, get_recent_rejections
 from langchain_google_genai import ChatGoogleGenerativeAI
+import json
 import os
 
 db = ProcurementDatabase()
 
+
+def _extract_json(text: str):
+    text = text.strip()
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        start = text.find("{")
+        end = text.rfind("}")
+        if start != -1 and end != -1 and end > start:
+            try:
+                return json.loads(text[start:end + 1])
+            except json.JSONDecodeError:
+                return None
+    return None
+
+
+def _choose_fallback_supplier(options):
+    # Deterministic fallback keeps runtime fast and output stable when LLM output is malformed.
+    return min(
+        options,
+        key=lambda o: (
+            float(o.get("price_per_unit", 10**9)),
+            int(o.get("lead_time_days", 10**9)),
+            int(o.get("late_deliveries_count", 10**9)),
+            -float(o.get("quality_rating", 0.0)),
+        ),
+    )
+
+
+def _product_key(value) -> str:
+    return str(value).strip()
+
+
+def _build_supplier_reason(option: dict) -> str:
+    return (
+        f"Beste keuze op basis van prijs (€{option.get('price_per_unit', 0):.2f}), "
+        f"levertijd ({option.get('lead_time_days', '?')} dagen), "
+        f"betrouwbaarheid ({option.get('late_deliveries_count', '?')} te late leveringen) "
+        f"en kwaliteit ({option.get('quality_rating', '?')}/10)."
+    )
+
+
+def _compact_text(value, max_len: int = 80) -> str:
+    text = str(value or "").strip().replace("\n", " ")
+    if len(text) <= max_len:
+        return text
+    return text[: max_len - 3].rstrip() + "..."
+
 def find_suppliers_node(state: ProcurementState) -> ProcurementState:
-    print("🔍 DEBUG: find_suppliers_node aangeroepen!")
+    print("DEBUG: find_suppliers_node called")
     print(f"   - step: {getattr(state, 'step', 'N/A')}")
     print(f"   - status: {getattr(state, 'status', 'N/A')}")
     print(f"   - path_choice: {getattr(state, 'path_choice', 'N/A')}")
@@ -44,7 +93,7 @@ def find_suppliers_node(state: ProcurementState) -> ProcurementState:
         state.step = "create_purchase_order"
         return state
 
-    # Clear supplier path data to prevent mixing
+
     state.clear_path_data("suppliers")
 
     products = db.get_products()
@@ -98,60 +147,6 @@ def find_suppliers_node(state: ProcurementState) -> ProcurementState:
         # Limit to top 3 suppliers
         supplier_options = supplier_options[:3]
 
-        # Use LLM to analyze and select best supplier
-        analysis_prompt = f"""
-            Je bent een procurement specialist voor een vinyl platenwinkel.
-
-            Product: {proposal['product_name']} ({product_code})
-            Hoeveelheid nodig: {proposal['reorder_qty']} stuks
-
-            Beschikbare leveranciers:
-            """
-        for i, opt in enumerate(supplier_options, 1):
-            analysis_prompt += f"\n{i}. {opt['supplier_name']}"
-            analysis_prompt += f"\n   - Prijs per unit: €{opt['price_per_unit']:.2f}"
-            analysis_prompt += f"\n   - Levertijd: {opt['lead_time_days']} dagen"
-            analysis_prompt += f"\n   - Late leveringen: {opt['late_deliveries_count']}"
-            analysis_prompt += f"\n   - Kwaliteitsbeoordeling: {opt['quality_rating']}/10"
-
-            rejection_reason = get_last_rejection_reason(opt['supplier_id'])
-            recent_rejections = get_recent_rejections(opt['supplier_id'], days=7)
-
-            if rejection_reason:
-                analysis_prompt += f"\n   - Laatste afkeuring: {rejection_reason}"
-            if recent_rejections:
-                analysis_prompt += f"\n   - {len(recent_rejections)} afkeuring(en) in afgelopen week"
-
-        analysis_prompt += """\n\nSelecteer de beste leverancier op basis van:
-            1. Prijs (totale kosten)
-            2. Levertijd
-            3. Betrouwbaarheid (late leveringen)
-            4. Kwaliteit
-            5. BELANGRIJK: Let op waarschuwingen over recente afkeuringen!
-
-            Geef je aanbeveling in dit formaat:
-            LEVERANCIER: [naam]
-            REDEN: [korte uitleg waarom deze leverancier het beste is]"""
-
-        response = llm.invoke(analysis_prompt)
-        recommendation = response.content
-
-        # Ensure recommendation is a string
-        if isinstance(recommendation, list):
-            recommendation = ' '.join(str(item) for item in recommendation)
-        else:
-            recommendation = str(recommendation)
-
-        # Extract recommended supplier
-        recommended_supplier = None
-        for opt in supplier_options:
-            if opt['supplier_name'].lower() in recommendation.lower():
-                recommended_supplier = opt
-                break
-
-        if not recommended_supplier:
-            recommended_supplier = supplier_options[0]  # Default to first
-
         supplier_selections.append({
             'product_code': product_code,
             'product_name': product_name,
@@ -159,14 +154,110 @@ def find_suppliers_node(state: ProcurementState) -> ProcurementState:
             'category': proposal.get('category') or product.get('category', 'Unknown'),
             'source_type': proposal.get('source_type', 'inventory_low_stock'),
             'reorder_qty': proposal.get('reorder_qty', 0),
-            'selected_supplier': recommended_supplier,
             'all_options': supplier_options,
-            'ai_recommendation': recommendation,
-            'ai_recommendation_summary': (
-                f"{product_name}: beste match is {recommended_supplier.get('supplier_name', 'Onbekend')} "
-                f"voor {proposal.get('reorder_qty', 0)} stuks."
-            )
+            'selected_supplier': None,
+            'ai_recommendation': "",
+            'ai_recommendation_summary': "",
         })
+
+    # Build one batched prompt for all proposals to avoid one network call per product.
+    recommendation_by_product = {}
+    if supplier_selections:
+        rejection_cache = {}
+        recent_rejection_count_cache = {}
+        batched_lines = [
+            "Rol: procurement specialist voor vinyl retail.",
+            "Taak: kies exact 1 leverancier per product.",
+            "Optimaliseer op: lage prijs, korte levertijd, weinig late deliveries, hoge kwaliteit, weinig recente afkeuringen.",
+            "Outputvereiste: GEEF KORTE TEKST MET PRODUCT NAAM, SUPPLIER NAAM, REDEN VAN MAX 20 WOORDEN.",
+            "Regels:",
+            "- Gebruik exact de supplier_name uit de opties.",
+            "- Geef precies 1 recommendation per product_id hieronder.",
+            "- reason moet kort, concreet en vergelijkend zijn.",
+            "",
+        ]
+
+        for selection in supplier_selections:
+            batched_lines.append(
+                f"PRODUCT id={selection['product_id']} | naam={selection['product_name']} | code={selection['product_code']} | qty={selection['reorder_qty']}"
+            )
+            batched_lines.append("OPTIES:")
+            for opt in selection['all_options']:
+                sid = opt['supplier_id']
+                if sid not in rejection_cache:
+                    rejection_cache[sid] = get_last_rejection_reason(sid)
+                if sid not in recent_rejection_count_cache:
+                    recent_rejection_count_cache[sid] = len(get_recent_rejections(sid, days=7))
+
+                batched_lines.append(
+                    f"- naam={opt['supplier_name']} | p={opt['price_per_unit']:.2f} | lt={opt['lead_time_days']} | "
+                    f"late={opt['late_deliveries_count']} | q={opt['quality_rating']}/10 | "
+                    f"rej7d={recent_rejection_count_cache[sid]} | lastrej={_compact_text(rejection_cache[sid] or '-') }"
+                )
+            batched_lines.append("")
+
+        batched_lines.append("Controle: lever recommendation voor ELKE product id.")
+
+        batched_prompt = "\n".join(batched_lines)
+
+        try:
+            response = llm.invoke(batched_prompt)
+            raw_recommendation = response.content
+            if isinstance(raw_recommendation, list):
+                raw_recommendation = " ".join(str(item) for item in raw_recommendation)
+            raw_recommendation = str(raw_recommendation)
+            parsed = _extract_json(raw_recommendation)
+            if isinstance(parsed, dict):
+                recommendations = parsed.get("recommendations", [])
+                if isinstance(recommendations, list):
+                    for item in recommendations:
+                        if not isinstance(item, dict):
+                            continue
+                        pid = item.get("product_id")
+                        if pid is None:
+                            continue
+                        recommendation_by_product[_product_key(pid)] = item
+        except Exception as exc:
+            print(f"WARN: batched supplier recommendation failed: {exc}")
+
+    for selection in supplier_selections:
+        selected_supplier = None
+        recommendation_text = ""
+        recommendation_item = recommendation_by_product.get(_product_key(selection['product_id']))
+
+        if isinstance(recommendation_item, dict):
+            supplier_name = str(recommendation_item.get("supplier_name", "")).strip().lower()
+            reason = str(recommendation_item.get("reason", "")).strip()
+            for opt in selection['all_options']:
+                candidate = str(opt.get('supplier_name', '')).strip().lower()
+                if candidate == supplier_name or (supplier_name and supplier_name in candidate) or (candidate and candidate in supplier_name):
+                    selected_supplier = opt
+                    break
+            if selected_supplier:
+                recommendation_text = (
+                    f"LEVERANCIER: {selected_supplier.get('supplier_name', 'Onbekend')}\n"
+                    f"REDEN: {reason or _build_supplier_reason(selected_supplier)}"
+                )
+            elif reason:
+                selected_supplier = _choose_fallback_supplier(selection['all_options'])
+                recommendation_text = (
+                    f"LEVERANCIER: {selected_supplier.get('supplier_name', 'Onbekend')}\n"
+                    f"REDEN: {reason}"
+                )
+
+        if not selected_supplier:
+            selected_supplier = _choose_fallback_supplier(selection['all_options'])
+            recommendation_text = (
+                f"LEVERANCIER: {selected_supplier.get('supplier_name', 'Onbekend')}\n"
+                f"REDEN: {_build_supplier_reason(selected_supplier)}"
+            )
+
+        selection['selected_supplier'] = selected_supplier
+        selection['ai_recommendation'] = recommendation_text
+        selection['ai_recommendation_summary'] = (
+            f"{selection['product_name']}: beste match is {selected_supplier.get('supplier_name', 'Onbekend')} "
+            f"voor {selection.get('reorder_qty', 0)} stuks."
+        )
 
     state.data['supplier_selections'] = supplier_selections
 
