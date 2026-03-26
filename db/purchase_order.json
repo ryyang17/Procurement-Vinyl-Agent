@@ -1410,5 +1410,24 @@
     "status": "approved",
     "total_amount": 293.0,
     "approved_by": "frontend_manager"
+  },
+  {
+    "purchase_order_id": 153,
+    "supplier_id": 10,
+    "order_date": "2026-03-26T21:48:32.388450",
+    "expected_delivery_date": "2026-03-25T21:48:32.393891",
+    "status": "delivered",
+    "total_amount": 2973.0,
+    "approved_by": "test_manager",
+    "delivery_date": "2026-03-26T21:48:32.399157"
+  },
+  {
+    "purchase_order_id": 154,
+    "supplier_id": 1,
+    "order_date": "2026-03-26T21:50:01.176225",
+    "expected_delivery_date": "2026-04-02T21:50:01.176209",
+    "status": "approved",
+    "total_amount": 1355.5,
+    "approved_by": "test_manager"
   }
 ]

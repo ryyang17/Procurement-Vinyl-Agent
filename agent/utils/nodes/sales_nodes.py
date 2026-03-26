@@ -4,6 +4,61 @@ from agent.procurement_data import ProcurementDatabase
 from agent.utils.state import ProcurementState
 
 
+def _detect_price_fluctuations(db: ProcurementDatabase, lookback_days: int = 14, threshold_pct: float = 12.0):
+    """Detect significant recent price increases per product."""
+    try:
+        history = db.get_price_history()
+        products = db.get_products()
+    except Exception:
+        return []
+
+    cutoff = datetime.now().date() - timedelta(days=lookback_days)
+    product_names = {p.get('product_id'): p.get('name', 'Unknown') for p in products}
+
+    grouped = {}
+    for entry in history:
+        product_id = entry.get('product_id')
+        price = entry.get('price')
+        date_raw = entry.get('date')
+        if product_id is None or price is None or not date_raw:
+            continue
+
+        try:
+            day = datetime.fromisoformat(str(date_raw)).date()
+            price_value = float(price)
+        except (ValueError, TypeError):
+            continue
+
+        if day < cutoff:
+            continue
+        grouped.setdefault(product_id, []).append((day, price_value))
+
+    alerts = []
+    for product_id, points in grouped.items():
+        points.sort(key=lambda item: item[0])
+        if len(points) < 2:
+            continue
+
+        start_price = points[0][1]
+        end_price = points[-1][1]
+        if start_price <= 0:
+            continue
+
+        increase_pct = ((end_price - start_price) / start_price) * 100
+        if increase_pct >= threshold_pct:
+            alerts.append({
+                'product_id': product_id,
+                'product_name': product_names.get(product_id, 'Unknown'),
+                'start_price': round(start_price, 2),
+                'current_price': round(end_price, 2),
+                'increase_pct': round(increase_pct, 2),
+                'lookback_days': lookback_days,
+                'severity': 'high' if increase_pct >= (threshold_pct * 1.5) else 'medium',
+            })
+
+    return alerts
+
+
 def analyse_sales_velocity_node(state: ProcurementState) -> ProcurementState:
     """
     Analyse sales velocity per product and compute dynamic reorder levels.
@@ -95,10 +150,17 @@ def analyse_sales_velocity_node(state: ProcurementState) -> ProcurementState:
     state.data['sales_velocity_forecasts'] = velocity_forecasts
     state.sales_velocity_alerts = alerts
 
+    price_alerts = _detect_price_fluctuations(db)
+    state.data['price_fluctuation_alerts'] = price_alerts
+
     if alerts:
         state.message = f"Sales velocity geanalyseerd. {len(alerts)} product(en) hebben versnelde reorder nodig."
         state.status = "attention"
     else:
         state.message = "Sales velocity geanalyseerd. Geen urgente versnelde reorder gevonden."
+
+    if price_alerts:
+        state.status = "attention"
+        state.message += f" Waarschuwing: {len(price_alerts)} product(en) met significante prijsstijging."
 
     return state

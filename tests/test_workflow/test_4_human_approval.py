@@ -38,10 +38,22 @@ class TestHumanApproval(unittest.TestCase):
         }
         state_with_draft = initial_state
         state_with_draft.data['draft_orders'] = [draft_order]
-        result_state = human_approval_node(state_with_draft)
-        self.assertEqual(result_state.step, 'awaiting_human_input', "Should be awaiting human input")
-        self.assertEqual(result_state.status, 'awaiting_approval', "Status should be awaiting approval")
-        self.assertIsNotNone(result_state.approval_requested_at, "Approval timestamp should be set")
+        
+        # Mock the interrupt function to simulate user approval without needing LangGraph runtime context
+        with patch('agent.utils.nodes.approval_nodes.interrupt') as mock_interrupt:
+            mock_interrupt.return_value = {
+                'approved_indices': [0],
+                'approval_decision': 'approved',
+                'approved_by': 'test_manager',
+                'rejection_reasons_by_index': {}
+            }
+            
+            result_state = human_approval_node(state_with_draft)
+            self.assertEqual(result_state.step, 'processing_approval', "Should be processing approval after interrupt")
+            self.assertEqual(result_state.status, 'in_progress', "Status should be in_progress after interrupt")
+            self.assertIsNotNone(result_state.approval_requested_at, "Approval timestamp should be set")
+            self.assertEqual(result_state.approved_by, 'test_manager', "Approved by should be set")
+        
         approved_orders = [0]  # Approve first order
         approval_state = process_approval_node(
             result_state,

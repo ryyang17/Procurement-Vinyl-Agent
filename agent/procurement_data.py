@@ -125,6 +125,18 @@ class ProcurementDatabase:
         performance = self.get_supplier_performance()
         products = self.get_products()
 
+        performance_by_supplier = {
+            p.get('supplier_id'): p for p in performance if p.get('supplier_id') is not None
+        }
+
+        # Skip suppliers marked as temporarily unavailable so we can select an alternative.
+        available_suppliers = [
+            s for s in suppliers
+            if not performance_by_supplier.get(s.get('supplier_id'), {}).get('temporarily_unavailable', False)
+        ]
+        if not available_suppliers:
+            return []
+
         # Get base price for product
         product = next((p for p in products if p['product_id'] == product_id), None)
         if not product:
@@ -137,11 +149,11 @@ class ProcurementDatabase:
         options = []
 
         # Randomly select 3-5 suppliers for this product
-        available_suppliers = random.sample(suppliers, min(3, len(suppliers)))
+        available_suppliers = random.sample(available_suppliers, min(3, len(available_suppliers)))
 
         for supplier in available_suppliers:
             # Get performance data
-            perf = next((p for p in performance if p['supplier_id'] == supplier['supplier_id']), None)
+            perf = performance_by_supplier.get(supplier['supplier_id'])
 
             # Generate price variation (base price +/- 20%)
             price_variation = random.uniform(0.85, 1.15)

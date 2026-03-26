@@ -1622,5 +1622,19 @@
     "product_id": 46,
     "quantity": 10,
     "unit_price": 29.3
+  },
+  {
+    "purchase_order_item_id": 233,
+    "purchase_order_id": 153,
+    "product_id": 1,
+    "quantity": 100,
+    "unit_price": 29.73
+  },
+  {
+    "purchase_order_item_id": 234,
+    "purchase_order_id": 154,
+    "product_id": 1,
+    "quantity": 50,
+    "unit_price": 27.11
   }
 ]
