@@ -134,6 +134,18 @@
 	color: #155e75;
 }
 
+.summary-chip-warning {
+	border-color: #fbd38d;
+	background: #fff6e6;
+	color: #9a5b00;
+}
+
+.summary-chip-danger {
+	border-color: #f7b2b2;
+	background: #ffefef;
+	color: #9f1239;
+}
+
 .btn {
 	border: none;
 	border-radius: 10px;
@@ -270,6 +282,115 @@
 	color: #1f2d44;
 }
 
+.info-card-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.75rem;
+}
+
+.info-card-grid-2 {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.info-card-grid-3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.info-card {
+	background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+	border: 1px solid #d9e4f1;
+	border-radius: 12px;
+	padding: 0.75rem;
+	box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+}
+
+.info-card-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 0.55rem;
+	margin-bottom: 0.45rem;
+}
+
+.info-card-title {
+	font-weight: 700;
+	color: #132840;
+	line-height: 1.28;
+}
+
+.info-card-text {
+	margin: 0;
+	color: #31435a;
+	font-size: 0.92rem;
+	line-height: 1.4;
+}
+
+.metric-pair-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.55rem;
+	margin-top: 0.6rem;
+}
+
+.metric-pair-grid small {
+	display: block;
+	font-size: 0.76rem;
+	color: #607089;
+	margin-bottom: 0.14rem;
+}
+
+.metric-pair-grid strong {
+	font-size: 0.92rem;
+	color: #12263d;
+	line-height: 1.3;
+}
+
+.alert-chip-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+}
+
+.nested-order-card {
+	border: 1px solid #e4e7ec;
+	border-radius: 10px;
+	padding: 0.6rem;
+	background: #f9fbff;
+}
+
+.item-pill-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.item-pill {
+	display: inline-flex;
+	align-items: center;
+	border-radius: 999px;
+	border: 1px solid #cfd9e8;
+	background: #f4f8ff;
+	padding: 0.24rem 0.52rem;
+	font-size: 0.78rem;
+	color: #28405f;
+	line-height: 1.25;
+}
+
+.inventory-high {
+	border-color: #f4b7b7;
+	background: linear-gradient(180deg, #fff7f7 0%, #fff1f1 100%);
+}
+
+.inventory-medium {
+	border-color: #f7d39b;
+	background: linear-gradient(180deg, #fffaf0 0%, #fff6e8 100%);
+}
+
+.inventory-low {
+	border-color: #bde3d7;
+	background: linear-gradient(180deg, #f3fffa 0%, #ecfff8 100%);
+}
+
 textarea,
 input[type="text"],
 input[type="number"] {
@@ -309,6 +430,13 @@ input[type="number"] {
 @media (max-width: 840px) {
 	.kpi-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.info-card-grid,
+	.info-card-grid-2,
+	.info-card-grid-3,
+	.metric-pair-grid {
+		grid-template-columns: 1fr;
 	}
 
 	.status-row {

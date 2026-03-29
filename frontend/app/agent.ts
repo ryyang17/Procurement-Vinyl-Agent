@@ -23,6 +23,9 @@ export interface DraftOrderItem {
   supplier_name?: string;
   source_type?: string;
   order_path?: string;
+  release_date?: string;
+  created_at?: string;
+  market_popularity_score?: number;
 }
 
 export interface ProcurementDraftOrder {
@@ -31,8 +34,19 @@ export interface ProcurementDraftOrder {
   total_amount?: number;
   source_type?: string;
   order_path?: string;
+  release_date?: string;
+  created_at?: string;
   items?: DraftOrderItem[];
   ai_recommendation?: string;
+  market_popularity_score?: number;
+}
+
+export interface PurchaseOrderProposal {
+  product_id?: string;
+  product_name?: string;
+  quantity?: number;
+  market_popularity_score?: number;
+  status?: string;
 }
 
 export interface SalesVelocityForecast {
@@ -50,17 +64,21 @@ export interface ProcurementAgentState {
   next_action?: NextAction;
   current_date?: string;
   status?: string;
+  message?: string;
   inventory_alerts?: string[];
   sales_velocity_alerts?: string[];
   new_release_alerts?: string[];
   supplier_offers?: SupplierOffer[];
   draft_orders?: ProcurementDraftOrder[];
+  purchase_order_proposals?: PurchaseOrderProposal[];
   approved_orders?: DraftOrderItem[];
   rejection_reasons?: string[];
   approval_decision?: "approved" | "rejected" | "pending";
   summary?: string;
   data?: {
     sales_velocity_forecasts?: SalesVelocityForecast[];
+    draft_orders?: ProcurementDraftOrder[];
+    purchase_order_proposals?: PurchaseOrderProposal[];
     [key: string]: unknown;
   };
 
@@ -75,8 +93,13 @@ export interface CheckpointDraftOrder {
   supplier_id?: number;
   supplier_name?: string;
   total_amount?: number;
+  source_type?: string;
+  order_path?: string;
+  release_date?: string;
+  created_at?: string;
   items?: DraftOrderItem[];
   ai_recommendation?: string;
+  market_popularity_score?: number;
 }
 
 export interface PendingCheckpointItem {

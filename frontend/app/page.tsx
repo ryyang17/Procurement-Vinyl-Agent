@@ -22,7 +22,6 @@ import {
   SalesVelocityForecast,
   formatCurrency,
 } from "./agent";
-import ApprovalPanel from "./components/ApprovalPanel";
 import CheckpointActionPanel from "./components/CheckpointActionPanel";
 
 const AGENT_ID = "procurement_agent";
@@ -45,6 +44,7 @@ type ApprovedOrderSummary = {
   delivery_date?: string;
   total_amount?: number;
   approved_by?: string;
+  album_names?: string[];
 };
 
 type DashboardBootstrapResponse = {
@@ -78,6 +78,66 @@ function formatRelativeTime(value?: string): string {
   if (deltaHours < 24) return `${deltaHours} uur geleden`;
   const deltaDays = Math.round(deltaHours / 24);
   return `${deltaDays} dag(en) geleden`;
+}
+
+function classifyAlertLevel(alert: string): "high" | "medium" | "low" {
+  const normalized = alert.toLowerCase();
+  if (
+    normalized.includes("krit") ||
+    normalized.includes("urgent") ||
+    normalized.includes("stockout") ||
+    normalized.includes("tekort") ||
+    normalized.includes("out of stock")
+  ) {
+    return "high";
+  }
+
+  if (
+    normalized.includes("waarschu") ||
+    normalized.includes("risico") ||
+    normalized.includes("vertraging") ||
+    normalized.includes("laag")
+  ) {
+    return "medium";
+  }
+
+  return "low";
+}
+
+function classifyDraftOrder(order: ProcurementDraftOrder): "New Release" | "Reorder" {
+  const NEW_RELEASE_WINDOW_DAYS = 5;
+  const source = String(order.source_type || order.order_path || "").toLowerCase();
+  const firstItem = Array.isArray(order.items) ? order.items[0] : undefined;
+  const itemSource = String(firstItem?.source_type || firstItem?.order_path || "").toLowerCase();
+  const recommendation = String(order.ai_recommendation || "").toLowerCase();
+  const supplierName = String(order.supplier_name || "").toLowerCase();
+
+  const parseDate = (raw?: string): Date | null => {
+    if (!raw) return null;
+    const parsed = new Date(raw);
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+  };
+
+  const cutoff = new Date(Date.now() - NEW_RELEASE_WINDOW_DAYS * 24 * 60 * 60 * 1000);
+  const releaseDate = parseDate(order.release_date || firstItem?.release_date);
+  const createdAt = parseDate(order.created_at || firstItem?.created_at);
+
+  if (
+    source.includes("new_release") ||
+    source.includes("new_releases") ||
+    itemSource.includes("new_release") ||
+    itemSource.includes("new_releases") ||
+    supplierName.includes("spotify market suggestion") ||
+    recommendation.includes("nieuwe release") ||
+    recommendation.includes("spotify") ||
+    typeof order.market_popularity_score === "number" ||
+    Boolean(releaseDate && releaseDate >= cutoff) ||
+    Boolean(createdAt && createdAt >= cutoff)
+  ) {
+    return "New Release";
+  }
+
+  return "Reorder";
 }
 
 function Dashboard() {
@@ -230,9 +290,54 @@ function Dashboard() {
   const kpis = useMemo(() => {
     const alerts = state.inventory_alerts?.length ?? 0;
     const offers = state.supplier_offers?.length ?? 0;
-    const draftOrders = state.draft_orders?.length ?? 0;
+    const directDraftOrders = Array.isArray(state.draft_orders) ? state.draft_orders : [];
+    const nestedDraftOrders = Array.isArray(state.data?.draft_orders) ? state.data.draft_orders : [];
+    const draftOrders = directDraftOrders.length + nestedDraftOrders.length;
     const approvals = state.approved_orders?.length ?? 0;
     return { alerts, offers, draftOrders, approvals };
+  }, [state]);
+
+  const activeDraftOrders = useMemo(() => {
+    const directDraftOrders = Array.isArray(state.draft_orders)
+      ? (state.draft_orders as ProcurementDraftOrder[])
+      : [];
+    const nestedDraftOrders = Array.isArray(state.data?.draft_orders)
+      ? (state.data.draft_orders as ProcurementDraftOrder[])
+      : [];
+
+    const mergedDraftOrders = [...directDraftOrders, ...nestedDraftOrders];
+    if (mergedDraftOrders.length > 0) {
+      return mergedDraftOrders;
+    }
+
+    const directProposals = Array.isArray(state.purchase_order_proposals)
+      ? state.purchase_order_proposals
+      : [];
+    const nestedProposals = Array.isArray(state.data?.purchase_order_proposals)
+      ? state.data.purchase_order_proposals
+      : [];
+
+    return [...directProposals, ...nestedProposals].map((proposal) => ({
+      supplier_id: 1,
+      supplier_name: "Spotify Market Suggestion",
+      source_type: "new_releases",
+      order_path: "new_releases",
+      total_amount: 0,
+      market_popularity_score:
+        typeof proposal.market_popularity_score === "number"
+          ? proposal.market_popularity_score
+          : undefined,
+      ai_recommendation:
+        "Inkoop gebaseerd op nieuwe release detectie.",
+      items: [{
+        product_id: proposal.product_id,
+        product_name: proposal.product_name,
+        quantity: proposal.quantity,
+        unit_price: 0,
+        source_type: "new_releases",
+        order_path: "new_releases",
+      }],
+    } as ProcurementDraftOrder));
   }, [state]);
 
   const salesVelocityForecasts = useMemo(() => {
@@ -347,6 +452,12 @@ function Dashboard() {
             ) : (
               <div style={{ display: "grid", gap: "0.8rem" }}>
                 {visiblePendingCheckpoints.map((item, idx) => (
+                  (() => {
+                    const checkpointOrders = (item.draft_orders || []) as ProcurementDraftOrder[];
+                    const newReleaseCount = checkpointOrders.filter((order) => classifyDraftOrder(order) === "New Release").length;
+                    const reorderCount = checkpointOrders.length - newReleaseCount;
+
+                    return (
                   <details
                     key={item.thread_id}
                     className="checkpoint-card"
@@ -358,6 +469,8 @@ function Dashboard() {
                         <span className="summary-chip summary-chip-green">{toFriendlyLabel(item.status, 18)}</span>
                         <span className="summary-chip">{toFriendlyLabel(item.step, 20)}</span>
                         <span className="summary-chip summary-chip-blue">{item.draft_orders_count} orders</span>
+                        <span className="summary-chip" style={{ backgroundColor: "#fef3c7", color: "#7a4f01" }}>{newReleaseCount} New Release</span>
+                        <span className="summary-chip" style={{ backgroundColor: "#e0e7ff", color: "#1d4ed8" }}>{reorderCount} Reorder</span>
                         <span className="summary-chip">{formatRelativeTime(item.updated_at || item.approval_requested_at)}</span>
                       </span>
                     </summary>
@@ -379,6 +492,8 @@ function Dashboard() {
                       />
                     </div>
                   </details>
+                    );
+                  })()
                 ))}
               </div>
             )}
@@ -386,13 +501,16 @@ function Dashboard() {
         </section>
 
         {/* Show Draft Orders panel from create_purchase_order onward */}
-        {(state.awaiting_human_approval || state.step === "create_purchase_order" || state.step === "human_approval")
-          && Array.isArray(state.draft_orders)
-          && state.draft_orders.length > 0 && (
-          <ApprovalPanel
-            state={state}
+        {(state.awaiting_human_approval || 
+          state.step === "create_purchase_order" || 
+          state.step === "human_approval" ||
+          state.status === "awaiting_approval" ||
+          state.status === "awaiting_human_approval")
+          && activeDraftOrders.length > 0 && (
+          <CheckpointActionPanel
+            state={{ ...state, draft_orders: activeDraftOrders }}
             agent={agent}
-            onSubmitCheckpointDecision={activeThreadId ? submitActiveThreadDecision : undefined}
+            onSubmitDecision={activeThreadId ? submitActiveThreadDecision : undefined}
           />
         )}
 
@@ -402,12 +520,35 @@ function Dashboard() {
               <span>Voorraad Meldingen</span>
               <span className="summary-chip">{(state.inventory_alerts || []).length}</span>
             </summary>
-            <ul className="list">
-              {(state.inventory_alerts || []).length === 0 && <li>Geen meldingen</li>}
-              {(state.inventory_alerts || []).map((alert, idx) => (
-                <li key={`${alert}-${idx}`}>{alert}</li>
-              ))}
-            </ul>
+
+            {(state.inventory_alerts || []).length === 0 ? (
+              <p style={{ marginTop: "0.8rem" }}>Geen meldingen</p>
+            ) : (
+              <div className="info-card-grid" style={{ marginTop: "0.8rem" }}>
+                {(state.inventory_alerts || []).map((alert, idx) => {
+                  const level = classifyAlertLevel(alert);
+                  return (
+                    <article key={`${alert}-${idx}`} className={`info-card inventory-${level}`}>
+                      <div className="info-card-head">
+                        <span className="info-card-title">Melding {idx + 1}</span>
+                        <span
+                          className={`summary-chip ${
+                            level === "high"
+                              ? "summary-chip-danger"
+                              : level === "medium"
+                                ? "summary-chip-warning"
+                                : "summary-chip-green"
+                          }`}
+                        >
+                          {level === "high" ? "Kritiek" : level === "medium" ? "Waarschuwing" : "Info"}
+                        </span>
+                      </div>
+                      <p className="info-card-text">{alert}</p>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
           </details>
         </section>
 
@@ -417,44 +558,47 @@ function Dashboard() {
               <span>Sales </span>
               <span className="summary-chip">{salesVelocityForecasts.length}</span>
             </summary>
-            <ul className="list" style={{ marginBottom: "0.8rem" }}>
-              {(state.sales_velocity_alerts || []).length === 0 && <li>Geen dringende meldingen</li>}
-              {(state.sales_velocity_alerts || []).map((alert, idx) => (
-                <li key={`velocity-alert-${idx}`}>{alert}</li>
-              ))}
-            </ul>
 
-            <div className="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Product</th>
-                    <th>Verkoop / dag</th>
-                    <th>Stockout datum</th>
-                    <th>Reorder basis</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {salesVelocityForecasts.length === 0 && (
-                    <tr>
-                      <td colSpan={4}>Nog geen sales data</td>
-                    </tr>
-                  )}
-                  {salesVelocityForecasts.map((forecast: SalesVelocityForecast, idx: number) => (
-                    <tr key={`velocity-${forecast.product_id ?? idx}`}>
-                      <td>{forecast.product_name || forecast.product_id || "-"}</td>
-                      <td>
-                        {typeof forecast.velocity_per_day === "number"
-                          ? forecast.velocity_per_day.toFixed(2)
-                          : "-"}
-                      </td>
-                      <td>{forecast.predicted_stockout_date || "-"}</td>
-                      <td>{forecast.reorder_basis || "-"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="alert-chip-row" style={{ marginTop: "0.8rem" }}>
+              {(state.sales_velocity_alerts || []).length === 0 && (
+                <span className="summary-chip summary-chip-green">Geen dringende meldingen</span>
+              )}
+              {(state.sales_velocity_alerts || []).map((alert, idx) => (
+                <span key={`velocity-alert-${idx}`} className="summary-chip summary-chip-warning">
+                  {alert}
+                </span>
+              ))}
             </div>
+
+            {salesVelocityForecasts.length === 0 ? (
+              <p style={{ marginTop: "0.9rem" }}>Nog geen sales data</p>
+            ) : (
+              <div className="info-card-grid info-card-grid-3" style={{ marginTop: "0.9rem" }}>
+                {salesVelocityForecasts.map((forecast: SalesVelocityForecast, idx: number) => (
+                  <article key={`velocity-${forecast.product_id ?? idx}`} className="info-card">
+                    <div className="info-card-head">
+                      <span className="info-card-title">{forecast.product_name || forecast.product_id || "Onbekend product"}</span>
+                      <span className="summary-chip summary-chip-blue">
+                        {typeof forecast.velocity_per_day === "number"
+                          ? `${forecast.velocity_per_day.toFixed(2)} / dag`
+                          : "- / dag"}
+                      </span>
+                    </div>
+
+                    <div className="metric-pair-grid">
+                      <div>
+                        <small>Stockout datum</small>
+                        <strong>{forecast.predicted_stockout_date || "-"}</strong>
+                      </div>
+                      <div>
+                        <small>Reorder basis</small>
+                        <strong>{forecast.reorder_basis || "-"}</strong>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </details>
         </section>
 
@@ -464,41 +608,42 @@ function Dashboard() {
               <span className="checkpoint-title">Leveranciers</span>
               <span className="summary-chip summary-chip-blue">{supplierOffers.length}</span>
             </summary>
-            <div className="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Supplier</th>
-                    <th>Notities</th>
-                    <th>Levertijd</th>
-                    <th>Betrouwbaarheid</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {supplierOffers.length === 0 && (
-                    <tr>
-                      <td colSpan={4}>Nog geen offers</td>
-                    </tr>
-                  )}
-                  {supplierOffers.map((offer, idx) => (
-                    <tr key={`offer-${idx}`}>
-                      <td>{offer.supplier_name || offer.supplier_id || "-"}</td>
-                      <td>{offer.notes || "-"}</td>
-                      <td>
-                        {typeof offer.lead_time_days === "number"
-                          ? `${offer.lead_time_days} d`
-                          : "-"}
-                      </td>
-                      <td>
+
+            {supplierOffers.length === 0 ? (
+              <p style={{ marginTop: "0.8rem" }}>Nog geen offers</p>
+            ) : (
+              <div className="info-card-grid info-card-grid-3" style={{ marginTop: "0.85rem" }}>
+                {supplierOffers.map((offer, idx) => (
+                  <article key={`offer-${idx}`} className="info-card">
+                    <div className="info-card-head">
+                      <span className="info-card-title">{offer.supplier_name || offer.supplier_id || "Onbekende leverancier"}</span>
+                      <span className="summary-chip summary-chip-blue">
                         {typeof offer.reliability_score === "number"
-                          ? offer.reliability_score.toFixed(2)
-                          : "-"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                          ? `Score ${offer.reliability_score.toFixed(2)}`
+                          : "Score -"}
+                      </span>
+                    </div>
+
+                    <p className="info-card-text">{offer.notes || "Geen aanvullende notities"}</p>
+
+                    <div className="metric-pair-grid">
+                      <div>
+                        <small>Levertijd</small>
+                        <strong>
+                          {typeof offer.lead_time_days === "number"
+                            ? `${offer.lead_time_days} dagen`
+                            : "-"}
+                        </strong>
+                      </div>
+                      <div>
+                        <small>Supplier ID</small>
+                        <strong>{offer.supplier_id ?? "-"}</strong>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </details>
         </section>
 
@@ -507,54 +652,80 @@ function Dashboard() {
             <summary className="panel-summary">
               <span>Goedgekeurde bestellingen</span>
               <span className="summary-chip">
-                {proposalHistory.length + (state.draft_orders || []).length + bootstrapApprovedOrders.length}
+                {proposalHistory.length + activeDraftOrders.length + bootstrapApprovedOrders.length}
               </span>
             </summary>
 
-            {proposalHistory.length === 0 && (state.draft_orders || []).length === 0 && bootstrapApprovedOrders.length === 0 && <p>Nog geen voorstellen in history</p>}
+            {proposalHistory.length === 0 && activeDraftOrders.length === 0 && bootstrapApprovedOrders.length === 0 && <p>Nog geen voorstellen in history</p>}
 
             {bootstrapApprovedOrders.length > 0 && (
-              <div style={{ display: "grid", gap: "0.8rem", marginBottom: "1rem" }}>
+              <div className="info-card-grid info-card-grid-2" style={{ marginTop: "0.85rem", marginBottom: "1rem" }}>
                 {bootstrapApprovedOrders.map((order, idx) => (
-                  <details key={`bootstrap-approved-${order.order_id ?? idx}`} className="draft-card">
-                    <summary className="checkpoint-summary">
-                      <span className="checkpoint-title">
-                        Bestelling #{order.order_id ?? "-"} - {order.supplier_name || "Onbekende leverancier"}
+                  <article key={`bootstrap-approved-${order.order_id ?? idx}`} className="info-card">
+                    <div className="info-card-head">
+                      <span className="info-card-title">
+                        Bestelling #{order.order_id ?? "-"}
                       </span>
-                      <span className="checkpoint-meta">
-                        <span className="summary-chip summary-chip-green">{toFriendlyLabel(order.status, 18)}</span>
-                        <span className="summary-chip summary-chip-blue">{formatCurrency(order.total_amount)}</span>
-                        <span className="summary-chip">{formatRelativeTime(order.order_date)}</span>
-                      </span>
-                    </summary>
+                      <span className="summary-chip summary-chip-green">{toFriendlyLabel(order.status, 18)}</span>
+                    </div>
 
-                    <div style={{ marginTop: "0.45rem", color: "#344054", fontSize: "0.92rem" }}>
+                    <p className="info-card-text">Leverancier: {order.supplier_name || "Onbekende leverancier"}</p>
+
+                    <div className="metric-pair-grid">
+                      <div>
+                        <small>Totaal</small>
+                        <strong>{formatCurrency(order.total_amount)}</strong>
+                      </div>
+                      <div>
+                        <small>Order datum</small>
+                        <strong>{formatRelativeTime(order.order_date)}</strong>
+                      </div>
+                    </div>
+
+                    <div style={{ marginTop: "0.55rem" }}>
+                      <small style={{ display: "block", color: "#607089", marginBottom: "0.22rem" }}>
+                        Albums in bestelling
+                      </small>
+                      <div className="item-pill-row">
+                        {(order.album_names || []).length === 0 && (
+                          <span className="item-pill">Geen albumdetails</span>
+                        )}
+                        {(order.album_names || []).map((album, albumIdx) => (
+                          <span key={`approved-order-${order.order_id ?? idx}-album-${albumIdx}`} className="item-pill">
+                            {album}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div style={{ marginTop: "0.45rem", color: "#344054", fontSize: "0.88rem" }}>
                       Goedgekeurd door: {order.approved_by || "-"}
                     </div>
-                  </details>
+                  </article>
                 ))}
               </div>
             )}
 
             {proposalHistory.length > 0 && (
-              <div style={{ display: "grid", gap: "0.8rem", marginBottom: "1rem" }}>
+              <div className="info-card-grid info-card-grid-2" style={{ marginTop: "0.8rem", marginBottom: "1rem" }}>
                 {proposalHistory.map((entry, idx) => (
-                  <details key={`history-thread-${entry.thread_id}-${idx}`} className="draft-card">
-                    <summary className="checkpoint-summary">
-                      <span className="checkpoint-title">Thread {entry.thread_id}</span>
-                      <span className="checkpoint-meta">
-                        <span className={`summary-chip ${entry.resolved_decision === "approved" ? "summary-chip-green" : "summary-chip"}`}>
-                          {entry.resolved_decision === "approved" ? "Goedgekeurd" : "Afgewezen"}
-                        </span>
-                        <span className="summary-chip summary-chip-blue">{entry.draft_orders_count} orders</span>
-                        <span className="summary-chip">{formatRelativeTime(entry.resolved_at)}</span>
+                  <article key={`history-thread-${entry.thread_id}-${idx}`} className="info-card">
+                    <div className="info-card-head">
+                      <span className="info-card-title">Thread {entry.thread_id}</span>
+                      <span className={`summary-chip ${entry.resolved_decision === "approved" ? "summary-chip-green" : "summary-chip-danger"}`}>
+                        {entry.resolved_decision === "approved" ? "Goedgekeurd" : "Afgewezen"}
                       </span>
-                    </summary>
+                    </div>
 
-                    <div style={{ display: "grid", gap: "0.55rem", marginTop: "0.45rem" }}>
+                    <div className="alert-chip-row" style={{ marginBottom: "0.55rem" }}>
+                      <span className="summary-chip summary-chip-blue">{entry.draft_orders_count} orders</span>
+                      <span className="summary-chip">{formatRelativeTime(entry.resolved_at)}</span>
+                    </div>
+
+                    <div style={{ display: "grid", gap: "0.55rem" }}>
                       {(entry.draft_orders || []).length === 0 && <p>Geen orderdetails beschikbaar</p>}
                       {(entry.draft_orders || []).map((order, orderIdx) => (
-                        <div key={`history-order-${entry.thread_id}-${orderIdx}`} style={{ border: "1px solid #e4e7ec", borderRadius: "8px", padding: "0.6rem" }}>
+                        <div key={`history-order-${entry.thread_id}-${orderIdx}`} className="nested-order-card">
                           <strong>{order.supplier_name || `Leverancier ${orderIdx + 1}`}</strong>
                           {typeof order.ai_recommendation === "string" && order.ai_recommendation.trim() && (
                             <div style={{ marginTop: "0.35rem", color: "#344054", fontSize: "0.9rem" }}>
@@ -566,52 +737,58 @@ function Dashboard() {
                               Reden afwijzing: {entry.rejection_reasons_by_index[orderIdx]}
                             </div>
                           )}
-                          <ul className="list" style={{ marginTop: "0.45rem" }}>
-                            {(order.items || []).length === 0 && <li>Geen items</li>}
+                          <div className="item-pill-row" style={{ marginTop: "0.5rem" }}>
+                            {(order.items || []).length === 0 && <span className="item-pill">Geen items</span>}
                             {(order.items || []).map((item, itemIdx) => (
-                              <li key={`history-order-${entry.thread_id}-${orderIdx}-item-${itemIdx}`}>
-                                {item.product_name || item.product_id || "Onbekend product"} - {item.quantity ?? 0} stuks @ {formatCurrency(item.unit_price)}
-                              </li>
+                              <span key={`history-order-${entry.thread_id}-${orderIdx}-item-${itemIdx}`} className="item-pill">
+                                {item.product_name || item.product_id || "Onbekend product"} x{item.quantity ?? 0} @ {formatCurrency(item.unit_price)}
+                              </span>
                             ))}
-                          </ul>
+                          </div>
                         </div>
                       ))}
                     </div>
-                  </details>
+                  </article>
                 ))}
               </div>
             )}
 
-            <div style={{ display: "grid", gap: "0.8rem" }}>
-              {(state.draft_orders || []).map((order: ProcurementDraftOrder, idx) => (
-                <details key={`draft-${idx}`} className="draft-card">
-                  <summary className="checkpoint-summary">
-                    <span className="checkpoint-title">Actief voorstel: {order.supplier_name || `Leverancier ${idx + 1}`}</span>
-                    <span className="checkpoint-meta">
-                      <span className="summary-chip">
-                        {String(order.source_type || order.order_path || "").toLowerCase().includes("new_release") ? "New Release" : "Reorder"}
-                      </span>
-                      <span className="summary-chip summary-chip-blue">
-                        {formatCurrency(typeof order.total_amount === "number" ? order.total_amount : (order.items || []).reduce((acc, item) => acc + (item.quantity ?? 0) * (item.unit_price ?? 0), 0))}
-                      </span>
+            <div className="info-card-grid info-card-grid-2" style={{ marginTop: "0.8rem" }}>
+              {activeDraftOrders.map((order: ProcurementDraftOrder, idx) => (
+                <article key={`draft-${idx}`} className="info-card">
+                  <div className="info-card-head">
+                    <span className="info-card-title">Actief voorstel: {order.supplier_name || `Leverancier ${idx + 1}`}</span>
+                    <span className="summary-chip">
+                      {classifyDraftOrder(order)}
                     </span>
-                  </summary>
+                  </div>
+
+                  <div className="alert-chip-row" style={{ marginBottom: "0.5rem" }}>
+                    <span className="summary-chip summary-chip-blue">
+                      {formatCurrency(
+                        typeof order.total_amount === "number"
+                          ? order.total_amount
+                          : (order.items || []).reduce((acc, item) => acc + (item.quantity ?? 0) * (item.unit_price ?? 0), 0)
+                      )}
+                    </span>
+                    <span className="summary-chip">{(order.items || []).length} items</span>
+                  </div>
 
                   {order.ai_recommendation && (
-                    <div style={{ marginTop: "0.45rem", color: "#344054", fontSize: "0.92rem" }}>
+                    <div style={{ marginTop: "0.2rem", color: "#344054", fontSize: "0.92rem" }}>
                       Reden voorstel: {order.ai_recommendation}
                     </div>
                   )}
 
-                  <ul className="list" style={{ marginTop: "0.45rem" }}>
-                    {(order.items || []).length === 0 && <li>Geen items</li>}
+                  <div className="item-pill-row" style={{ marginTop: "0.5rem" }}>
+                    {(order.items || []).length === 0 && <span className="item-pill">Geen items</span>}
                     {(order.items || []).map((item, itemIdx) => (
-                      <li key={`draft-${idx}-item-${itemIdx}`}>
-                        {item.product_name || item.product_id || "Onbekend product"} - {item.quantity ?? 0} stuks @ {formatCurrency(item.unit_price)}
-                      </li>
+                      <span key={`draft-${idx}-item-${itemIdx}`} className="item-pill">
+                        {item.product_name || item.product_id || "Onbekend product"} x{item.quantity ?? 0} @ {formatCurrency(item.unit_price)}
+                      </span>
                     ))}
-                  </ul>
-                </details>
+                  </div>
+                </article>
               ))}
             </div>
           </details>

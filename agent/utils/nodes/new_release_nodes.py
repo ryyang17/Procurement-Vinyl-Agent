@@ -7,6 +7,7 @@ from agent.spotify_integration import SpotifyClient
 TOTAL_PROPOSAL_CAP = 15
 RESERVED_NEW_RELEASE_SLOTS = 5
 MAX_REORDER_PROPOSALS = TOTAL_PROPOSAL_CAP
+MAX_NEW_RELEASE_PROPOSALS = RESERVED_NEW_RELEASE_SLOTS
 
 
 def _state_get(state: ProcurementState, key: str, default):
@@ -40,8 +41,9 @@ def market_popularity_node(state: ProcurementState) -> Dict[str, Any]:
             "market_popularity_alerts": [],
         }
 
-    country = getattr(state, "country", "US")
-    market_limit = min(remaining_slots, max(8, int(getattr(state, "limit", 5)) * 2))
+    country = _state_get(state, "country", "US")
+    state_limit = _state_get(state, "limit", 5)
+    market_limit = min(remaining_slots, max(8, int(state_limit) * 2))
     market_popular_albums = spotify_client.get_market_popular_albums(country=country, limit=market_limit)
 
     if not market_popular_albums:
@@ -88,10 +90,11 @@ def detect_new_releases_node(state: ProcurementState) -> Dict[str, Any]:
         print("Globale limiet bereikt via lage-voorraad voorstellen; geen nieuwe releases toevoegen.")
         return {"new_releases": [], "next_action": "find_suppliers"}
 
-    country = getattr(state, "country", "US")
-    limit = min(remaining_slots, getattr(state, "limit", 5))
+    country = _state_get(state, "country", "US")
+    state_limit = int(_state_get(state, "limit", 5) or 5)
+    limit = min(remaining_slots, state_limit, MAX_NEW_RELEASE_PROPOSALS)
     new_releases_raw = spotify_client.get_new_releases(country=country, limit=limit)
-    uncatalogued_popular_albums = getattr(state, "uncatalogued_popular_albums", [])
+    uncatalogued_popular_albums = _state_get(state, "uncatalogued_popular_albums", [])
 
     if not new_releases_raw:
         # Keep market-trending albums as candidates even if Spotify new-release fetch is empty.
@@ -130,12 +133,13 @@ def detect_new_releases_node(state: ProcurementState) -> Dict[str, Any]:
     new_releases = list(by_id.values())
 
     # Keep testing runs predictable by capping candidates.
-    if len(new_releases) > remaining_slots:
+    capped_release_count = min(remaining_slots, MAX_NEW_RELEASE_PROPOSALS)
+    if len(new_releases) > capped_release_count:
         new_releases = sorted(
             new_releases,
             key=lambda r: float(r.get("market_popularity_score", 0) or 0),
             reverse=True,
-        )[:remaining_slots]
+        )[:capped_release_count]
 
     if not new_releases:
         print("Geen nieuwe releases gevonden.")
@@ -149,6 +153,18 @@ def detect_new_releases_node(state: ProcurementState) -> Dict[str, Any]:
         except AttributeError:
             unseen_releases.append(r)
     if not unseen_releases:
+        # Fallback: if all candidates already exist in catalog, still propose top market/new-release
+        # candidates so the approval form always includes up to 5 release-based orders.
+        fallback_candidates = sorted(
+            new_releases,
+            key=lambda r: float(r.get("market_popularity_score", 0) or 0),
+            reverse=True,
+        )[:max(1, min(limit, MAX_NEW_RELEASE_PROPOSALS))]
+
+        if fallback_candidates:
+            print(f"Geen onbekende releases; fallback met {len(fallback_candidates)} markt/release kandidaten.")
+            return {"new_releases": fallback_candidates, "next_action": "create_new_release_orders"}
+
         print("Geen nieuwe, onbekende releases.")
         return {"new_releases": [], "next_action": "end"}
     print(f"{len(unseen_releases)} nieuwe releases gevonden.")
@@ -161,7 +177,27 @@ def create_new_release_orders_node(state: ProcurementState) -> Dict[str, Any]:
     """
     print("📝 CREATE NEW RELEASE ORDERS")
     db = ProcurementDatabase()
-    new_releases = getattr(state, "new_releases", [])
+    new_releases = list(_state_get(state, "new_releases", []) or [])
+    if not new_releases:
+        market_fallback = list(_state_get(state, "market_popular_albums", []) or [])
+        if market_fallback:
+            market_fallback = sorted(
+                market_fallback,
+                key=lambda r: float(r.get("market_popularity_score", 0) or 0),
+                reverse=True,
+            )[:MAX_NEW_RELEASE_PROPOSALS]
+            new_releases = [
+                {
+                    "id": album.get("id"),
+                    "title": album.get("title"),
+                    "artist": album.get("artist"),
+                    "genre": album.get("genre", "Unknown"),
+                    "release_date": album.get("release_date"),
+                    "market_popularity_score": album.get("market_popularity_score"),
+                }
+                for album in market_fallback
+                if album.get("id") and album.get("title")
+            ]
     proposals = []
     draft_orders = []
 
@@ -180,7 +216,8 @@ def create_new_release_orders_node(state: ProcurementState) -> Dict[str, Any]:
         state.clear_path_data("new_releases")
 
     remaining_slots = _remaining_global_slots(state)
-    limited_new_releases = new_releases[:remaining_slots]
+    max_new_release_slots = min(remaining_slots, MAX_NEW_RELEASE_PROPOSALS)
+    limited_new_releases = new_releases[:max_new_release_slots]
 
     for release in limited_new_releases:
         popularity_score = float(release.get("market_popularity_score", 0) or 0)
@@ -203,11 +240,15 @@ def create_new_release_orders_node(state: ProcurementState) -> Dict[str, Any]:
         draft_orders.append({
             "supplier_id": 1,
             "supplier_name": "Spotify Market Suggestion",
+            "source_type": "new_releases",
+            "order_path": "new_releases",
             "items": [{
                 "product_id": release['id'],
                 "product_name": release['title'],
                 "quantity": suggested_qty,
                 "unit_price": 0,
+                "source_type": "new_releases",
+                "order_path": "new_releases",
             }],
             "total_amount": 0,
             "market_popularity_score": popularity_score,
@@ -227,7 +268,8 @@ def create_new_release_orders_node(state: ProcurementState) -> Dict[str, Any]:
                 "category": category,
                 "supplier_id": 1,
                 "artist": release.get('artist', 'Unknown'),
-                "release_date": release.get('release_date')
+                "release_date": release.get('release_date'),
+                "market_popularity_score": popularity_score,
             })
             db.add_inventory({"product_id": added_product['product_id'], "quantity_in_stock": 0, "reorder_level": 5})
         except AttributeError:
@@ -238,11 +280,25 @@ def create_new_release_orders_node(state: ProcurementState) -> Dict[str, Any]:
         if isinstance(state, dict):
             state.setdefault("data", {})
             state["data"]["draft_orders"] = draft_orders
+            state["awaiting_human_approval"] = True
+            state["step"] = "human_approval"
+            state["status"] = "awaiting_approval"
+            state["message"] = (
+                f"{len(draft_orders)} new-release conceptbestelling(en) klaar "
+                "met marktpopulariteit. Wachten op goedkeuring."
+            )
         else:
             for order in draft_orders:
                 state.add_new_release_order(order)
+            state.awaiting_human_approval = True
+            state.step = "human_approval"
+            state.status = "awaiting_approval"
+            state.message = (
+                f"{len(draft_orders)} new-release conceptbestelling(en) klaar "
+                "met marktpopulariteit. Wachten op goedkeuring."
+            )
 
-    print(f"{len(proposals)} ordervoorstellen aangemaakt (max {MAX_REORDER_PROPOSALS}).")
+    print(f"{len(proposals)} ordervoorstellen aangemaakt (max {MAX_NEW_RELEASE_PROPOSALS}).")
     return {"purchase_order_proposals": proposals, "next_action": "human_approval"}
 
 

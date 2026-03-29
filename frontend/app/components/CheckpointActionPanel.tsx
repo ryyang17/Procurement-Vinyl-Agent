@@ -3,12 +3,19 @@
 import { useState } from "react";
 import {
   PendingCheckpointItem,
+  ProcurementAgentState,
+  ProcurementDraftOrder,
   formatCurrency,
 } from "../agent";
 
 type CheckpointActionPanelProps = {
-  checkpoint: PendingCheckpointItem;
-  onSubmitDecision: (
+  checkpoint?: PendingCheckpointItem;
+  state?: ProcurementAgentState;
+  agent?: {
+    setState: (state: ProcurementAgentState) => void;
+    state?: ProcurementAgentState;
+  };
+  onSubmitDecision?: (
     approvedIndices: number[],
     rejectionReasonsByIndex: Record<number, string>
   ) => Promise<void>;
@@ -17,15 +24,99 @@ type CheckpointActionPanelProps = {
 
 export default function CheckpointActionPanel({
   checkpoint,
+  state,
+  agent,
   onSubmitDecision,
   isLoading = false,
 }: CheckpointActionPanelProps) {
+  const NEW_RELEASE_WINDOW_DAYS = 5;
+
+  const parseDate = (raw?: string): Date | null => {
+    if (!raw) return null;
+    const parsed = new Date(raw);
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+  };
+
+  const isRecentRelease = (order: ProcurementDraftOrder): boolean => {
+    const cutoff = new Date(Date.now() - NEW_RELEASE_WINDOW_DAYS * 24 * 60 * 60 * 1000);
+    const firstItem = Array.isArray(order.items) ? order.items[0] : undefined;
+
+    const releaseDate = parseDate(order.release_date || firstItem?.release_date);
+    const createdAt = parseDate(order.created_at || firstItem?.created_at);
+
+    if (releaseDate && releaseDate >= cutoff) return true;
+    if (createdAt && createdAt >= cutoff) return true;
+    return false;
+  };
+  const toOrderTypeSource = (order: ProcurementDraftOrder): string => {
+    const directSource = String(order.source_type || order.order_path || "").toLowerCase();
+    if (directSource) return directSource;
+
+    const firstItem = Array.isArray(order.items) ? order.items[0] : undefined;
+    return String(firstItem?.source_type || firstItem?.order_path || "").toLowerCase();
+  };
+
+  const normalizeDraftOrders = (): ProcurementDraftOrder[] => {
+    if (checkpoint) {
+      return Array.isArray(checkpoint.draft_orders)
+        ? (checkpoint.draft_orders as ProcurementDraftOrder[])
+        : [];
+    }
+
+    const directDraftOrders = Array.isArray(state?.draft_orders)
+      ? (state?.draft_orders as ProcurementDraftOrder[])
+      : [];
+    const nestedDraftOrders = Array.isArray(state?.data?.draft_orders)
+      ? (state?.data?.draft_orders as ProcurementDraftOrder[])
+      : [];
+
+    const mergedDraftOrders = [
+      ...directDraftOrders,
+      ...nestedDraftOrders,
+    ];
+
+    if (mergedDraftOrders.length > 0) {
+      return mergedDraftOrders;
+    }
+
+    const directProposals = Array.isArray(state?.purchase_order_proposals)
+      ? state.purchase_order_proposals
+      : [];
+    const nestedProposals = Array.isArray(state?.data?.purchase_order_proposals)
+      ? state.data.purchase_order_proposals
+      : [];
+    const proposals = [...directProposals, ...nestedProposals] as Array<{
+      product_id?: string;
+      product_name?: string;
+      quantity?: number;
+      market_popularity_score?: number;
+    }>;
+
+    return proposals.map((proposal) => ({
+      supplier_id: 1,
+      supplier_name: "Spotify Market Suggestion",
+      source_type: "new_releases",
+      order_path: "new_releases",
+      total_amount: 0,
+      market_popularity_score: proposal.market_popularity_score,
+      ai_recommendation: "Inkoop gebaseerd op nieuwe release detectie.",
+      items: [{
+        product_id: proposal.product_id,
+        product_name: proposal.product_name,
+        quantity: proposal.quantity,
+        unit_price: 0,
+        source_type: "new_releases",
+        order_path: "new_releases",
+      }],
+    }));
+  };
+
   const [localApprovals, setLocalApprovals] = useState<Record<number, boolean>>({});
   const [localRejectionReasons, setLocalRejectionReasons] = useState<Record<number, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const draftOrders = checkpoint.draft_orders || [];
+  const draftOrders = normalizeDraftOrders();
 
   const parseAiRecommendation = (raw: unknown): { supplier?: string; reason: string } | null => {
     if (!raw) return null;
@@ -41,11 +132,43 @@ export default function CheckpointActionPanel({
     return { supplier, reason };
   };
 
+  const getOrderType = (order: ProcurementDraftOrder): "New Release" | "Reorder" => {
+    const source = toOrderTypeSource(order);
+    const recommendation = String(order.ai_recommendation || "").toLowerCase();
+    const supplierName = String(order.supplier_name || "").toLowerCase();
+
+    if (
+      source.includes("new_release") ||
+      source.includes("new_releases") ||
+      supplierName.includes("spotify market suggestion") ||
+      recommendation.includes("nieuwe release") ||
+      recommendation.includes("spotify") ||
+      typeof order.market_popularity_score === "number" ||
+      isRecentRelease(order)
+    ) {
+      return "New Release";
+    }
+    return "Reorder";
+  };
+
+  const getOrderSourceLabel = (order: ProcurementDraftOrder): string => {
+    const orderType = getOrderType(order);
+    if (orderType === "New Release") {
+      return "Bron: Spotify/Markttrend";
+    }
+    return "Bron: Lage voorraad";
+  };
+
   // Bepaal checkpoint type op basis van step/status
   const isApprovalCheckpoint =
-    checkpoint.step === "awaiting_human_input" || 
-    checkpoint.status === "awaiting_approval" ||
-    checkpoint.message?.toLowerCase().includes("bestellingen");
+    (checkpoint?.step === "awaiting_human_input" || 
+    checkpoint?.status === "awaiting_approval" ||
+    checkpoint?.message?.toLowerCase().includes("bestellingen")) ||
+    (state?.awaiting_human_approval === true || 
+    state?.step === "human_approval" ||
+    state?.step === "create_purchase_order" ||
+    state?.status === "awaiting_approval" ||
+    state?.status === "awaiting_human_approval");
   
   const handleToggleApproval = (index: number) => {
     setLocalApprovals((prev) => {
@@ -82,7 +205,19 @@ export default function CheckpointActionPanel({
         .filter(([, approved]) => approved)
         .map(([idx]) => parseInt(idx, 10));
 
-      await onSubmitDecision(approvedIndices, localRejectionReasons);
+      if (onSubmitDecision) {
+        await onSubmitDecision(approvedIndices, localRejectionReasons);
+      } else if (agent && state) {
+        agent.setState({
+          ...state,
+          approval_order_indices: approvedIndices,
+          rejection_reasons_by_index: localRejectionReasons,
+          awaiting_human_approval: false,
+          approval_decision: approvedIndices.length > 0 ? "approved" : "rejected",
+          next_action: "end",
+          approved_by: "manager",
+        });
+      }
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       setSubmitError(message);
@@ -120,6 +255,11 @@ export default function CheckpointActionPanel({
       >
         <h4 style={{ marginTop: 0, marginBottom: "0.8rem", color: "#b30000" }}>
           Goedkeuring Vereist
+          {draftOrders.length > 0 && draftOrders.every(o => getOrderType(o) === "New Release") && (
+            <span style={{ fontSize: "0.75rem", marginLeft: "0.5rem", backgroundColor: "#fef3c7", padding: "0.2rem 0.6rem", borderRadius: "3px" }}>
+              🎵 Nieuwe Releases
+            </span>
+          )}
         </h4>
 
         {submitError && (
@@ -129,7 +269,7 @@ export default function CheckpointActionPanel({
         )}
 
         {draftOrders.length === 0 ? (
-          <p>Geen bestellingen in deze checkpoint.</p>
+          <p>Geen bestellingen beschikbaar.</p>
         ) : (
           <div style={{ display: "grid", gap: "0.8rem", marginBottom: "1rem" }}>
             {draftOrders.map((order, idx) => {
@@ -137,6 +277,10 @@ export default function CheckpointActionPanel({
               const hasRejectionReason = Boolean(localRejectionReasons[idx]);
               const recommendation = parseAiRecommendation(order.ai_recommendation);
               const displaySupplier = recommendation?.supplier || order.supplier_name || `Leverancier ${idx + 1}`;
+              const orderType = getOrderType(order);
+              const orderSourceLabel = getOrderSourceLabel(order);
+              const totalAmount = typeof order.total_amount === "number" ? order.total_amount : 0;
+
               return (
                 <div
                   key={`checkpoint-order-${idx}`}
@@ -160,11 +304,20 @@ export default function CheckpointActionPanel({
                     />
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <strong>{displaySupplier}</strong>
-                      {typeof order.total_amount === "number" && (
-                        <span style={{ marginLeft: "1rem", color: "#666" }}>
-                          Totaal: {formatCurrency(order.total_amount)}
+                      <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", marginTop: "0.3rem", fontSize: "0.85rem" }}>
+                        <span style={{ backgroundColor: orderType === "New Release" ? "#fef3c7" : "#e0e7ff", padding: "0.2rem 0.5rem", borderRadius: "3px", fontWeight: 700 }}>
+                          {orderType}
                         </span>
-                      )}
+                        <span style={{ backgroundColor: "#f3f4f6", padding: "0.2rem 0.5rem", borderRadius: "3px" }}>
+                          {orderSourceLabel}
+                        </span>
+                        <span style={{ backgroundColor: "#f3f4f6", padding: "0.2rem 0.5rem", borderRadius: "3px" }}>
+                          {(order.items || []).length} items
+                        </span>
+                        <span style={{ backgroundColor: "#dbeafe", padding: "0.2rem 0.5rem", borderRadius: "3px" }}>
+                          {formatCurrency(totalAmount)}
+                        </span>
+                      </div>
                     </div>
                     <span
                       style={{
@@ -173,22 +326,14 @@ export default function CheckpointActionPanel({
                         borderRadius: "4px",
                         backgroundColor: isApproved ? "#5cb85c" : hasRejectionReason ? "#b42318" : "#e4e7ec",
                         color: isApproved || hasRejectionReason ? "white" : "#333",
+                        whiteSpace: "nowrap",
                       }}
                     >
-                      {isApproved ? "✓ Goedgekeurd" : hasRejectionReason ? "✗ Afgewezen" : "⊗ Geen keuze"}
+                      {isApproved ? "✓ Goed" : hasRejectionReason ? "✗ Afg" : "⊗ Geen"}
                     </span>
                   </div>
-                  {Array.isArray(order.items) && (order.items as Array<{ product_name?: string; product_id?: string; quantity?: number; unit_price?: number }>).length > 0 && (
-                    <ul style={{ marginBottom: "0.6rem", marginLeft: "2rem", fontSize: "0.9rem", margin: 0 }}>
-                      {(order.items as Array<{ product_name?: string; product_id?: string; quantity?: number; unit_price?: number }>).map((item, itemIdx) => (
-                        <li key={`checkpoint-order-${idx}-item-${itemIdx}`}>
-                          {item.product_name || item.product_id || "Onbekend product"} — {item.quantity ?? 0} stuks @{" "}
-                          {formatCurrency(item.unit_price ?? 0)}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {recommendation && (
+
+                  {order.ai_recommendation && (
                     <div
                       style={{
                         marginBottom: "0.6rem",
@@ -199,21 +344,22 @@ export default function CheckpointActionPanel({
                         backgroundColor: "#f8fafc",
                         color: "#344054",
                         fontSize: "0.9rem",
-                        lineHeight: 1.5,
-                        whiteSpace: "normal",
-                        overflowWrap: "anywhere",
-                        wordBreak: "break-word",
                       }}
                     >
-                      <strong>AI aanbeveling</strong>
-                      <div style={{ marginTop: "0.25rem" }}>
-                        Leverancier: <strong>{displaySupplier}</strong>
-                      </div>
-                      <div style={{ marginTop: "0.25rem" }}>
-                        Reden: {recommendation.reason}
-                      </div>
+                      <strong>Reden voorstel:</strong> {order.ai_recommendation}
                     </div>
                   )}
+
+                  {Array.isArray(order.items) && (order.items as Array<{ product_name?: string; product_id?: string; quantity?: number; unit_price?: number }>).length > 0 && (
+                    <ul style={{ marginBottom: "0.6rem", marginLeft: "2rem", fontSize: "0.9rem", margin: 0, paddingLeft: "1.5rem" }}>
+                      {(order.items as Array<{ product_name?: string; product_id?: string; quantity?: number; unit_price?: number }>).map((item, itemIdx) => (
+                        <li key={`checkpoint-order-${idx}-item-${itemIdx}`}>
+                          {item.product_name || item.product_id || "Onbekend product"} — {item.quantity ?? 0} stuks @ {formatCurrency(item.unit_price ?? 0)}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
                   {!isApproved && (
                     <textarea
                       placeholder="Optioneel: Reden voor afwijzing..."
@@ -227,7 +373,7 @@ export default function CheckpointActionPanel({
                         fontSize: "0.9rem",
                         borderRadius: "4px",
                         border: "1px solid #ccc",
-                        fontFamily: "monospace",
+                        fontFamily: "inherit",
                         resize: "vertical",
                         minHeight: "60px",
                       }}
@@ -238,6 +384,7 @@ export default function CheckpointActionPanel({
             })}
           </div>
         )}
+
         <button
           type="submit"
           disabled={submitting || isLoading || (draftOrders.length > 0 && !allOrdersHaveDecision)}
@@ -249,14 +396,14 @@ export default function CheckpointActionPanel({
             borderRadius: "6px",
             fontWeight: "bold",
             cursor: submitting || isLoading ? "not-allowed" : "pointer",
-            opacity: submitting || isLoading ? 0.6 : 1,
+            opacity: submitting || isLoading || (draftOrders.length > 0 && !allOrdersHaveDecision) ? 0.6 : 1,
           }}
         >
           {submitting
             ? "Verwerken..."
             : draftOrders.length === 0
-              ? "Verwijder deze checkpoint"
-              : "📋 Plaatsen Bestelling"}
+              ? "Geen bestellingen"
+              : "📋 Beslissing Afronden"}
         </button>
 
         {draftOrders.length > 0 && !allOrdersHaveDecision && (
@@ -284,18 +431,38 @@ export default function CheckpointActionPanel({
       </h4>
 
       <p style={{ marginBottom: "1rem", fontSize: "0.95rem", color: "#344054" }}>
-        {checkpoint.message || "Voorstel gereed voor verwerking."}
+        {checkpoint?.message || state?.message || "Voorstel gereed voor verwerking."}
       </p>
 
-      {(draftOrders || []).length > 0 && (
-        <div style={{ marginBottom: "1rem", maxHeight: "200px", overflowY: "auto" }}>
-          {(draftOrders || []).map((order, idx) => (
-            <div key={`proposal-order-${idx}`} style={{ fontSize: "0.9rem", marginBottom: "0.5rem", color: "#555" }}>
-              <strong>{order.supplier_name || `Voorstel ${idx + 1}`}</strong> — {"{"}
-              {String(order.ai_recommendation || "Geen reden")}
-              {"}"}
-            </div>
-          ))}
+      {draftOrders.length > 0 && (
+        <div style={{ marginBottom: "1rem", maxHeight: "200px", overflowY: "auto", fontSize: "0.9rem" }}>
+          {draftOrders.map((order, idx) => {
+            const orderType = getOrderType(order);
+            const orderSourceLabel = getOrderSourceLabel(order);
+            return (
+              <div key={`proposal-order-${idx}`} style={{ marginBottom: "0.5rem", color: "#555" }}>
+                <strong>{order.supplier_name || `Voorstel ${idx + 1}`}</strong>
+                <span
+                  style={{
+                    marginLeft: "0.5rem",
+                    backgroundColor: orderType === "New Release" ? "#fef3c7" : "#e0e7ff",
+                    padding: "0.15rem 0.45rem",
+                    borderRadius: "3px",
+                    fontWeight: 700,
+                    color: "#111827",
+                  }}
+                >
+                  {orderType}
+                </span>
+                <span style={{ marginLeft: "0.4rem", fontSize: "0.8rem", color: "#475467" }}>{orderSourceLabel}</span>
+                {order.ai_recommendation && (
+                  <div style={{ fontSize: "0.85rem", marginTop: "0.25rem", color: "#666" }}>
+                    → {String(order.ai_recommendation).substring(0, 60)}...
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
 

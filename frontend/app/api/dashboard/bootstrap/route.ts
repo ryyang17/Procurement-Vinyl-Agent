@@ -24,6 +24,14 @@ type Product = {
   name?: string;
 };
 
+type PurchaseOrderItem = {
+  purchase_order_item_id?: number;
+  purchase_order_id?: number;
+  product_id?: number;
+  quantity?: number;
+  unit_price?: number;
+};
+
 type Supplier = {
   supplier_id?: number;
   name?: string;
@@ -38,6 +46,19 @@ type PurchaseOrder = {
   delivery_date?: string;
   total_amount?: number;
   approved_by?: string;
+};
+
+type ApprovedOrderSummary = {
+  order_id?: number;
+  supplier_id?: number;
+  supplier_name?: string;
+  status?: string;
+  order_date?: string;
+  expected_delivery_date?: string;
+  delivery_date?: string;
+  total_amount?: number;
+  approved_by?: string;
+  album_names?: string[];
 };
 
 type SupplierPerformance = {
@@ -125,7 +146,7 @@ function normalizeSuppliers(raw: Supplier[] | LooseObject): Supplier[] {
   return [];
 }
 
-function buildApprovedOrders(orders: PurchaseOrder[], suppliers: Supplier[]) {
+function buildApprovedOrders(orders: PurchaseOrder[], suppliers: Supplier[]): ApprovedOrderSummary[] {
   const supplierNameById = new Map<number, string>();
   for (const supplier of suppliers) {
     if (typeof supplier.supplier_id === "number") {
@@ -155,6 +176,48 @@ function buildApprovedOrders(orders: PurchaseOrder[], suppliers: Supplier[]) {
       total_amount: order.total_amount,
       approved_by: order.approved_by,
     }));
+}
+
+function enrichApprovedOrdersWithAlbums(
+  approvedOrders: ApprovedOrderSummary[],
+  purchaseOrderItems: PurchaseOrderItem[],
+  products: Product[]
+): ApprovedOrderSummary[] {
+  const productNameById = new Map<number, string>();
+  for (const product of products) {
+    if (typeof product.product_id === "number") {
+      productNameById.set(product.product_id, product.name || `Product ${product.product_id}`);
+    }
+  }
+
+  const albumsByOrderId = new Map<number, string[]>();
+  for (const item of purchaseOrderItems || []) {
+    if (typeof item.purchase_order_id !== "number" || typeof item.product_id !== "number") continue;
+    const title = productNameById.get(item.product_id) || `Product ${item.product_id}`;
+    const qty = typeof item.quantity === "number" && Number.isFinite(item.quantity) ? item.quantity : undefined;
+    const label = typeof qty === "number" ? `${title} x${qty}` : title;
+
+    const current = albumsByOrderId.get(item.purchase_order_id);
+    if (!current) {
+      albumsByOrderId.set(item.purchase_order_id, [label]);
+      continue;
+    }
+
+    if (!current.includes(label)) {
+      current.push(label);
+    }
+  }
+
+  return approvedOrders.map((order) => {
+    if (typeof order.order_id !== "number") {
+      return { ...order, album_names: [] };
+    }
+
+    return {
+      ...order,
+      album_names: albumsByOrderId.get(order.order_id) || [],
+    };
+  });
 }
 
 function buildSupplierOffersFromPerformance(performanceRows: SupplierPerformance[], suppliers: Supplier[]) {
@@ -190,17 +253,22 @@ function buildSupplierOffersFromPerformance(performanceRows: SupplierPerformance
 }
 
 async function localBootstrapPayload() {
-  const [sales, products, orders, rawSuppliers, supplierPerformance] = await Promise.all([
+  const [sales, products, orders, rawSuppliers, supplierPerformance, purchaseOrderItems] = await Promise.all([
     readJson<SalesEvent[]>("sales.json"),
     readJson<Product[]>("product.json"),
     readJson<PurchaseOrder[]>("purchase_order.json"),
     readJson<Supplier[] | LooseObject>("supplier.json"),
     readJson<SupplierPerformance[]>("supplier_performance.json"),
+    readJson<PurchaseOrderItem[]>("purchase_order_item.json"),
   ]);
 
   const suppliers = normalizeSuppliers(rawSuppliers);
   const salesVelocityForecasts = buildSalesVelocityForecasts(sales || [], products || []);
-  const approvedOrders = buildApprovedOrders(orders || [], suppliers);
+  const approvedOrders = enrichApprovedOrdersWithAlbums(
+    buildApprovedOrders(orders || [], suppliers),
+    purchaseOrderItems || [],
+    products || []
+  );
   const supplierOffers = buildSupplierOffersFromPerformance(supplierPerformance || [], suppliers);
 
   return {
@@ -226,7 +294,29 @@ export async function GET() {
 
     if (response.ok) {
       const text = await response.text();
-      const payload = text ? JSON.parse(text) : {};
+      const payload = (text ? JSON.parse(text) : {}) as LooseObject;
+
+      // Enrich approved orders with album names when upstream payload does not include them.
+      const approved = Array.isArray(payload.approved_orders) ? (payload.approved_orders as ApprovedOrderSummary[]) : [];
+      const hasAlbumNames = approved.some((order) => Array.isArray(order.album_names) && order.album_names.length > 0);
+
+      if (!hasAlbumNames && approved.length > 0) {
+        try {
+          const [products, purchaseOrderItems] = await Promise.all([
+            readJson<Product[]>("product.json"),
+            readJson<PurchaseOrderItem[]>("purchase_order_item.json"),
+          ]);
+
+          payload.approved_orders = enrichApprovedOrdersWithAlbums(
+            approved,
+            purchaseOrderItems || [],
+            products || []
+          );
+        } catch {
+          // Keep upstream payload if local enrichment fails.
+        }
+      }
+
       return NextResponse.json(payload, { status: 200 });
     }
 

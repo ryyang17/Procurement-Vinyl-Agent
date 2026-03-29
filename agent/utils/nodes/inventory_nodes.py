@@ -8,6 +8,30 @@ RESERVED_NEW_RELEASE_SLOTS = 5
 MAX_REORDER_PROPOSALS = max(1, TOTAL_PROPOSAL_CAP - RESERVED_NEW_RELEASE_SLOTS)
 
 
+NEW_RELEASE_WINDOW_DAYS = 5
+
+
+def _parse_iso_datetime(raw_value):
+    if not raw_value:
+        return None
+    try:
+        return datetime.fromisoformat(str(raw_value).replace('Z', '+00:00')).replace(tzinfo=None)
+    except (ValueError, TypeError):
+        return None
+
+
+def _is_recent_new_release(product: dict) -> bool:
+    cutoff = datetime.now() - timedelta(days=NEW_RELEASE_WINDOW_DAYS)
+    release_dt = _parse_iso_datetime(product.get('release_date'))
+    created_dt = _parse_iso_datetime(product.get('created_at'))
+
+    if release_dt and release_dt >= cutoff:
+        return True
+    if created_dt and created_dt >= cutoff:
+        return True
+    return False
+
+
 def _normalize_path_choice(path_choice: str | None) -> str | None:
     if path_choice is None:
         return None
@@ -86,13 +110,17 @@ def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
                     reorder_qty=reorder_qty,
                     min_threshold=min_qty
                 ))
+                is_recent_release = _is_recent_new_release(prod)
                 proposal_dicts.append({
                     **proposals[-1].model_dump(),
                     'product_id': product_id,
                     'category': prod.get('category', 'Unknown'),
-                    'source_type': 'inventory_low_stock',
+                    'source_type': 'new_releases' if is_recent_release else 'inventory_low_stock',
+                    'order_path': 'new_releases' if is_recent_release else 'suppliers',
                     'reorder_basis': 'sales_velocity' if str(product_id) in dynamic_levels else 'static_threshold',
                     'created_at': prod.get('created_at'),
+                    'release_date': prod.get('release_date'),
+                    'market_popularity_score': prod.get('market_popularity_score'),
                 })
                 seen_product_ids.add(product_id)
 
@@ -146,7 +174,8 @@ def daily_inventory_check_node(state: ProcurementState) -> ProcurementState:
 
         # Update UI helper fields for display
         state.inventory_alerts = [
-            f"{p.product_name} [{proposal_dicts[i].get('category', 'Unknown')}] - {p.current_qty} op voorraad (min {p.min_threshold}), voorstel {p.reorder_qty} (Inventory)"
+            f"{p.product_name} [{proposal_dicts[i].get('category', 'Unknown')}] - {p.current_qty} op voorraad (min {p.min_threshold}), voorstel {p.reorder_qty} "
+            f"({'New Release' if proposal_dicts[i].get('source_type') == 'new_releases' else 'Inventory'})"
             for i, p in enumerate(proposals)
         ]
 

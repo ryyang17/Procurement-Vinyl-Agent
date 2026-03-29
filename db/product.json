@@ -588,5 +588,230 @@
     "release_date": "2026-03-27",
     "product_id": 61,
     "created_at": "2026-03-27T10:18:34.438499"
+  },
+  {
+    "id": "4klopFVbccP5iM2NG3IUXT",
+    "name": "A WHITE VALENTINE CONCERT",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "ANH TRAI \"SAY HI\"",
+    "release_date": "2026-03-29",
+    "product_id": 62,
+    "created_at": "2026-03-29T22:36:42.870066"
+  },
+  {
+    "id": "1HhYxpCEC7fcbNPbLOTJeu",
+    "name": "לא לחינם",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Ishay Ribo",
+    "release_date": "2026-03-29",
+    "product_id": 63,
+    "created_at": "2026-03-29T22:36:42.874088"
+  },
+  {
+    "id": "3ukkRHDHbN8tNRPKsGZR1h",
+    "name": "ARIRANG",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "BTS",
+    "release_date": "2026-03-20",
+    "product_id": 64,
+    "created_at": "2026-03-29T22:36:42.877069"
+  },
+  {
+    "id": "5poA9SAx0Xiz1cf17fWBLS",
+    "name": "BULLY",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Kanye West, Ye",
+    "release_date": "2026-03-28",
+    "product_id": 65,
+    "created_at": "2026-03-29T22:36:42.879144"
+  },
+  {
+    "id": "4w6hrJBHXEpFvKg6bwyzSi",
+    "name": "ÁNH SÁNG • MÀN ĐÊM (side A)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "GREY D",
+    "release_date": "2026-03-29",
+    "product_id": 66,
+    "created_at": "2026-03-29T22:36:42.880893"
+  },
+  {
+    "id": "2qbzHAhrFsrqfbRQdZlXUL",
+    "name": "Yreedon Methlah",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Hussain Aljassmi",
+    "release_date": "2026-03-28",
+    "product_id": 67,
+    "created_at": "2026-03-29T22:58:28.793979"
+  },
+  {
+    "id": "7LxWCSwZmLOVn3y6S1Sc5a",
+    "name": "Desde que te vi (En Vivo)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Corazón Serrano",
+    "release_date": "2026-03-28",
+    "product_id": 68,
+    "created_at": "2026-03-29T22:58:28.808243"
+  },
+  {
+    "id": "4klopFVbccP5iM2NG3IUXT",
+    "name": "A WHITE VALENTINE CONCERT",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "ANH TRAI \"SAY HI\"",
+    "release_date": "2026-03-29",
+    "product_id": 69,
+    "created_at": "2026-03-29T23:13:04.160064"
+  },
+  {
+    "id": "1HhYxpCEC7fcbNPbLOTJeu",
+    "name": "לא לחינם",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Ishay Ribo",
+    "release_date": "2026-03-29",
+    "product_id": 70,
+    "created_at": "2026-03-29T23:13:04.163688"
+  },
+  {
+    "id": "4w6hrJBHXEpFvKg6bwyzSi",
+    "name": "ÁNH SÁNG • MÀN ĐÊM (side A)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "GREY D",
+    "release_date": "2026-03-29",
+    "product_id": 71,
+    "created_at": "2026-03-29T23:13:04.165456"
+  },
+  {
+    "id": "2qbzHAhrFsrqfbRQdZlXUL",
+    "name": "Yreedon Methlah",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Hussain Aljassmi",
+    "release_date": "2026-03-28",
+    "product_id": 72,
+    "created_at": "2026-03-29T23:13:04.167493"
+  },
+  {
+    "id": "7LxWCSwZmLOVn3y6S1Sc5a",
+    "name": "Desde que te vi (En Vivo)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Corazón Serrano",
+    "release_date": "2026-03-28",
+    "product_id": 73,
+    "created_at": "2026-03-29T23:13:04.169738"
+  },
+  {
+    "id": "4klopFVbccP5iM2NG3IUXT",
+    "name": "A WHITE VALENTINE CONCERT",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "ANH TRAI \"SAY HI\"",
+    "release_date": "2026-03-29",
+    "product_id": 74,
+    "created_at": "2026-03-29T23:21:18.244840"
+  },
+  {
+    "id": "1HhYxpCEC7fcbNPbLOTJeu",
+    "name": "לא לחינם",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Ishay Ribo",
+    "release_date": "2026-03-29",
+    "product_id": 75,
+    "created_at": "2026-03-29T23:21:18.247772"
+  },
+  {
+    "id": "4w6hrJBHXEpFvKg6bwyzSi",
+    "name": "ÁNH SÁNG • MÀN ĐÊM (side A)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "GREY D",
+    "release_date": "2026-03-29",
+    "product_id": 76,
+    "created_at": "2026-03-29T23:21:18.249915"
+  },
+  {
+    "id": "2qbzHAhrFsrqfbRQdZlXUL",
+    "name": "Yreedon Methlah",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Hussain Aljassmi",
+    "release_date": "2026-03-28",
+    "product_id": 77,
+    "created_at": "2026-03-29T23:21:18.251831"
+  },
+  {
+    "id": "7LxWCSwZmLOVn3y6S1Sc5a",
+    "name": "Desde que te vi (En Vivo)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Corazón Serrano",
+    "release_date": "2026-03-28",
+    "product_id": 78,
+    "created_at": "2026-03-29T23:21:18.254275"
+  },
+  {
+    "id": "4klopFVbccP5iM2NG3IUXT",
+    "name": "A WHITE VALENTINE CONCERT",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "ANH TRAI \"SAY HI\"",
+    "release_date": "2026-03-29",
+    "market_popularity_score": 0.0,
+    "product_id": 79,
+    "created_at": "2026-03-29T23:31:45.363325"
+  },
+  {
+    "id": "1HhYxpCEC7fcbNPbLOTJeu",
+    "name": "לא לחינם",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Ishay Ribo",
+    "release_date": "2026-03-29",
+    "market_popularity_score": 0.0,
+    "product_id": 80,
+    "created_at": "2026-03-29T23:31:45.367008"
+  },
+  {
+    "id": "4w6hrJBHXEpFvKg6bwyzSi",
+    "name": "ÁNH SÁNG • MÀN ĐÊM (side A)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "GREY D",
+    "release_date": "2026-03-29",
+    "market_popularity_score": 0.0,
+    "product_id": 81,
+    "created_at": "2026-03-29T23:31:45.369337"
+  },
+  {
+    "id": "2qbzHAhrFsrqfbRQdZlXUL",
+    "name": "Yreedon Methlah",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Hussain Aljassmi",
+    "release_date": "2026-03-28",
+    "market_popularity_score": 0.0,
+    "product_id": 82,
+    "created_at": "2026-03-29T23:31:45.372203"
+  },
+  {
+    "id": "7LxWCSwZmLOVn3y6S1Sc5a",
+    "name": "Desde que te vi (En Vivo)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Corazón Serrano",
+    "release_date": "2026-03-28",
+    "market_popularity_score": 0.0,
+    "product_id": 83,
+    "created_at": "2026-03-29T23:31:45.374094"
   }
 ]

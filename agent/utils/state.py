@@ -59,14 +59,22 @@ class ProcurementState(BaseModel):
 
     def add_supplier_order(self, order: Dict[str, Any]):
         """Add an order from supplier path, ensuring proper source tracking."""
-        order_with_source = {**order, "source_type": "inventory_low_stock", "order_path": "suppliers"}
+        order_with_source = {
+            **order,
+            "source_type": order.get("source_type", "inventory_low_stock"),
+            "order_path": order.get("order_path", "suppliers"),
+        }
         if "draft_orders" not in self.data:
             self.data["draft_orders"] = []
         self.data["draft_orders"].append(order_with_source)
 
     def add_new_release_order(self, order: Dict[str, Any]):
         """Add an order from new release path, ensuring proper source tracking."""
-        order_with_source = {**order, "source_type": "new_release_spotify", "order_path": "new_releases"}
+        order_with_source = {
+            **order,
+            "source_type": order.get("source_type", "new_release_spotify"),
+            "order_path": order.get("order_path", "new_releases"),
+        }
         if "draft_orders" not in self.data:
             self.data["draft_orders"] = []
         self.data["draft_orders"].append(order_with_source)
