@@ -538,5 +538,55 @@
     "release_date": "2026-03-25",
     "product_id": 56,
     "created_at": "2026-03-25T11:14:11.279554"
+  },
+  {
+    "id": "3ZN01xzenGMhWHdC5kfAe9",
+    "name": "THIS MUSIC MAY CONTAIN HOPE.",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "RAYE",
+    "release_date": "2026-03-27",
+    "product_id": 57,
+    "created_at": "2026-03-27T10:18:34.387385"
+  },
+  {
+    "id": "7jwikgbD6e5Oht9gJzaR3l",
+    "name": "HADES",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Melanie Martinez",
+    "release_date": "2026-03-27",
+    "product_id": 58,
+    "created_at": "2026-03-27T10:18:34.407284"
+  },
+  {
+    "id": "0jwalP0wios13VlRWKILbC",
+    "name": "Nalguita y Teta",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Neton Vega",
+    "release_date": "2026-03-27",
+    "product_id": 59,
+    "created_at": "2026-03-27T10:18:34.420696"
+  },
+  {
+    "id": "2ivbRaW10BVYVDTGRGDW6p",
+    "name": "Whatever's Clever!",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Charlie Puth",
+    "release_date": "2026-03-27",
+    "product_id": 60,
+    "created_at": "2026-03-27T10:18:34.429965"
+  },
+  {
+    "id": "5wQV2yzSVcLdvVCRyTqAiV",
+    "name": "Up Out & Gone",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Ne-Yo",
+    "release_date": "2026-03-27",
+    "product_id": 61,
+    "created_at": "2026-03-27T10:18:34.438499"
   }
 ]

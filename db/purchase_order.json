@@ -444,27 +444,30 @@
     "supplier_id": 9,
     "order_date": "2026-03-20T10:06:49.143913",
     "expected_delivery_date": "2026-03-27T10:06:49.143904",
-    "status": "approved",
+    "status": "delivered",
     "total_amount": 1490.5,
-    "approved_by": "test_manager"
+    "approved_by": "test_manager",
+    "delivery_date": "2026-03-27T10:18:13.341153"
   },
   {
     "purchase_order_id": 46,
     "supplier_id": 14,
     "order_date": "2026-03-20T10:19:59.671453",
     "expected_delivery_date": "2026-03-27T10:19:59.671446",
-    "status": "approved",
+    "status": "delivered",
     "total_amount": 1280.0,
-    "approved_by": "test_manager"
+    "approved_by": "test_manager",
+    "delivery_date": "2026-03-27T10:18:13.341245"
   },
   {
     "purchase_order_id": 47,
     "supplier_id": 18,
     "order_date": "2026-03-20T12:00:10.594091",
     "expected_delivery_date": "2026-03-27T12:00:10.594083",
-    "status": "approved",
+    "status": "delivered",
     "total_amount": 1480.0,
-    "approved_by": "test_manager"
+    "approved_by": "test_manager",
+    "delivery_date": "2026-03-27T10:18:13.341300"
   },
   {
     "purchase_order_id": 48,
