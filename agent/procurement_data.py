@@ -2,9 +2,12 @@ import json
 import os
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
+from copy import deepcopy
 
 class ProcurementDatabase:
     """Database helper class for managing procurement data from JSON files"""
+
+    _json_cache: Dict[str, Dict[str, Any]] = {}
 
     def __init__(self):
         self.db_path = os.path.join(os.path.dirname(__file__), '../db')
@@ -12,14 +15,39 @@ class ProcurementDatabase:
     def load_json(self, filename: str) -> List[Dict[str, Any]]:
         """Load data from JSON file"""
         file_path = os.path.join(self.db_path, filename)
+
+        try:
+            mtime = os.path.getmtime(file_path)
+        except OSError:
+            mtime = None
+
+        cached = self._json_cache.get(file_path)
+        if cached and cached.get('mtime') == mtime:
+            return deepcopy(cached['data'])
+
         with open(file_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            data = json.load(f)
+
+        self._json_cache[file_path] = {
+            'mtime': mtime,
+            'data': deepcopy(data),
+        }
+        return data
 
     def save_json(self, filename: str, data: List[Dict[str, Any]]) -> None:
         """Save data to JSON file"""
         file_path = os.path.join(self.db_path, filename)
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
+
+        try:
+            mtime = os.path.getmtime(file_path)
+        except OSError:
+            mtime = None
+        self._json_cache[file_path] = {
+            'mtime': mtime,
+            'data': deepcopy(data),
+        }
 
     def get_inventory(self) -> List[Dict[str, Any]]:
         """Get all inventory items"""

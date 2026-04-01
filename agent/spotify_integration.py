@@ -1,15 +1,21 @@
 import os
 import time
 from datetime import datetime, timezone
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 
 
 class SpotifyClient:
+    _shared_access_token = None
+    _shared_token_expires_at = 0
+    _shared_artist_profile_cache = {}
+
     def __init__(self):
         self.client_id = os.getenv("SPOTIFY_CLIENT_ID")
         self.client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
         self.base_url = "https://api.spotify.com/v1"
         self.token_url = "https://accounts.spotify.com/api/token"
+        self._session = requests.Session()
 
         if not self.client_id or not self.client_secret:
             raise ValueError(
@@ -21,10 +27,13 @@ class SpotifyClient:
 
     def _get_access_token(self) -> str:
         # Reuse token until shortly before expiry
-        if self._access_token and time.time() < (self._token_expires_at - 30):
+        now = time.time()
+        if SpotifyClient._shared_access_token and now < (SpotifyClient._shared_token_expires_at - 30):
+            return SpotifyClient._shared_access_token
+        if self._access_token and now < (self._token_expires_at - 30):
             return self._access_token
 
-        response = requests.post(
+        response = self._session.post(
             self.token_url,
             data={"grant_type": "client_credentials"},
             auth=(self.client_id, self.client_secret),
@@ -36,7 +45,41 @@ class SpotifyClient:
         self._access_token = token_data["access_token"]
         expires_in = token_data.get("expires_in", 3600)
         self._token_expires_at = time.time() + expires_in
+
+        SpotifyClient._shared_access_token = self._access_token
+        SpotifyClient._shared_token_expires_at = self._token_expires_at
         return self._access_token
+
+    def _get_artist_profiles_map(self, artist_ids, token: str):
+        profiles = {}
+        missing = []
+
+        for artist_id in artist_ids:
+            if not artist_id:
+                continue
+            cached = SpotifyClient._shared_artist_profile_cache.get(artist_id)
+            if cached:
+                profiles[artist_id] = cached
+                continue
+            missing.append(artist_id)
+
+        if missing:
+            max_workers = min(8, len(missing))
+            with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                future_map = {
+                    executor.submit(self._get_artist_profile, artist_id, token): artist_id
+                    for artist_id in missing
+                }
+                for future in as_completed(future_map):
+                    artist_id = future_map[future]
+                    try:
+                        profile = future.result()
+                    except Exception:
+                        profile = {"genres": [], "popularity": None}
+                    SpotifyClient._shared_artist_profile_cache[artist_id] = profile
+                    profiles[artist_id] = profile
+
+        return profiles
 
     def get_new_releases(self, country="US", limit=5):
         token = self._get_access_token()
@@ -58,11 +101,18 @@ class SpotifyClient:
 
             # response structure for search is { "albums": { "items": [...] } }
             albums = response.json().get("albums", {}).get("items", [])
+            artist_ids = []
+            for album in albums:
+                artists = album.get("artists", [])
+                primary_artist = artists[0] if artists else {}
+                artist_ids.append(primary_artist.get("id"))
+            profiles = self._get_artist_profiles_map(artist_ids, token)
+
             releases = []
             for album in albums:
                 artists = album.get("artists", [])
                 primary_artist = artists[0] if artists else {}
-                artist_profile = self._get_artist_profile(primary_artist.get("id"), token) if primary_artist.get("id") else {}
+                artist_profile = profiles.get(primary_artist.get("id"), {}) if primary_artist.get("id") else {}
                 artist_genres = artist_profile.get("genres", [])
                 artist_popularity = artist_profile.get("popularity")
 
@@ -105,16 +155,23 @@ class SpotifyClient:
         }
 
         try:
-            response = requests.get(url, headers=headers, params=params, timeout=20)
+            response = self._session.get(url, headers=headers, params=params, timeout=20)
             response.raise_for_status()
 
             albums = response.json().get("albums", {}).get("items", [])
+            artist_ids = []
+            for album in albums:
+                artists = album.get("artists", [])
+                primary_artist = artists[0] if artists else {}
+                artist_ids.append(primary_artist.get("id"))
+            profiles = self._get_artist_profiles_map(artist_ids, token)
+
             ranked = []
 
             for album in albums:
                 artists = album.get("artists", [])
                 primary_artist = artists[0] if artists else {}
-                artist_profile = self._get_artist_profile(primary_artist.get("id"), token) if primary_artist.get("id") else {}
+                artist_profile = profiles.get(primary_artist.get("id"), {}) if primary_artist.get("id") else {}
                 artist_popularity = artist_profile.get("popularity")
                 if artist_popularity is None:
                     artist_popularity = 0
@@ -177,7 +234,7 @@ class SpotifyClient:
         url = f"{self.base_url}/artists/{artist_id}"
         headers = {"Authorization": f"Bearer {token}"}
         try:
-            response = requests.get(url, headers=headers, timeout=20)
+            response = self._session.get(url, headers=headers, timeout=20)
             response.raise_for_status()
             body = response.json()
             return {

@@ -37,6 +37,25 @@ def _ensure_db() -> None:
         conn.commit()
 
 
+def _ensure_memory_file_exists() -> Path:
+    """Backward-compatible helper for legacy tests/scripts.
+
+    Historically, decisions were stored in ``decision_log.json`` and callers
+    invoked this helper before logging. The current implementation stores
+    decisions in SQLite, but we keep this function so existing imports keep
+    working.
+    """
+    _ensure_db()
+
+    # Keep the legacy JSON file available for compatibility with old scripts.
+    MEMORY_DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    if not MEMORY_DB_PATH.exists():
+        with open(MEMORY_DB_PATH, "w", encoding="utf-8") as f:
+            json.dump([], f, ensure_ascii=False, indent=2)
+
+    return MEMORY_DB_PATH
+
+
 @contextmanager
 def _get_conn():
     """Context-manager die een SQLite-verbinding opent en automatisch sluit."""

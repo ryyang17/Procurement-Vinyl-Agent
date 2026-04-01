@@ -10,6 +10,17 @@ MAX_REORDER_PROPOSALS = TOTAL_PROPOSAL_CAP
 MAX_NEW_RELEASE_PROPOSALS = RESERVED_NEW_RELEASE_SLOTS
 
 
+_db = ProcurementDatabase()
+_spotify_client = None
+
+
+def _get_spotify_client() -> SpotifyClient:
+    global _spotify_client
+    if _spotify_client is None:
+        _spotify_client = SpotifyClient()
+    return _spotify_client
+
+
 def _state_get(state: ProcurementState, key: str, default):
     if isinstance(state, dict):
         return state.get(key, default)
@@ -29,8 +40,8 @@ def market_popularity_node(state: ProcurementState) -> Dict[str, Any]:
     Runs before the new-release check to enrich procurement decisions.
     """
     print("📈 MARKET POPULARITY ANALYSIS (Spotify)")
-    db = ProcurementDatabase()
-    spotify_client = SpotifyClient()
+    db = _db
+    spotify_client = _get_spotify_client()
 
     remaining_slots = _remaining_global_slots(state)
     if remaining_slots == 0:
@@ -83,8 +94,8 @@ def detect_new_releases_node(state: ProcurementState) -> Dict[str, Any]:
     Node for detecting new vinyl releases using the Spotify client.
     """
     print("🎵 NEW RELEASE DETECTION (Spotify)")
-    db = ProcurementDatabase()
-    spotify_client = SpotifyClient()
+    db = _db
+    spotify_client = _get_spotify_client()
     remaining_slots = _remaining_global_slots(state)
     if remaining_slots == 0:
         print("Globale limiet bereikt via lage-voorraad voorstellen; geen nieuwe releases toevoegen.")
@@ -176,7 +187,7 @@ def create_new_release_orders_node(state: ProcurementState) -> Dict[str, Any]:
     Node for creating purchase order proposals for new releases.
     """
     print("📝 CREATE NEW RELEASE ORDERS")
-    db = ProcurementDatabase()
+    db = _db
     new_releases = list(_state_get(state, "new_releases", []) or [])
     if not new_releases:
         market_fallback = list(_state_get(state, "market_popular_albums", []) or [])
@@ -307,7 +318,7 @@ def check_existing_new_releases_node(state: ProcurementState) -> Dict[str, Any]:
     Node for checking existing products that might be new releases needing restock.
     """
     print("📂 CHECK EXISTING NEW RELEASES")
-    db = ProcurementDatabase()
+    db = _db
     try:
         new_releases = db.detect_new_releases()
     except AttributeError:

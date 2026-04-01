@@ -1,7 +1,5 @@
 from agent.utils.state import ProcurementState
 from agent.procurement_data import ProcurementDatabase
-from langchain_google_genai import ChatGoogleGenerativeAI
-import os
 from datetime import datetime, timedelta
 
 db = ProcurementDatabase()
@@ -41,12 +39,6 @@ def _selection_order_type(selection: dict) -> str:
 
 def create_purchase_order_node(state: ProcurementState) -> ProcurementState:
     """Create draft purchase orders based on supplier selections from previous node"""
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-3-pro-preview",
-        temperature=0.7,
-        api_key=os.getenv("GOOGLE_API_KEY")
-    )
-
     supplier_selections = state.data.get('supplier_selections', [])
     existing_draft_orders = list(state.data.get('draft_orders', []))
 

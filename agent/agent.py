@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-from langchain_google_genai import ChatGoogleGenerativeAI
 from agent.utils.state import ProcurementState
 # Importeer nodes voor goedkeuring, levering, voorraad, orders, leveranciers en nieuwe releases
 from agent.utils.nodes.approval_nodes import human_approval_node, process_approval_node_workflow
@@ -20,13 +19,6 @@ from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.sqlite import SqliteSaver
 import os
 import sqlite3
-
-# Initialiseer LLM voor workflow
-llm = ChatGoogleGenerativeAI(
-    model="gemini-3-pro-preview",
-    temperature=0.7,
-    api_key=os.getenv("GOOGLE_API_KEY")
-)
 
 # Pad naar database voor checkpointing
 DB_PATH = os.path.join(os.path.dirname(__file__), '../db/checkpoints.sqlite')
