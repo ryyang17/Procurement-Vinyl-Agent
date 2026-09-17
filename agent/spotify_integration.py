@@ -5,6 +5,13 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 
 
+TOKEN_TIMEOUT_SECONDS = 8
+REQUEST_TIMEOUT_SECONDS = 8
+ARTIST_PROFILE_TIMEOUT_SECONDS = 5
+MAX_ARTIST_PROFILE_WORKERS = 4
+MAX_MARKET_CANDIDATES = 20
+
+
 class SpotifyClient:
     _shared_access_token = None
     _shared_token_expires_at = 0
@@ -37,7 +44,7 @@ class SpotifyClient:
             self.token_url,
             data={"grant_type": "client_credentials"},
             auth=(self.client_id, self.client_secret),
-            timeout=20,
+            timeout=TOKEN_TIMEOUT_SECONDS,
         )
         response.raise_for_status()
 
@@ -64,7 +71,7 @@ class SpotifyClient:
             missing.append(artist_id)
 
         if missing:
-            max_workers = min(8, len(missing))
+            max_workers = min(MAX_ARTIST_PROFILE_WORKERS, len(missing))
             with ThreadPoolExecutor(max_workers=max_workers) as executor:
                 future_map = {
                     executor.submit(self._get_artist_profile, artist_id, token): artist_id
@@ -96,16 +103,20 @@ class SpotifyClient:
         }
 
         try:
-            response = requests.get(url, headers=headers, params=params, timeout=20)
+            response = self._session.get(url, headers=headers, params=params, timeout=REQUEST_TIMEOUT_SECONDS)
             response.raise_for_status()
 
             # response structure for search is { "albums": { "items": [...] } }
             albums = response.json().get("albums", {}).get("items", [])
             artist_ids = []
+            seen_artist_ids = set()
             for album in albums:
                 artists = album.get("artists", [])
                 primary_artist = artists[0] if artists else {}
-                artist_ids.append(primary_artist.get("id"))
+                artist_id = primary_artist.get("id")
+                if artist_id and artist_id not in seen_artist_ids:
+                    seen_artist_ids.add(artist_id)
+                    artist_ids.append(artist_id)
             profiles = self._get_artist_profiles_map(artist_ids, token)
 
             releases = []
@@ -146,7 +157,7 @@ class SpotifyClient:
         headers = {"Authorization": f"Bearer {token}"}
 
         # Pull a wider candidate set first, then rank locally.
-        candidate_limit = min(max(limit * 3, 20), 50)
+        candidate_limit = min(max(limit * 2, 10), MAX_MARKET_CANDIDATES)
         params = {
             "q": "tag:new",
             "type": "album",
@@ -155,15 +166,19 @@ class SpotifyClient:
         }
 
         try:
-            response = self._session.get(url, headers=headers, params=params, timeout=20)
+            response = self._session.get(url, headers=headers, params=params, timeout=REQUEST_TIMEOUT_SECONDS)
             response.raise_for_status()
 
             albums = response.json().get("albums", {}).get("items", [])
             artist_ids = []
+            seen_artist_ids = set()
             for album in albums:
                 artists = album.get("artists", [])
                 primary_artist = artists[0] if artists else {}
-                artist_ids.append(primary_artist.get("id"))
+                artist_id = primary_artist.get("id")
+                if artist_id and artist_id not in seen_artist_ids:
+                    seen_artist_ids.add(artist_id)
+                    artist_ids.append(artist_id)
             profiles = self._get_artist_profiles_map(artist_ids, token)
 
             ranked = []
@@ -234,7 +249,7 @@ class SpotifyClient:
         url = f"{self.base_url}/artists/{artist_id}"
         headers = {"Authorization": f"Bearer {token}"}
         try:
-            response = self._session.get(url, headers=headers, timeout=20)
+            response = self._session.get(url, headers=headers, timeout=ARTIST_PROFILE_TIMEOUT_SECONDS)
             response.raise_for_status()
             body = response.json()
             return {

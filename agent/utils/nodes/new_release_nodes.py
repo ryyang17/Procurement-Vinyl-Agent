@@ -17,7 +17,11 @@ _spotify_client = None
 def _get_spotify_client() -> SpotifyClient:
     global _spotify_client
     if _spotify_client is None:
-        _spotify_client = SpotifyClient()
+        try:
+            _spotify_client = SpotifyClient()
+        except Exception as exc:
+            print(f"Spotify client unavailable: {exc}")
+            _spotify_client = False
     return _spotify_client
 
 
@@ -42,6 +46,12 @@ def market_popularity_node(state: ProcurementState) -> Dict[str, Any]:
     print("📈 MARKET POPULARITY ANALYSIS (Spotify)")
     db = _db
     spotify_client = _get_spotify_client()
+    if not spotify_client:
+        return {
+            "market_popular_albums": [],
+            "uncatalogued_popular_albums": [],
+            "market_popularity_alerts": [],
+        }
 
     remaining_slots = _remaining_global_slots(state)
     if remaining_slots == 0:
@@ -96,6 +106,8 @@ def detect_new_releases_node(state: ProcurementState) -> Dict[str, Any]:
     print("🎵 NEW RELEASE DETECTION (Spotify)")
     db = _db
     spotify_client = _get_spotify_client()
+    if not spotify_client:
+        return {"new_releases": [], "next_action": "find_suppliers"}
     remaining_slots = _remaining_global_slots(state)
     if remaining_slots == 0:
         print("Globale limiet bereikt via lage-voorraad voorstellen; geen nieuwe releases toevoegen.")
