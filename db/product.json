@@ -912,5 +912,71 @@
     "market_popularity_score": 0.0,
     "product_id": 92,
     "created_at": "2026-04-01T09:35:22.971489"
+  },
+  {
+    "id": "71eu7HW0xiX1CsPOjfTkfk",
+    "name": "LUXURY",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Pirlo",
+    "release_date": "2026-04-01",
+    "market_popularity_score": 20.0,
+    "product_id": 93,
+    "created_at": "2026-04-01T09:47:05.380151"
+  },
+  {
+    "id": "5znyQMF82OwZo9G5lar9yC",
+    "name": "Up Out & Gone",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Ne-Yo",
+    "release_date": "2026-03-30",
+    "market_popularity_score": 0.0,
+    "product_id": 94,
+    "created_at": "2026-04-01T10:30:51.018220"
+  },
+  {
+    "id": "0IAAsMXyI0xm8FkmsOJRh3",
+    "name": "FENIAN",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "KNEECAP",
+    "release_date": "2026-04-01",
+    "market_popularity_score": 0.0,
+    "product_id": 95,
+    "created_at": "2026-04-01T10:30:51.029986"
+  },
+  {
+    "id": "0JWCja3WqO620zWx46H8qi",
+    "name": "Popola (Remix)",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "Ezzy R, July Queen, Yoan Retro, Malcom Produce",
+    "release_date": "2026-03-30",
+    "market_popularity_score": 0.0,
+    "product_id": 96,
+    "created_at": "2026-04-01T10:30:51.036521"
+  },
+  {
+    "id": "28TpiwghzeUEx0HMP2Giui",
+    "name": "ADIOS",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "El Alfa",
+    "release_date": "2026-03-30",
+    "market_popularity_score": 0.0,
+    "product_id": 97,
+    "created_at": "2026-04-01T10:30:51.042998"
+  },
+  {
+    "id": "5xkMzl6bYm2s1s6udgqOws",
+    "name": "The Natural Water Cycle",
+    "category": "Vinyl",
+    "supplier_id": 1,
+    "artist": "The Wiggles",
+    "release_date": "2026-03-30",
+    "market_popularity_score": 0.0,
+    "product_id": 98,
+    "created_at": "2026-04-01T10:30:51.049912"
   }
 ]
