@@ -1,7 +1,7 @@
 [project]
-name = "pdf-workbook-extractor-pot"
+name = "procurement-vinyl-agent"
 version = "0.1.0"
-description = "Minimal pipeline to extract and split workbook exercises from PDF"
+description = "Procurement Vinyl Agent with JSON test data"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -19,6 +19,5 @@ dependencies = [
     "httpx>=0.24.0",
     "copilotkit>=0.1.79",
     "langchain-openai>=1.1.10",
-    "pypdf>=5.4.0",
 ]
 
